@@ -1,8 +1,8 @@
 package com.grepp.spring.infra.config.security;
 
 import com.grepp.spring.app.model.auth.domain.Principal;
-import com.grepp.spring.member.domain.Member;
-import com.grepp.spring.member.repos.MemberRepository;
+import com.grepp.spring.app.model.member.domain.Member;
+import com.grepp.spring.app.model.member.repos.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
