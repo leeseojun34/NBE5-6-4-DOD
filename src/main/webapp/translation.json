@@ -1,0 +1,1083 @@
+{
+  "app": {
+    "title": "Spring"
+  },
+  "navigation": {
+    "toggle": "Toggle navigation",
+    "home": "Home",
+    "entities": "Entities"
+  },
+  "home": {
+    "index": {
+      "headline": "Welcome to your new app!",
+      "text": "Your app was created with <a href=\"https://bootify.io\" target=\"_blank\" className=\"underline\">Bootify.io</a> and can now be customized. If you are happy with the result, <strong>please recommend us to other developers</strong> - so Bootify.io can grow further.",
+      "swagger": {
+        "text": "Swagger is",
+        "link": "available here"
+      },
+      "exploreEntities": "Explore your entities"
+    }
+  },
+  "error": {
+    "page": {
+      "headline": "Error",
+      "message": "The page you are looking for is not available right now."
+    }
+  },
+  "member": {
+    "list": {
+      "headline": "Members",
+      "createNew": "Create new Member",
+      "empty": "No Members could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Member",
+      "back": "Back to list"
+    },
+    "userId": {
+      "label": "User Id"
+    },
+    "password": {
+      "label": "Password"
+    },
+    "provider": {
+      "label": "Provider"
+    },
+    "role": {
+      "label": "Role"
+    },
+    "email": {
+      "label": "Email"
+    },
+    "name": {
+      "label": "Name"
+    },
+    "profileImageNumber": {
+      "label": "Profile Image Number"
+    },
+    "phoneNumber": {
+      "label": "Phone Number"
+    },
+    "edit": {
+      "headline": "Edit Member",
+      "back": "Back to list"
+    },
+    "socialAuthTokens": {
+      "user": {
+        "referenced": "This entity is still referenced by Social Auth Tokens {{id}} via field User."
+      }
+    },
+    "likeLocation": {
+      "user": {
+        "referenced": "This entity is still referenced by Like Location {{id}} via field User."
+      }
+    },
+    "likeTimetable": {
+      "user": {
+        "referenced": "This entity is still referenced by Like Timetable {{id}} via field User."
+      }
+    },
+    "calendar": {
+      "user": {
+        "referenced": "This entity is still referenced by Calendar {{id}} via field User."
+      }
+    },
+    "groupUser": {
+      "user": {
+        "referenced": "This entity is still referenced by Group User {{id}} via field User."
+      }
+    },
+    "eventUser": {
+      "user": {
+        "referenced": "This entity is still referenced by Event User {{id}} via field User."
+      }
+    },
+    "scheduleUser": {
+      "user": {
+        "referenced": "This entity is still referenced by Schedule User {{id}} via field User."
+      }
+    },
+    "create": {
+      "success": "Member was created successfully."
+    },
+    "update": {
+      "success": "Member was updated successfully."
+    },
+    "delete": {
+      "success": "Member was removed successfully."
+    }
+  },
+  "socialAuthTokens": {
+    "list": {
+      "headline": "Social Auth Tokenses",
+      "createNew": "Create new Social Auth Tokens",
+      "empty": "No Social Auth Tokenses could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Social Auth Tokens",
+      "back": "Back to list"
+    },
+    "socialAuthTokensId": {
+      "label": "Social Auth Tokens Id"
+    },
+    "accessToken": {
+      "label": "Access Token"
+    },
+    "refreshToken": {
+      "label": "Refresh Token"
+    },
+    "tokenType": {
+      "label": "Token Type"
+    },
+    "expiresAt": {
+      "label": "Expires At"
+    },
+    "provider": {
+      "label": "Provider"
+    },
+    "user": {
+      "label": "User"
+    },
+    "edit": {
+      "headline": "Edit Social Auth Tokens",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Social Auth Tokens was created successfully."
+    },
+    "update": {
+      "success": "Social Auth Tokens was updated successfully."
+    },
+    "delete": {
+      "success": "Social Auth Tokens was removed successfully."
+    }
+  },
+  "likeLocation": {
+    "list": {
+      "headline": "Like Locations",
+      "createNew": "Create new Like Location",
+      "empty": "No Like Locations could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Like Location",
+      "back": "Back to list"
+    },
+    "likeLocationId": {
+      "label": "Like Location Id"
+    },
+    "longitude": {
+      "label": "Longitude"
+    },
+    "latitude": {
+      "label": "Latitude"
+    },
+    "locationName": {
+      "label": "Location Name"
+    },
+    "user": {
+      "label": "User"
+    },
+    "edit": {
+      "headline": "Edit Like Location",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Like Location was created successfully."
+    },
+    "update": {
+      "success": "Like Location was updated successfully."
+    },
+    "delete": {
+      "success": "Like Location was removed successfully."
+    }
+  },
+  "likeTimetable": {
+    "list": {
+      "headline": "Like Timetables",
+      "createNew": "Create new Like Timetable",
+      "empty": "No Like Timetables could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Like Timetable",
+      "back": "Back to list"
+    },
+    "likeTimetableId": {
+      "label": "Like Timetable Id"
+    },
+    "startTime": {
+      "label": "Start Time"
+    },
+    "endTime": {
+      "label": "End Time"
+    },
+    "weekday": {
+      "label": "Weekday"
+    },
+    "user": {
+      "label": "User"
+    },
+    "edit": {
+      "headline": "Edit Like Timetable",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Like Timetable was created successfully."
+    },
+    "update": {
+      "success": "Like Timetable was updated successfully."
+    },
+    "delete": {
+      "success": "Like Timetable was removed successfully."
+    }
+  },
+  "calendar": {
+    "list": {
+      "headline": "Calendars",
+      "createNew": "Create new Calendar",
+      "empty": "No Calendars could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Calendar",
+      "back": "Back to list"
+    },
+    "calendarId": {
+      "label": "Calendar Id"
+    },
+    "calendarName": {
+      "label": "Calendar Name"
+    },
+    "synced": {
+      "label": "Synced"
+    },
+    "syncedAt": {
+      "label": "Synced At"
+    },
+    "user": {
+      "label": "User"
+    },
+    "edit": {
+      "headline": "Edit Calendar",
+      "back": "Back to list"
+    },
+    "calendarDetail": {
+      "calendar": {
+        "referenced": "This entity is still referenced by Calendar Detail {{id}} via field Calendar."
+      }
+    },
+    "create": {
+      "success": "Calendar was created successfully."
+    },
+    "update": {
+      "success": "Calendar was updated successfully."
+    },
+    "delete": {
+      "success": "Calendar was removed successfully."
+    }
+  },
+  "calendarDetail": {
+    "list": {
+      "headline": "Calendar Details",
+      "createNew": "Create new Calendar Detail",
+      "empty": "No Calendar Details could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Calendar Detail",
+      "back": "Back to list"
+    },
+    "calendarDetailId": {
+      "label": "Calendar Detail Id"
+    },
+    "title": {
+      "label": "Title"
+    },
+    "startDatetime": {
+      "label": "Start Datetime"
+    },
+    "endDatetime": {
+      "label": "End Datetime"
+    },
+    "syncedAt": {
+      "label": "Synced At"
+    },
+    "calendar": {
+      "label": "Calendar"
+    },
+    "edit": {
+      "headline": "Edit Calendar Detail",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Calendar Detail was created successfully."
+    },
+    "update": {
+      "success": "Calendar Detail was updated successfully."
+    },
+    "delete": {
+      "success": "Calendar Detail was removed successfully."
+    }
+  },
+  "locationCandidate": {
+    "list": {
+      "headline": "Location Candidates",
+      "createNew": "Create new Location Candidate",
+      "empty": "No Location Candidates could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Location Candidate",
+      "back": "Back to list"
+    },
+    "locationCandidateId": {
+      "label": "Location Candidate Id"
+    },
+    "suggestUserId": {
+      "label": "Suggest User Id"
+    },
+    "locationName": {
+      "label": "Location Name"
+    },
+    "latitude": {
+      "label": "Latitude"
+    },
+    "longitude": {
+      "label": "Longitude"
+    },
+    "voteCount": {
+      "label": "Vote Count"
+    },
+    "status": {
+      "label": "Status"
+    },
+    "detail": {
+      "label": "Detail"
+    },
+    "edit": {
+      "headline": "Edit Location Candidate",
+      "back": "Back to list"
+    },
+    "userVote": {
+      "locationCandidate": {
+        "referenced": "This entity is still referenced by User Vote {{id}} via field Location Candidate."
+      }
+    },
+    "create": {
+      "success": "Location Candidate was created successfully."
+    },
+    "update": {
+      "success": "Location Candidate was updated successfully."
+    },
+    "delete": {
+      "success": "Location Candidate was removed successfully."
+    }
+  },
+  "meeting": {
+    "list": {
+      "headline": "Meetings",
+      "createNew": "Create new Meeting",
+      "empty": "No Meetings could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Meeting",
+      "back": "Back to list"
+    },
+    "meetingId": {
+      "label": "Meeting Id"
+    },
+    "meetingPlatform": {
+      "label": "Meeting Platform"
+    },
+    "platformUrl": {
+      "label": "Platform Url"
+    },
+    "schedule": {
+      "label": "Schedule"
+    },
+    "edit": {
+      "headline": "Edit Meeting",
+      "back": "Back to list"
+    },
+    "departRegion": {
+      "meeting": {
+        "referenced": "This entity is still referenced by Depart Region {{id}} via field Meeting."
+      }
+    },
+    "create": {
+      "success": "Meeting was created successfully."
+    },
+    "update": {
+      "success": "Meeting was updated successfully."
+    },
+    "delete": {
+      "success": "Meeting was removed successfully."
+    }
+  },
+  "eventUser": {
+    "list": {
+      "headline": "Event Users",
+      "createNew": "Create new Event User",
+      "empty": "No Event Users could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Event User",
+      "back": "Back to list"
+    },
+    "eventUserId": {
+      "label": "Event User Id"
+    },
+    "user": {
+      "label": "User"
+    },
+    "event": {
+      "label": "Event"
+    },
+    "edit": {
+      "headline": "Edit Event User",
+      "back": "Back to list"
+    },
+    "tempSchedule": {
+      "eventUser": {
+        "referenced": "This entity is still referenced by Temp Schedule {{id}} via field Event User."
+      }
+    },
+    "create": {
+      "success": "Event User was created successfully."
+    },
+    "update": {
+      "success": "Event User was updated successfully."
+    },
+    "delete": {
+      "success": "Event User was removed successfully."
+    }
+  },
+  "userVote": {
+    "list": {
+      "headline": "User Votes",
+      "createNew": "Create new User Vote",
+      "empty": "No User Votes could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add User Vote",
+      "back": "Back to list"
+    },
+    "userVoteId": {
+      "label": "User Vote Id"
+    },
+    "userId": {
+      "label": "User Id"
+    },
+    "locationCandidate": {
+      "label": "Location Candidate"
+    },
+    "edit": {
+      "headline": "Edit User Vote",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "User Vote was created successfully."
+    },
+    "update": {
+      "success": "User Vote was updated successfully."
+    },
+    "delete": {
+      "success": "User Vote was removed successfully."
+    }
+  },
+  "location": {
+    "list": {
+      "headline": "Locations",
+      "createNew": "Create new Location",
+      "empty": "No Locations could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Location",
+      "back": "Back to list"
+    },
+    "locationId": {
+      "label": "Location Id"
+    },
+    "latitude": {
+      "label": "Latitude"
+    },
+    "longitude": {
+      "label": "Longitude"
+    },
+    "locationName": {
+      "label": "Location Name"
+    },
+    "middleRegion": {
+      "label": "Middle Region"
+    },
+    "edit": {
+      "headline": "Edit Location",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Location was created successfully."
+    },
+    "update": {
+      "success": "Location was updated successfully."
+    },
+    "delete": {
+      "success": "Location was removed successfully."
+    }
+  },
+  "middleRegion": {
+    "list": {
+      "headline": "Middle Regions",
+      "createNew": "Create new Middle Region",
+      "empty": "No Middle Regions could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Middle Region",
+      "back": "Back to list"
+    },
+    "middleRegionId": {
+      "label": "Middle Region Id"
+    },
+    "latitude": {
+      "label": "Latitude"
+    },
+    "longitude": {
+      "label": "Longitude"
+    },
+    "edit": {
+      "headline": "Edit Middle Region",
+      "back": "Back to list"
+    },
+    "departRegion": {
+      "middleRegion": {
+        "referenced": "This entity is still referenced by Depart Region {{id}} via field Middle Region."
+      }
+    },
+    "location": {
+      "middleRegion": {
+        "referenced": "This entity is still referenced by Location {{id}} via field Middle Region."
+      }
+    },
+    "create": {
+      "success": "Middle Region was created successfully."
+    },
+    "update": {
+      "success": "Middle Region was updated successfully."
+    },
+    "delete": {
+      "success": "Middle Region was removed successfully."
+    }
+  },
+  "departRegion": {
+    "list": {
+      "headline": "Depart Regions",
+      "createNew": "Create new Depart Region",
+      "empty": "No Depart Regions could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Depart Region",
+      "back": "Back to list"
+    },
+    "departRegionId": {
+      "label": "Depart Region Id"
+    },
+    "dapartLocationName": {
+      "label": "Dapart Location Name"
+    },
+    "latitude": {
+      "label": "Latitude"
+    },
+    "longitude": {
+      "label": "Longitude"
+    },
+    "meeting": {
+      "label": "Meeting"
+    },
+    "middleRegion": {
+      "label": "Middle Region"
+    },
+    "edit": {
+      "headline": "Edit Depart Region",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Depart Region was created successfully."
+    },
+    "update": {
+      "success": "Depart Region was updated successfully."
+    },
+    "delete": {
+      "success": "Depart Region was removed successfully."
+    }
+  },
+  "candidateDate": {
+    "list": {
+      "headline": "Candidate Dates",
+      "createNew": "Create new Candidate Date",
+      "empty": "No Candidate Dates could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Candidate Date",
+      "back": "Back to list"
+    },
+    "candidateDateId": {
+      "label": "Candidate Date Id"
+    },
+    "date": {
+      "label": "Date"
+    },
+    "event": {
+      "label": "Event"
+    },
+    "edit": {
+      "headline": "Edit Candidate Date",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Candidate Date was created successfully."
+    },
+    "update": {
+      "success": "Candidate Date was updated successfully."
+    },
+    "delete": {
+      "success": "Candidate Date was removed successfully."
+    }
+  },
+  "workspace": {
+    "list": {
+      "headline": "Workspaces",
+      "createNew": "Create new Workspace",
+      "empty": "No Workspaces could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Workspace",
+      "back": "Back to list"
+    },
+    "workspaceId": {
+      "label": "Workspace Id"
+    },
+    "url": {
+      "label": "Url"
+    },
+    "detail": {
+      "label": "Detail"
+    },
+    "edit": {
+      "headline": "Edit Workspace",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Workspace was created successfully."
+    },
+    "update": {
+      "success": "Workspace was updated successfully."
+    },
+    "delete": {
+      "success": "Workspace was removed successfully."
+    }
+  },
+  "detail": {
+    "list": {
+      "headline": "Details",
+      "createNew": "Create new Detail",
+      "empty": "No Details could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Detail",
+      "back": "Back to list"
+    },
+    "detailId": {
+      "label": "Detail Id"
+    },
+    "location": {
+      "label": "Location"
+    },
+    "schedule": {
+      "label": "Schedule"
+    },
+    "edit": {
+      "headline": "Edit Detail",
+      "back": "Back to list"
+    },
+    "workspace": {
+      "detail": {
+        "referenced": "This entity is still referenced by Workspace {{id}} via field Detail."
+      }
+    },
+    "locationCandidate": {
+      "detail": {
+        "referenced": "This entity is still referenced by Location Candidate {{id}} via field Detail."
+      }
+    },
+    "create": {
+      "success": "Detail was created successfully."
+    },
+    "update": {
+      "success": "Detail was updated successfully."
+    },
+    "delete": {
+      "success": "Detail was removed successfully."
+    }
+  },
+  "scheduleUser": {
+    "list": {
+      "headline": "Schedule Users",
+      "createNew": "Create new Schedule User",
+      "empty": "No Schedule Users could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Schedule User",
+      "back": "Back to list"
+    },
+    "scheduleUserId": {
+      "label": "Schedule User Id"
+    },
+    "role": {
+      "label": "Role"
+    },
+    "user": {
+      "label": "User"
+    },
+    "schedule": {
+      "label": "Schedule"
+    },
+    "edit": {
+      "headline": "Edit Schedule User",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Schedule User was created successfully."
+    },
+    "update": {
+      "success": "Schedule User was updated successfully."
+    },
+    "delete": {
+      "success": "Schedule User was removed successfully."
+    }
+  },
+  "event": {
+    "list": {
+      "headline": "Events",
+      "createNew": "Create new Event",
+      "empty": "No Events could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Event",
+      "back": "Back to list"
+    },
+    "eventId": {
+      "label": "Event Id"
+    },
+    "title": {
+      "label": "Title"
+    },
+    "description": {
+      "label": "Description"
+    },
+    "creator": {
+      "label": "Creator"
+    },
+    "meetingType": {
+      "label": "Meeting Type"
+    },
+    "maxMember": {
+      "label": "Max Member"
+    },
+    "group": {
+      "label": "Group"
+    },
+    "edit": {
+      "headline": "Edit Event",
+      "back": "Back to list"
+    },
+    "eventUser": {
+      "event": {
+        "referenced": "This entity is still referenced by Event User {{id}} via field Event."
+      }
+    },
+    "candidateDate": {
+      "event": {
+        "referenced": "This entity is still referenced by Candidate Date {{id}} via field Event."
+      }
+    },
+    "schedule": {
+      "event": {
+        "referenced": "This entity is still referenced by Schedule {{id}} via field Event."
+      }
+    },
+    "create": {
+      "success": "Event was created successfully."
+    },
+    "update": {
+      "success": "Event was updated successfully."
+    },
+    "delete": {
+      "success": "Event was removed successfully."
+    }
+  },
+  "group": {
+    "list": {
+      "headline": "Groups",
+      "createNew": "Create new Group",
+      "empty": "No Groups could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Group",
+      "back": "Back to list"
+    },
+    "groupId": {
+      "label": "Group Id"
+    },
+    "name": {
+      "label": "Name"
+    },
+    "description": {
+      "label": "Description"
+    },
+    "isGrouped": {
+      "label": "Is Grouped"
+    },
+    "edit": {
+      "headline": "Edit Group",
+      "back": "Back to list"
+    },
+    "groupUser": {
+      "group": {
+        "referenced": "This entity is still referenced by Group User {{id}} via field Group."
+      }
+    },
+    "event": {
+      "group": {
+        "referenced": "This entity is still referenced by Event {{id}} via field Group."
+      }
+    },
+    "create": {
+      "success": "Group was created successfully."
+    },
+    "update": {
+      "success": "Group was updated successfully."
+    },
+    "delete": {
+      "success": "Group was removed successfully."
+    }
+  },
+  "tempSchedule": {
+    "list": {
+      "headline": "Temp Schedules",
+      "createNew": "Create new Temp Schedule",
+      "empty": "No Temp Schedules could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Temp Schedule",
+      "back": "Back to list"
+    },
+    "tempScheduleId": {
+      "label": "Temp Schedule Id"
+    },
+    "startTime": {
+      "label": "Start Time"
+    },
+    "endTime": {
+      "label": "End Time"
+    },
+    "eventUser": {
+      "label": "Event User"
+    },
+    "edit": {
+      "headline": "Edit Temp Schedule",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Temp Schedule was created successfully."
+    },
+    "update": {
+      "success": "Temp Schedule was updated successfully."
+    },
+    "delete": {
+      "success": "Temp Schedule was removed successfully."
+    }
+  },
+  "groupUser": {
+    "list": {
+      "headline": "Group Users",
+      "createNew": "Create new Group User",
+      "empty": "No Group Users could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Group User",
+      "back": "Back to list"
+    },
+    "groupUserId": {
+      "label": "Group User Id"
+    },
+    "groupRole": {
+      "label": "Group Role"
+    },
+    "user": {
+      "label": "User"
+    },
+    "group": {
+      "label": "Group"
+    },
+    "edit": {
+      "headline": "Edit Group User",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Group User was created successfully."
+    },
+    "update": {
+      "success": "Group User was updated successfully."
+    },
+    "delete": {
+      "success": "Group User was removed successfully."
+    }
+  },
+  "schedule": {
+    "list": {
+      "headline": "Schedules",
+      "createNew": "Create new Schedule",
+      "empty": "No Schedules could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Schedule",
+      "back": "Back to list"
+    },
+    "scheduleId": {
+      "label": "Schedule Id"
+    },
+    "startTime": {
+      "label": "Start Time"
+    },
+    "endTime": {
+      "label": "End Time"
+    },
+    "status": {
+      "label": "Status"
+    },
+    "event": {
+      "label": "Event"
+    },
+    "edit": {
+      "headline": "Edit Schedule",
+      "back": "Back to list"
+    },
+    "scheduleUser": {
+      "schedule": {
+        "referenced": "This entity is still referenced by Schedule User {{id}} via field Schedule."
+      }
+    },
+    "detail": {
+      "schedule": {
+        "referenced": "This entity is still referenced by Detail {{id}} via field Schedule."
+      }
+    },
+    "meeting": {
+      "schedule": {
+        "referenced": "This entity is still referenced by Meeting {{id}} via field Schedule."
+      }
+    },
+    "create": {
+      "success": "Schedule was created successfully."
+    },
+    "update": {
+      "success": "Schedule was updated successfully."
+    },
+    "delete": {
+      "success": "Schedule was removed successfully."
+    }
+  },
+  "exists": {
+    "member": {
+      "userId": "This User Id is already taken.",
+      "email": "This Email is already taken.",
+      "phoneNumber": "This Phone Number is already taken."
+    },
+    "socialAuthTokens": {
+      "accessToken": "This Access Token is already taken.",
+      "refreshToken": "This Refresh Token is already taken."
+    },
+    "locationCandidate": {
+      "locationName": "This Location Name is already taken."
+    },
+    "candidateDate": {
+      "date": "This Date is already taken."
+    }
+  },
+  "Exists": {
+    "likeLocation": {
+      "user": "This Member is already referenced by another Like Location."
+    },
+    "calendar": {
+      "user": "This Member is already referenced by another Calendar."
+    },
+    "meeting": {
+      "schedule": "This Schedule is already referenced by another Meeting."
+    },
+    "userVote": {
+      "location-candidate": "This Location Candidate is already referenced by another User Vote."
+    },
+    "location": {
+      "middle-region": "This Middle Region is already referenced by another Location."
+    },
+    "detail": {
+      "schedule": "This Schedule is already referenced by another Detail."
+    }
+  },
+  "select": {
+    "empty": {
+      "label": "Please select"
+    }
+  },
+  "delete": {
+    "confirm": "Do you really want to delete this element? This cannot be undone."
+  },
+  "operation": {
+    "success": "Your operation was successful."
+  },
+  "required": "Please provide a value.",
+  "maxlength": "Your value must have a length of less then ${max} characters.",
+  "valid": {
+    "double": "Please provide a valid floating point number.",
+    "number": "Please provide a valid number."
+  }
+}

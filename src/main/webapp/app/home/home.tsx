@@ -1,0 +1,48 @@
+import React from 'react';
+import { Link } from 'react-router';
+import { Trans, useTranslation } from 'react-i18next';
+import useDocumentTitle from 'app/common/use-document-title';
+import './home.css';
+
+
+export default function Home() {
+  const { t } = useTranslation();
+  useDocumentTitle(t('home.index.headline'));
+
+  return (<>
+    <h1 className="grow text-3xl md:text-4xl font-medium mb-8">{t('home.index.headline')}</h1>
+    <p className="mb-4"><Trans i18nKey="home.index.text" components={{ a: <a />, strong: <strong /> }} /></p>
+    <p className="mb-12">
+      <span>{t('home.index.swagger.text')}</span>
+      <span> </span>
+      <a href={process.env.API_PATH + '/swagger-ui.html'} target="_blank" className="underline">{t('home.index.swagger.link')}</a>.
+    </p>
+    <div className="md:w-2/5 mb-12">
+      <h4 className="text-2xl font-medium mb-4">{t('home.index.exploreEntities')}</h4>
+      <div className="flex flex-col border border-gray-300 rounded">
+        <Link to="/members" className="w-full border-gray-300 hover:bg-gray-100 border-b rounded-t px-4 py-2">{t('member.list.headline')}</Link>
+        <Link to="/socialAuthTokenss" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('socialAuthTokens.list.headline')}</Link>
+        <Link to="/likeLocations" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('likeLocation.list.headline')}</Link>
+        <Link to="/likeTimetables" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('likeTimetable.list.headline')}</Link>
+        <Link to="/calendars" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('calendar.list.headline')}</Link>
+        <Link to="/calendarDetails" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('calendarDetail.list.headline')}</Link>
+        <Link to="/locationCandidates" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('locationCandidate.list.headline')}</Link>
+        <Link to="/meetings" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('meeting.list.headline')}</Link>
+        <Link to="/eventUsers" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('eventUser.list.headline')}</Link>
+        <Link to="/userVotes" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('userVote.list.headline')}</Link>
+        <Link to="/locations" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('location.list.headline')}</Link>
+        <Link to="/middleRegions" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('middleRegion.list.headline')}</Link>
+        <Link to="/departRegions" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('departRegion.list.headline')}</Link>
+        <Link to="/candidateDates" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('candidateDate.list.headline')}</Link>
+        <Link to="/workspaces" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('workspace.list.headline')}</Link>
+        <Link to="/details" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('detail.list.headline')}</Link>
+        <Link to="/scheduleUsers" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('scheduleUser.list.headline')}</Link>
+        <Link to="/events" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('event.list.headline')}</Link>
+        <Link to="/groups" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('group.list.headline')}</Link>
+        <Link to="/tempSchedules" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('tempSchedule.list.headline')}</Link>
+        <Link to="/groupUsers" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('groupUser.list.headline')}</Link>
+        <Link to="/schedules" className="w-full border-gray-300 hover:bg-gray-100 rounded-b px-4 py-2">{t('schedule.list.headline')}</Link>
+      </div>
+    </div>
+  </>);
+}
