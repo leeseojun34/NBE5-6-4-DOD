@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class MiddleRegionDTO {
 
-    private Long middleRegionId;
+    private Long id;
 
     @NotNull
     private Double latitude;

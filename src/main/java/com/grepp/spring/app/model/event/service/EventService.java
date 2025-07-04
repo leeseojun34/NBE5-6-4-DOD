@@ -5,8 +5,8 @@ import com.grepp.spring.app.model.candidate_date.repos.CandidateDateRepository;
 import com.grepp.spring.app.model.event.domain.Event;
 import com.grepp.spring.app.model.event.model.EventDTO;
 import com.grepp.spring.app.model.event.repos.EventRepository;
-import com.grepp.spring.app.model.event_user.domain.EventUser;
-import com.grepp.spring.app.model.event_user.repos.EventUserRepository;
+import com.grepp.spring.app.model.event_member.domain.EventMember;
+import com.grepp.spring.app.model.event_member.repos.EventMemberRepository;
 import com.grepp.spring.app.model.group.domain.Group;
 import com.grepp.spring.app.model.group.repos.GroupRepository;
 import com.grepp.spring.app.model.schedule.domain.Schedule;
@@ -23,30 +23,31 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final GroupRepository groupRepository;
-    private final EventUserRepository eventUserRepository;
-    private final CandidateDateRepository candidateDateRepository;
+    private final EventMemberRepository eventMemberRepository;
     private final ScheduleRepository scheduleRepository;
+    private final CandidateDateRepository candidateDateRepository;
 
     public EventService(final EventRepository eventRepository,
-            final GroupRepository groupRepository, final EventUserRepository eventUserRepository,
-            final CandidateDateRepository candidateDateRepository,
-            final ScheduleRepository scheduleRepository) {
+            final GroupRepository groupRepository,
+            final EventMemberRepository eventMemberRepository,
+            final ScheduleRepository scheduleRepository,
+            final CandidateDateRepository candidateDateRepository) {
         this.eventRepository = eventRepository;
         this.groupRepository = groupRepository;
-        this.eventUserRepository = eventUserRepository;
-        this.candidateDateRepository = candidateDateRepository;
+        this.eventMemberRepository = eventMemberRepository;
         this.scheduleRepository = scheduleRepository;
+        this.candidateDateRepository = candidateDateRepository;
     }
 
     public List<EventDTO> findAll() {
-        final List<Event> events = eventRepository.findAll(Sort.by("eventId"));
+        final List<Event> events = eventRepository.findAll(Sort.by("id"));
         return events.stream()
                 .map(event -> mapToDTO(event, new EventDTO()))
                 .toList();
     }
 
-    public EventDTO get(final Long eventId) {
-        return eventRepository.findById(eventId)
+    public EventDTO get(final Long id) {
+        return eventRepository.findById(id)
                 .map(event -> mapToDTO(event, new EventDTO()))
                 .orElseThrow(NotFoundException::new);
     }
@@ -54,35 +55,33 @@ public class EventService {
     public Long create(final EventDTO eventDTO) {
         final Event event = new Event();
         mapToEntity(eventDTO, event);
-        return eventRepository.save(event).getEventId();
+        return eventRepository.save(event).getId();
     }
 
-    public void update(final Long eventId, final EventDTO eventDTO) {
-        final Event event = eventRepository.findById(eventId)
+    public void update(final Long id, final EventDTO eventDTO) {
+        final Event event = eventRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(eventDTO, event);
         eventRepository.save(event);
     }
 
-    public void delete(final Long eventId) {
-        eventRepository.deleteById(eventId);
+    public void delete(final Long id) {
+        eventRepository.deleteById(id);
     }
 
     private EventDTO mapToDTO(final Event event, final EventDTO eventDTO) {
-        eventDTO.setEventId(event.getEventId());
+        eventDTO.setId(event.getId());
         eventDTO.setTitle(event.getTitle());
         eventDTO.setDescription(event.getDescription());
-        eventDTO.setCreator(event.getCreator());
         eventDTO.setMeetingType(event.getMeetingType());
         eventDTO.setMaxMember(event.getMaxMember());
-        eventDTO.setGroup(event.getGroup() == null ? null : event.getGroup().getGroupId());
+        eventDTO.setGroup(event.getGroup() == null ? null : event.getGroup().getId());
         return eventDTO;
     }
 
     private Event mapToEntity(final EventDTO eventDTO, final Event event) {
         event.setTitle(eventDTO.getTitle());
         event.setDescription(eventDTO.getDescription());
-        event.setCreator(eventDTO.getCreator());
         event.setMeetingType(eventDTO.getMeetingType());
         event.setMaxMember(eventDTO.getMaxMember());
         final Group group = eventDTO.getGroup() == null ? null : groupRepository.findById(eventDTO.getGroup())
@@ -91,26 +90,26 @@ public class EventService {
         return event;
     }
 
-    public ReferencedWarning getReferencedWarning(final Long eventId) {
+    public ReferencedWarning getReferencedWarning(final Long id) {
         final ReferencedWarning referencedWarning = new ReferencedWarning();
-        final Event event = eventRepository.findById(eventId)
+        final Event event = eventRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
-        final EventUser eventEventUser = eventUserRepository.findFirstByEvent(event);
-        if (eventEventUser != null) {
-            referencedWarning.setKey("event.eventUser.event.referenced");
-            referencedWarning.addParam(eventEventUser.getEventUserId());
-            return referencedWarning;
-        }
-        final CandidateDate eventCandidateDate = candidateDateRepository.findFirstByEvent(event);
-        if (eventCandidateDate != null) {
-            referencedWarning.setKey("event.candidateDate.event.referenced");
-            referencedWarning.addParam(eventCandidateDate.getCandidateDateId());
+        final EventMember eventEventMember = eventMemberRepository.findFirstByEvent(event);
+        if (eventEventMember != null) {
+            referencedWarning.setKey("event.eventMember.event.referenced");
+            referencedWarning.addParam(eventEventMember.getId());
             return referencedWarning;
         }
         final Schedule eventSchedule = scheduleRepository.findFirstByEvent(event);
         if (eventSchedule != null) {
             referencedWarning.setKey("event.schedule.event.referenced");
-            referencedWarning.addParam(eventSchedule.getScheduleId());
+            referencedWarning.addParam(eventSchedule.getId());
+            return referencedWarning;
+        }
+        final CandidateDate eventCandidateDate = candidateDateRepository.findFirstByEvent(event);
+        if (eventCandidateDate != null) {
+            referencedWarning.setKey("event.candidateDate.event.referenced");
+            referencedWarning.addParam(eventCandidateDate.getId());
             return referencedWarning;
         }
         return null;

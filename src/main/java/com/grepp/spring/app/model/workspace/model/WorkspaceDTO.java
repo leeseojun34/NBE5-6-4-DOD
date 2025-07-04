@@ -1,7 +1,6 @@
 package com.grepp.spring.app.model.workspace.model;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,12 +9,11 @@ import lombok.Setter;
 @Setter
 public class WorkspaceDTO {
 
-    private Long workspaceId;
+    private Long id;
 
     @NotNull
-    @Size(max = 255)
     private String url;
 
-    private Long detail;
+    private Long schedule;
 
 }

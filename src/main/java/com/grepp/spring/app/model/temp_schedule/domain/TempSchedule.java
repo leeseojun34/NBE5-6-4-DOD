@@ -1,6 +1,7 @@
 package com.grepp.spring.app.model.temp_schedule.domain;
 
-import com.grepp.spring.app.model.event_user.domain.EventUser;
+import com.grepp.spring.app.model.event_member.domain.EventMember;
+import com.grepp.spring.infra.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Table(name = "TempSchedules")
 @Getter
 @Setter
-public class TempSchedule {
+public class TempSchedule extends BaseEntity {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -34,7 +35,7 @@ public class TempSchedule {
             strategy = GenerationType.SEQUENCE,
             generator = "primary_sequence"
     )
-    private Long tempScheduleId;
+    private Long id;
 
     @Column(nullable = false)
     private LocalDateTime startTime;
@@ -43,7 +44,7 @@ public class TempSchedule {
     private LocalDateTime endTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_user_id")
-    private EventUser eventUser;
+    @JoinColumn(name = "event_member_id")
+    private EventMember eventMember;
 
 }

@@ -1,7 +1,7 @@
 package com.grepp.spring.app.model.temp_schedule.service;
 
-import com.grepp.spring.app.model.event_user.domain.EventUser;
-import com.grepp.spring.app.model.event_user.repos.EventUserRepository;
+import com.grepp.spring.app.model.event_member.domain.EventMember;
+import com.grepp.spring.app.model.event_member.repos.EventMemberRepository;
 import com.grepp.spring.app.model.temp_schedule.domain.TempSchedule;
 import com.grepp.spring.app.model.temp_schedule.model.TempScheduleDTO;
 import com.grepp.spring.app.model.temp_schedule.repos.TempScheduleRepository;
@@ -15,23 +15,23 @@ import org.springframework.stereotype.Service;
 public class TempScheduleService {
 
     private final TempScheduleRepository tempScheduleRepository;
-    private final EventUserRepository eventUserRepository;
+    private final EventMemberRepository eventMemberRepository;
 
     public TempScheduleService(final TempScheduleRepository tempScheduleRepository,
-            final EventUserRepository eventUserRepository) {
+            final EventMemberRepository eventMemberRepository) {
         this.tempScheduleRepository = tempScheduleRepository;
-        this.eventUserRepository = eventUserRepository;
+        this.eventMemberRepository = eventMemberRepository;
     }
 
     public List<TempScheduleDTO> findAll() {
-        final List<TempSchedule> tempSchedules = tempScheduleRepository.findAll(Sort.by("tempScheduleId"));
+        final List<TempSchedule> tempSchedules = tempScheduleRepository.findAll(Sort.by("id"));
         return tempSchedules.stream()
                 .map(tempSchedule -> mapToDTO(tempSchedule, new TempScheduleDTO()))
                 .toList();
     }
 
-    public TempScheduleDTO get(final Long tempScheduleId) {
-        return tempScheduleRepository.findById(tempScheduleId)
+    public TempScheduleDTO get(final Long id) {
+        return tempScheduleRepository.findById(id)
                 .map(tempSchedule -> mapToDTO(tempSchedule, new TempScheduleDTO()))
                 .orElseThrow(NotFoundException::new);
     }
@@ -39,26 +39,26 @@ public class TempScheduleService {
     public Long create(final TempScheduleDTO tempScheduleDTO) {
         final TempSchedule tempSchedule = new TempSchedule();
         mapToEntity(tempScheduleDTO, tempSchedule);
-        return tempScheduleRepository.save(tempSchedule).getTempScheduleId();
+        return tempScheduleRepository.save(tempSchedule).getId();
     }
 
-    public void update(final Long tempScheduleId, final TempScheduleDTO tempScheduleDTO) {
-        final TempSchedule tempSchedule = tempScheduleRepository.findById(tempScheduleId)
+    public void update(final Long id, final TempScheduleDTO tempScheduleDTO) {
+        final TempSchedule tempSchedule = tempScheduleRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(tempScheduleDTO, tempSchedule);
         tempScheduleRepository.save(tempSchedule);
     }
 
-    public void delete(final Long tempScheduleId) {
-        tempScheduleRepository.deleteById(tempScheduleId);
+    public void delete(final Long id) {
+        tempScheduleRepository.deleteById(id);
     }
 
     private TempScheduleDTO mapToDTO(final TempSchedule tempSchedule,
             final TempScheduleDTO tempScheduleDTO) {
-        tempScheduleDTO.setTempScheduleId(tempSchedule.getTempScheduleId());
+        tempScheduleDTO.setId(tempSchedule.getId());
         tempScheduleDTO.setStartTime(tempSchedule.getStartTime());
         tempScheduleDTO.setEndTime(tempSchedule.getEndTime());
-        tempScheduleDTO.setEventUser(tempSchedule.getEventUser() == null ? null : tempSchedule.getEventUser().getEventUserId());
+        tempScheduleDTO.setEventMember(tempSchedule.getEventMember() == null ? null : tempSchedule.getEventMember().getId());
         return tempScheduleDTO;
     }
 
@@ -66,9 +66,9 @@ public class TempScheduleService {
             final TempSchedule tempSchedule) {
         tempSchedule.setStartTime(tempScheduleDTO.getStartTime());
         tempSchedule.setEndTime(tempScheduleDTO.getEndTime());
-        final EventUser eventUser = tempScheduleDTO.getEventUser() == null ? null : eventUserRepository.findById(tempScheduleDTO.getEventUser())
-                .orElseThrow(() -> new NotFoundException("eventUser not found"));
-        tempSchedule.setEventUser(eventUser);
+        final EventMember eventMember = tempScheduleDTO.getEventMember() == null ? null : eventMemberRepository.findById(tempScheduleDTO.getEventMember())
+                .orElseThrow(() -> new NotFoundException("eventMember not found"));
+        tempSchedule.setEventMember(eventMember);
         return tempSchedule;
     }
 

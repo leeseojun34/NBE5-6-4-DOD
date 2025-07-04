@@ -43,44 +43,41 @@ public class CalendarResource {
         return ResponseEntity.ok(calendarService.findAll());
     }
 
-    @GetMapping("/{calendarId}")
-    public ResponseEntity<CalendarDTO> getCalendar(
-            @PathVariable(name = "calendarId") final Long calendarId) {
-        return ResponseEntity.ok(calendarService.get(calendarId));
+    @GetMapping("/{id}")
+    public ResponseEntity<CalendarDTO> getCalendar(@PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(calendarService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createCalendar(@RequestBody @Valid final CalendarDTO calendarDTO) {
-        final Long createdCalendarId = calendarService.create(calendarDTO);
-        return new ResponseEntity<>(createdCalendarId, HttpStatus.CREATED);
+        final Long createdId = calendarService.create(calendarDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{calendarId}")
-    public ResponseEntity<Long> updateCalendar(
-            @PathVariable(name = "calendarId") final Long calendarId,
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updateCalendar(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final CalendarDTO calendarDTO) {
-        calendarService.update(calendarId, calendarDTO);
-        return ResponseEntity.ok(calendarId);
+        calendarService.update(id, calendarDTO);
+        return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{calendarId}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteCalendar(
-            @PathVariable(name = "calendarId") final Long calendarId) {
-        final ReferencedWarning referencedWarning = calendarService.getReferencedWarning(calendarId);
+    public ResponseEntity<Void> deleteCalendar(@PathVariable(name = "id") final Long id) {
+        final ReferencedWarning referencedWarning = calendarService.getReferencedWarning(id);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
         }
-        calendarService.delete(calendarId);
+        calendarService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/userValues")
-    public ResponseEntity<Map<String, String>> getUserValues() {
-        return ResponseEntity.ok(memberRepository.findAll(Sort.by("userId"))
+    @GetMapping("/memberValues")
+    public ResponseEntity<Map<String, String>> getMemberValues() {
+        return ResponseEntity.ok(memberRepository.findAll(Sort.by("id"))
                 .stream()
-                .collect(CustomCollectors.toSortedMap(Member::getUserId, Member::getPassword)));
+                .collect(CustomCollectors.toSortedMap(Member::getId, Member::getPassword)));
     }
 
 }

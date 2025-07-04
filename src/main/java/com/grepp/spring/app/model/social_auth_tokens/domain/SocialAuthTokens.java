@@ -1,5 +1,6 @@
 package com.grepp.spring.app.model.social_auth_tokens.domain;
 
+import com.grepp.spring.infra.entity.BaseEntity;
 import com.grepp.spring.app.model.member.domain.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Table(name = "SocialAuthTokenses")
 @Getter
 @Setter
-public class SocialAuthTokens {
+public class SocialAuthTokens extends BaseEntity {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -34,7 +35,7 @@ public class SocialAuthTokens {
             strategy = GenerationType.SEQUENCE,
             generator = "primary_sequence"
     )
-    private Long socialAuthTokensId;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String accessToken;
@@ -52,7 +53,7 @@ public class SocialAuthTokens {
     private String provider;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private Member user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 }

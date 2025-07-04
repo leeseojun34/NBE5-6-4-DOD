@@ -41,41 +41,39 @@ public class SocialAuthTokensResource {
         return ResponseEntity.ok(socialAuthTokensService.findAll());
     }
 
-    @GetMapping("/{socialAuthTokensId}")
+    @GetMapping("/{id}")
     public ResponseEntity<SocialAuthTokensDTO> getSocialAuthTokens(
-            @PathVariable(name = "socialAuthTokensId") final Long socialAuthTokensId) {
-        return ResponseEntity.ok(socialAuthTokensService.get(socialAuthTokensId));
+            @PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(socialAuthTokensService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createSocialAuthTokens(
             @RequestBody @Valid final SocialAuthTokensDTO socialAuthTokensDTO) {
-        final Long createdSocialAuthTokensId = socialAuthTokensService.create(socialAuthTokensDTO);
-        return new ResponseEntity<>(createdSocialAuthTokensId, HttpStatus.CREATED);
+        final Long createdId = socialAuthTokensService.create(socialAuthTokensDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{socialAuthTokensId}")
-    public ResponseEntity<Long> updateSocialAuthTokens(
-            @PathVariable(name = "socialAuthTokensId") final Long socialAuthTokensId,
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updateSocialAuthTokens(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final SocialAuthTokensDTO socialAuthTokensDTO) {
-        socialAuthTokensService.update(socialAuthTokensId, socialAuthTokensDTO);
-        return ResponseEntity.ok(socialAuthTokensId);
+        socialAuthTokensService.update(id, socialAuthTokensDTO);
+        return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{socialAuthTokensId}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteSocialAuthTokens(
-            @PathVariable(name = "socialAuthTokensId") final Long socialAuthTokensId) {
-        socialAuthTokensService.delete(socialAuthTokensId);
+    public ResponseEntity<Void> deleteSocialAuthTokens(@PathVariable(name = "id") final Long id) {
+        socialAuthTokensService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/userValues")
-    public ResponseEntity<Map<String, String>> getUserValues() {
-        return ResponseEntity.ok(memberRepository.findAll(Sort.by("userId"))
+    @GetMapping("/memberValues")
+    public ResponseEntity<Map<String, String>> getMemberValues() {
+        return ResponseEntity.ok(memberRepository.findAll(Sort.by("id"))
                 .stream()
-                .collect(CustomCollectors.toSortedMap(Member::getUserId, Member::getPassword)));
+                .collect(CustomCollectors.toSortedMap(Member::getId, Member::getPassword)));
     }
 
 }

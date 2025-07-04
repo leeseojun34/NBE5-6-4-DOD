@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class LocationDTO {
 
-    private Long locationId;
+    private Long id;
 
     @NotNull
     private Double latitude;
@@ -20,9 +20,17 @@ public class LocationDTO {
 
     @NotNull
     @Size(max = 255)
-    private String locationName;
+    private String name;
 
-    @LocationMiddleRegionUnique
+    @Size(max = 255)
+    private String suggestedMemberId;
+
+    private Long voteCount;
+
+    @NotNull
+    @Size(max = 255)
+    private String status;
+
     private Long middleRegion;
 
 }

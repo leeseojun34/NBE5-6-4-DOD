@@ -35,37 +35,35 @@ public class MiddleRegionResource {
         return ResponseEntity.ok(middleRegionService.findAll());
     }
 
-    @GetMapping("/{middleRegionId}")
+    @GetMapping("/{id}")
     public ResponseEntity<MiddleRegionDTO> getMiddleRegion(
-            @PathVariable(name = "middleRegionId") final Long middleRegionId) {
-        return ResponseEntity.ok(middleRegionService.get(middleRegionId));
+            @PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(middleRegionService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createMiddleRegion(
             @RequestBody @Valid final MiddleRegionDTO middleRegionDTO) {
-        final Long createdMiddleRegionId = middleRegionService.create(middleRegionDTO);
-        return new ResponseEntity<>(createdMiddleRegionId, HttpStatus.CREATED);
+        final Long createdId = middleRegionService.create(middleRegionDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{middleRegionId}")
-    public ResponseEntity<Long> updateMiddleRegion(
-            @PathVariable(name = "middleRegionId") final Long middleRegionId,
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updateMiddleRegion(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final MiddleRegionDTO middleRegionDTO) {
-        middleRegionService.update(middleRegionId, middleRegionDTO);
-        return ResponseEntity.ok(middleRegionId);
+        middleRegionService.update(id, middleRegionDTO);
+        return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{middleRegionId}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteMiddleRegion(
-            @PathVariable(name = "middleRegionId") final Long middleRegionId) {
-        final ReferencedWarning referencedWarning = middleRegionService.getReferencedWarning(middleRegionId);
+    public ResponseEntity<Void> deleteMiddleRegion(@PathVariable(name = "id") final Long id) {
+        final ReferencedWarning referencedWarning = middleRegionService.getReferencedWarning(id);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
         }
-        middleRegionService.delete(middleRegionId);
+        middleRegionService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -1,6 +1,7 @@
 package com.grepp.spring.app.model.calendar_detail.domain;
 
 import com.grepp.spring.app.model.calendar.domain.Calendar;
+import com.grepp.spring.infra.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Table(name = "CalendarDetails")
 @Getter
 @Setter
-public class CalendarDetail {
+public class CalendarDetail extends BaseEntity {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -34,7 +35,7 @@ public class CalendarDetail {
             strategy = GenerationType.SEQUENCE,
             generator = "primary_sequence"
     )
-    private Long calendarDetailId;
+    private Long id;
 
     @Column(nullable = false)
     private String title;
@@ -47,6 +48,12 @@ public class CalendarDetail {
 
     @Column(nullable = false)
     private LocalDateTime syncedAt;
+
+    @Column(nullable = false)
+    private Boolean isAllDay;
+
+    @Column(nullable = false, columnDefinition = "text")
+    private String externalEtag;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "calendar_id")

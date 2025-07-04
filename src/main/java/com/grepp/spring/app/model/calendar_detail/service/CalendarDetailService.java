@@ -24,14 +24,14 @@ public class CalendarDetailService {
     }
 
     public List<CalendarDetailDTO> findAll() {
-        final List<CalendarDetail> calendarDetails = calendarDetailRepository.findAll(Sort.by("calendarDetailId"));
+        final List<CalendarDetail> calendarDetails = calendarDetailRepository.findAll(Sort.by("id"));
         return calendarDetails.stream()
                 .map(calendarDetail -> mapToDTO(calendarDetail, new CalendarDetailDTO()))
                 .toList();
     }
 
-    public CalendarDetailDTO get(final Long calendarDetailId) {
-        return calendarDetailRepository.findById(calendarDetailId)
+    public CalendarDetailDTO get(final Long id) {
+        return calendarDetailRepository.findById(id)
                 .map(calendarDetail -> mapToDTO(calendarDetail, new CalendarDetailDTO()))
                 .orElseThrow(NotFoundException::new);
     }
@@ -39,28 +39,30 @@ public class CalendarDetailService {
     public Long create(final CalendarDetailDTO calendarDetailDTO) {
         final CalendarDetail calendarDetail = new CalendarDetail();
         mapToEntity(calendarDetailDTO, calendarDetail);
-        return calendarDetailRepository.save(calendarDetail).getCalendarDetailId();
+        return calendarDetailRepository.save(calendarDetail).getId();
     }
 
-    public void update(final Long calendarDetailId, final CalendarDetailDTO calendarDetailDTO) {
-        final CalendarDetail calendarDetail = calendarDetailRepository.findById(calendarDetailId)
+    public void update(final Long id, final CalendarDetailDTO calendarDetailDTO) {
+        final CalendarDetail calendarDetail = calendarDetailRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(calendarDetailDTO, calendarDetail);
         calendarDetailRepository.save(calendarDetail);
     }
 
-    public void delete(final Long calendarDetailId) {
-        calendarDetailRepository.deleteById(calendarDetailId);
+    public void delete(final Long id) {
+        calendarDetailRepository.deleteById(id);
     }
 
     private CalendarDetailDTO mapToDTO(final CalendarDetail calendarDetail,
             final CalendarDetailDTO calendarDetailDTO) {
-        calendarDetailDTO.setCalendarDetailId(calendarDetail.getCalendarDetailId());
+        calendarDetailDTO.setId(calendarDetail.getId());
         calendarDetailDTO.setTitle(calendarDetail.getTitle());
         calendarDetailDTO.setStartDatetime(calendarDetail.getStartDatetime());
         calendarDetailDTO.setEndDatetime(calendarDetail.getEndDatetime());
         calendarDetailDTO.setSyncedAt(calendarDetail.getSyncedAt());
-        calendarDetailDTO.setCalendar(calendarDetail.getCalendar() == null ? null : calendarDetail.getCalendar().getCalendarId());
+        calendarDetailDTO.setIsAllDay(calendarDetail.getIsAllDay());
+        calendarDetailDTO.setExternalEtag(calendarDetail.getExternalEtag());
+        calendarDetailDTO.setCalendar(calendarDetail.getCalendar() == null ? null : calendarDetail.getCalendar().getId());
         return calendarDetailDTO;
     }
 
@@ -70,6 +72,8 @@ public class CalendarDetailService {
         calendarDetail.setStartDatetime(calendarDetailDTO.getStartDatetime());
         calendarDetail.setEndDatetime(calendarDetailDTO.getEndDatetime());
         calendarDetail.setSyncedAt(calendarDetailDTO.getSyncedAt());
+        calendarDetail.setIsAllDay(calendarDetailDTO.getIsAllDay());
+        calendarDetail.setExternalEtag(calendarDetailDTO.getExternalEtag());
         final Calendar calendar = calendarDetailDTO.getCalendar() == null ? null : calendarRepository.findById(calendarDetailDTO.getCalendar())
                 .orElseThrow(() -> new NotFoundException("calendar not found"));
         calendarDetail.setCalendar(calendar);

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SocialAuthTokensRepository extends JpaRepository<SocialAuthTokens, Long> {
 
-    SocialAuthTokens findFirstByUser(Member member);
+    SocialAuthTokens findFirstByMember(Member member);
 
     boolean existsByAccessTokenIgnoreCase(String accessToken);
 

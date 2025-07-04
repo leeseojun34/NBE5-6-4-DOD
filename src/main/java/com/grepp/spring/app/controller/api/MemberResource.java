@@ -35,33 +35,33 @@ public class MemberResource {
         return ResponseEntity.ok(memberService.findAll());
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<MemberDTO> getMember(@PathVariable(name = "userId") final String userId) {
-        return ResponseEntity.ok(memberService.get(userId));
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberDTO> getMember(@PathVariable(name = "id") final String id) {
+        return ResponseEntity.ok(memberService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<String> createMember(@RequestBody @Valid final MemberDTO memberDTO) {
-        final String createdUserId = memberService.create(memberDTO);
-        return new ResponseEntity<>('"' + createdUserId + '"', HttpStatus.CREATED);
+        final String createdId = memberService.create(memberDTO);
+        return new ResponseEntity<>('"' + createdId + '"', HttpStatus.CREATED);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<String> updateMember(@PathVariable(name = "userId") final String userId,
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateMember(@PathVariable(name = "id") final String id,
             @RequestBody @Valid final MemberDTO memberDTO) {
-        memberService.update(userId, memberDTO);
-        return ResponseEntity.ok('"' + userId + '"');
+        memberService.update(id, memberDTO);
+        return ResponseEntity.ok('"' + id + '"');
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteMember(@PathVariable(name = "userId") final String userId) {
-        final ReferencedWarning referencedWarning = memberService.getReferencedWarning(userId);
+    public ResponseEntity<Void> deleteMember(@PathVariable(name = "id") final String id) {
+        final ReferencedWarning referencedWarning = memberService.getReferencedWarning(id);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
         }
-        memberService.delete(userId);
+        memberService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

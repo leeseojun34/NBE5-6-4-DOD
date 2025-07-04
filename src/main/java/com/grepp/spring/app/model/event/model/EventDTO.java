@@ -10,16 +10,13 @@ import lombok.Setter;
 @Setter
 public class EventDTO {
 
-    private Long eventId;
+    private Long id;
 
     @NotNull
     @Size(max = 255)
     private String title;
 
     private String description;
-
-    @NotNull
-    private Long creator;
 
     @NotNull
     @Size(max = 255)

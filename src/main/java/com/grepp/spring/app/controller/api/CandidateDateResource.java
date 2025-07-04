@@ -41,41 +41,39 @@ public class CandidateDateResource {
         return ResponseEntity.ok(candidateDateService.findAll());
     }
 
-    @GetMapping("/{candidateDateId}")
+    @GetMapping("/{id}")
     public ResponseEntity<CandidateDateDTO> getCandidateDate(
-            @PathVariable(name = "candidateDateId") final Long candidateDateId) {
-        return ResponseEntity.ok(candidateDateService.get(candidateDateId));
+            @PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(candidateDateService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createCandidateDate(
             @RequestBody @Valid final CandidateDateDTO candidateDateDTO) {
-        final Long createdCandidateDateId = candidateDateService.create(candidateDateDTO);
-        return new ResponseEntity<>(createdCandidateDateId, HttpStatus.CREATED);
+        final Long createdId = candidateDateService.create(candidateDateDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{candidateDateId}")
-    public ResponseEntity<Long> updateCandidateDate(
-            @PathVariable(name = "candidateDateId") final Long candidateDateId,
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updateCandidateDate(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final CandidateDateDTO candidateDateDTO) {
-        candidateDateService.update(candidateDateId, candidateDateDTO);
-        return ResponseEntity.ok(candidateDateId);
+        candidateDateService.update(id, candidateDateDTO);
+        return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{candidateDateId}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteCandidateDate(
-            @PathVariable(name = "candidateDateId") final Long candidateDateId) {
-        candidateDateService.delete(candidateDateId);
+    public ResponseEntity<Void> deleteCandidateDate(@PathVariable(name = "id") final Long id) {
+        candidateDateService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/eventValues")
     public ResponseEntity<Map<Long, String>> getEventValues() {
-        return ResponseEntity.ok(eventRepository.findAll(Sort.by("eventId"))
+        return ResponseEntity.ok(eventRepository.findAll(Sort.by("id"))
                 .stream()
-                .collect(CustomCollectors.toSortedMap(Event::getEventId, Event::getTitle)));
+                .collect(CustomCollectors.toSortedMap(Event::getId, Event::getTitle)));
     }
 
 }

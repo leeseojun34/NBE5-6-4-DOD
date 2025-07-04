@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class TempScheduleDTO {
 
-    private Long tempScheduleId;
+    private Long id;
 
     @NotNull
     private LocalDateTime startTime;
@@ -18,6 +18,6 @@ public class TempScheduleDTO {
     @NotNull
     private LocalDateTime endTime;
 
-    private Long eventUser;
+    private Long eventMember;
 
 }

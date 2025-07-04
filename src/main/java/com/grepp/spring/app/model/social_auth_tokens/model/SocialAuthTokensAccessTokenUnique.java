@@ -55,7 +55,7 @@ public @interface SocialAuthTokensAccessTokenUnique {
             }
             @SuppressWarnings("unchecked") final Map<String, String> pathVariables =
                     ((Map<String, String>)request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
-            final String currentId = pathVariables.get("socialAuthTokensId");
+            final String currentId = pathVariables.get("id");
             if (currentId != null && value.equalsIgnoreCase(socialAuthTokensService.get(Long.parseLong(currentId)).getAccessToken())) {
                 // value hasn't changed
                 return true;

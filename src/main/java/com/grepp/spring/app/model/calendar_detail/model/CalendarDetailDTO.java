@@ -1,5 +1,6 @@
 package com.grepp.spring.app.model.calendar_detail.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class CalendarDetailDTO {
 
-    private Long calendarDetailId;
+    private Long id;
 
     @NotNull
     @Size(max = 255)
@@ -27,6 +28,13 @@ public class CalendarDetailDTO {
 
     @NotNull
     private LocalDateTime syncedAt;
+
+    @NotNull
+    @JsonProperty("isAllDay")
+    private Boolean isAllDay;
+
+    @NotNull
+    private String externalEtag;
 
     private Long calendar;
 

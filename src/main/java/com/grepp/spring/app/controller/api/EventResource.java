@@ -42,41 +42,41 @@ public class EventResource {
         return ResponseEntity.ok(eventService.findAll());
     }
 
-    @GetMapping("/{eventId}")
-    public ResponseEntity<EventDTO> getEvent(@PathVariable(name = "eventId") final Long eventId) {
-        return ResponseEntity.ok(eventService.get(eventId));
+    @GetMapping("/{id}")
+    public ResponseEntity<EventDTO> getEvent(@PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(eventService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createEvent(@RequestBody @Valid final EventDTO eventDTO) {
-        final Long createdEventId = eventService.create(eventDTO);
-        return new ResponseEntity<>(createdEventId, HttpStatus.CREATED);
+        final Long createdId = eventService.create(eventDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{eventId}")
-    public ResponseEntity<Long> updateEvent(@PathVariable(name = "eventId") final Long eventId,
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updateEvent(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final EventDTO eventDTO) {
-        eventService.update(eventId, eventDTO);
-        return ResponseEntity.ok(eventId);
+        eventService.update(id, eventDTO);
+        return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{eventId}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteEvent(@PathVariable(name = "eventId") final Long eventId) {
-        final ReferencedWarning referencedWarning = eventService.getReferencedWarning(eventId);
+    public ResponseEntity<Void> deleteEvent(@PathVariable(name = "id") final Long id) {
+        final ReferencedWarning referencedWarning = eventService.getReferencedWarning(id);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
         }
-        eventService.delete(eventId);
+        eventService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/groupValues")
     public ResponseEntity<Map<Long, String>> getGroupValues() {
-        return ResponseEntity.ok(groupRepository.findAll(Sort.by("groupId"))
+        return ResponseEntity.ok(groupRepository.findAll(Sort.by("id"))
                 .stream()
-                .collect(CustomCollectors.toSortedMap(Group::getGroupId, Group::getName)));
+                .collect(CustomCollectors.toSortedMap(Group::getId, Group::getName)));
     }
 
 }

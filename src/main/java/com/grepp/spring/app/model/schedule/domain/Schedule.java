@@ -1,6 +1,7 @@
 package com.grepp.spring.app.model.schedule.domain;
 
 import com.grepp.spring.app.model.event.domain.Event;
+import com.grepp.spring.infra.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Table(name = "Schedules")
 @Getter
 @Setter
-public class Schedule {
+public class Schedule extends BaseEntity {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -34,7 +35,7 @@ public class Schedule {
             strategy = GenerationType.SEQUENCE,
             generator = "primary_sequence"
     )
-    private Long scheduleId;
+    private Long id;
 
     @Column(nullable = false)
     private LocalDateTime startTime;
@@ -44,6 +45,21 @@ public class Schedule {
 
     @Column(nullable = false)
     private String status;
+
+    @Column
+    private String location;
+
+    @Column(columnDefinition = "text")
+    private String description;
+
+    @Column
+    private String meetingPlatform;
+
+    @Column(columnDefinition = "text")
+    private String platformUrl;
+
+    @Column
+    private String specificLocation;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id")

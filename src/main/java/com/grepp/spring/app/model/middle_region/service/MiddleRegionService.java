@@ -1,12 +1,12 @@
 package com.grepp.spring.app.model.middle_region.service;
 
-import com.grepp.spring.app.model.depart_region.domain.DepartRegion;
-import com.grepp.spring.app.model.depart_region.repos.DepartRegionRepository;
 import com.grepp.spring.app.model.location.domain.Location;
 import com.grepp.spring.app.model.location.repos.LocationRepository;
 import com.grepp.spring.app.model.middle_region.domain.MiddleRegion;
 import com.grepp.spring.app.model.middle_region.model.MiddleRegionDTO;
 import com.grepp.spring.app.model.middle_region.repos.MiddleRegionRepository;
+import com.grepp.spring.app.model.schedule_member.domain.ScheduleMember;
+import com.grepp.spring.app.model.schedule_member.repos.ScheduleMemberRepository;
 import com.grepp.spring.util.NotFoundException;
 import com.grepp.spring.util.ReferencedWarning;
 import java.util.List;
@@ -18,26 +18,26 @@ import org.springframework.stereotype.Service;
 public class MiddleRegionService {
 
     private final MiddleRegionRepository middleRegionRepository;
-    private final DepartRegionRepository departRegionRepository;
     private final LocationRepository locationRepository;
+    private final ScheduleMemberRepository scheduleMemberRepository;
 
     public MiddleRegionService(final MiddleRegionRepository middleRegionRepository,
-            final DepartRegionRepository departRegionRepository,
-            final LocationRepository locationRepository) {
+            final LocationRepository locationRepository,
+            final ScheduleMemberRepository scheduleMemberRepository) {
         this.middleRegionRepository = middleRegionRepository;
-        this.departRegionRepository = departRegionRepository;
         this.locationRepository = locationRepository;
+        this.scheduleMemberRepository = scheduleMemberRepository;
     }
 
     public List<MiddleRegionDTO> findAll() {
-        final List<MiddleRegion> middleRegions = middleRegionRepository.findAll(Sort.by("middleRegionId"));
+        final List<MiddleRegion> middleRegions = middleRegionRepository.findAll(Sort.by("id"));
         return middleRegions.stream()
                 .map(middleRegion -> mapToDTO(middleRegion, new MiddleRegionDTO()))
                 .toList();
     }
 
-    public MiddleRegionDTO get(final Long middleRegionId) {
-        return middleRegionRepository.findById(middleRegionId)
+    public MiddleRegionDTO get(final Long id) {
+        return middleRegionRepository.findById(id)
                 .map(middleRegion -> mapToDTO(middleRegion, new MiddleRegionDTO()))
                 .orElseThrow(NotFoundException::new);
     }
@@ -45,23 +45,23 @@ public class MiddleRegionService {
     public Long create(final MiddleRegionDTO middleRegionDTO) {
         final MiddleRegion middleRegion = new MiddleRegion();
         mapToEntity(middleRegionDTO, middleRegion);
-        return middleRegionRepository.save(middleRegion).getMiddleRegionId();
+        return middleRegionRepository.save(middleRegion).getId();
     }
 
-    public void update(final Long middleRegionId, final MiddleRegionDTO middleRegionDTO) {
-        final MiddleRegion middleRegion = middleRegionRepository.findById(middleRegionId)
+    public void update(final Long id, final MiddleRegionDTO middleRegionDTO) {
+        final MiddleRegion middleRegion = middleRegionRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(middleRegionDTO, middleRegion);
         middleRegionRepository.save(middleRegion);
     }
 
-    public void delete(final Long middleRegionId) {
-        middleRegionRepository.deleteById(middleRegionId);
+    public void delete(final Long id) {
+        middleRegionRepository.deleteById(id);
     }
 
     private MiddleRegionDTO mapToDTO(final MiddleRegion middleRegion,
             final MiddleRegionDTO middleRegionDTO) {
-        middleRegionDTO.setMiddleRegionId(middleRegion.getMiddleRegionId());
+        middleRegionDTO.setId(middleRegion.getId());
         middleRegionDTO.setLatitude(middleRegion.getLatitude());
         middleRegionDTO.setLongitude(middleRegion.getLongitude());
         return middleRegionDTO;
@@ -74,20 +74,20 @@ public class MiddleRegionService {
         return middleRegion;
     }
 
-    public ReferencedWarning getReferencedWarning(final Long middleRegionId) {
+    public ReferencedWarning getReferencedWarning(final Long id) {
         final ReferencedWarning referencedWarning = new ReferencedWarning();
-        final MiddleRegion middleRegion = middleRegionRepository.findById(middleRegionId)
+        final MiddleRegion middleRegion = middleRegionRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
-        final DepartRegion middleRegionDepartRegion = departRegionRepository.findFirstByMiddleRegion(middleRegion);
-        if (middleRegionDepartRegion != null) {
-            referencedWarning.setKey("middleRegion.departRegion.middleRegion.referenced");
-            referencedWarning.addParam(middleRegionDepartRegion.getDepartRegionId());
-            return referencedWarning;
-        }
         final Location middleRegionLocation = locationRepository.findFirstByMiddleRegion(middleRegion);
         if (middleRegionLocation != null) {
             referencedWarning.setKey("middleRegion.location.middleRegion.referenced");
-            referencedWarning.addParam(middleRegionLocation.getLocationId());
+            referencedWarning.addParam(middleRegionLocation.getId());
+            return referencedWarning;
+        }
+        final ScheduleMember middleRegionScheduleMember = scheduleMemberRepository.findFirstByMiddleRegion(middleRegion);
+        if (middleRegionScheduleMember != null) {
+            referencedWarning.setKey("middleRegion.scheduleMember.middleRegion.referenced");
+            referencedWarning.addParam(middleRegionScheduleMember.getId());
             return referencedWarning;
         }
         return null;

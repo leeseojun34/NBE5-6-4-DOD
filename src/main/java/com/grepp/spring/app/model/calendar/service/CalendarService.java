@@ -30,14 +30,14 @@ public class CalendarService {
     }
 
     public List<CalendarDTO> findAll() {
-        final List<Calendar> calendars = calendarRepository.findAll(Sort.by("calendarId"));
+        final List<Calendar> calendars = calendarRepository.findAll(Sort.by("id"));
         return calendars.stream()
                 .map(calendar -> mapToDTO(calendar, new CalendarDTO()))
                 .toList();
     }
 
-    public CalendarDTO get(final Long calendarId) {
-        return calendarRepository.findById(calendarId)
+    public CalendarDTO get(final Long id) {
+        return calendarRepository.findById(id)
                 .map(calendar -> mapToDTO(calendar, new CalendarDTO()))
                 .orElseThrow(NotFoundException::new);
     }
@@ -45,51 +45,51 @@ public class CalendarService {
     public Long create(final CalendarDTO calendarDTO) {
         final Calendar calendar = new Calendar();
         mapToEntity(calendarDTO, calendar);
-        return calendarRepository.save(calendar).getCalendarId();
+        return calendarRepository.save(calendar).getId();
     }
 
-    public void update(final Long calendarId, final CalendarDTO calendarDTO) {
-        final Calendar calendar = calendarRepository.findById(calendarId)
+    public void update(final Long id, final CalendarDTO calendarDTO) {
+        final Calendar calendar = calendarRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(calendarDTO, calendar);
         calendarRepository.save(calendar);
     }
 
-    public void delete(final Long calendarId) {
-        calendarRepository.deleteById(calendarId);
+    public void delete(final Long id) {
+        calendarRepository.deleteById(id);
     }
 
     private CalendarDTO mapToDTO(final Calendar calendar, final CalendarDTO calendarDTO) {
-        calendarDTO.setCalendarId(calendar.getCalendarId());
-        calendarDTO.setCalendarName(calendar.getCalendarName());
+        calendarDTO.setId(calendar.getId());
+        calendarDTO.setName(calendar.getName());
         calendarDTO.setSynced(calendar.getSynced());
         calendarDTO.setSyncedAt(calendar.getSyncedAt());
-        calendarDTO.setUser(calendar.getUser() == null ? null : calendar.getUser().getUserId());
+        calendarDTO.setMember(calendar.getMember() == null ? null : calendar.getMember().getId());
         return calendarDTO;
     }
 
     private Calendar mapToEntity(final CalendarDTO calendarDTO, final Calendar calendar) {
-        calendar.setCalendarName(calendarDTO.getCalendarName());
+        calendar.setName(calendarDTO.getName());
         calendar.setSynced(calendarDTO.getSynced());
         calendar.setSyncedAt(calendarDTO.getSyncedAt());
-        final Member user = calendarDTO.getUser() == null ? null : memberRepository.findById(calendarDTO.getUser())
-                .orElseThrow(() -> new NotFoundException("user not found"));
-        calendar.setUser(user);
+        final Member member = calendarDTO.getMember() == null ? null : memberRepository.findById(calendarDTO.getMember())
+                .orElseThrow(() -> new NotFoundException("member not found"));
+        calendar.setMember(member);
         return calendar;
     }
 
-    public boolean userExists(final String userId) {
-        return calendarRepository.existsByUserUserIdIgnoreCase(userId);
+    public boolean memberExists(final String id) {
+        return calendarRepository.existsByMemberIdIgnoreCase(id);
     }
 
-    public ReferencedWarning getReferencedWarning(final Long calendarId) {
+    public ReferencedWarning getReferencedWarning(final Long id) {
         final ReferencedWarning referencedWarning = new ReferencedWarning();
-        final Calendar calendar = calendarRepository.findById(calendarId)
+        final Calendar calendar = calendarRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         final CalendarDetail calendarCalendarDetail = calendarDetailRepository.findFirstByCalendar(calendar);
         if (calendarCalendarDetail != null) {
             referencedWarning.setKey("calendar.calendarDetail.calendar.referenced");
-            referencedWarning.addParam(calendarCalendarDetail.getCalendarDetailId());
+            referencedWarning.addParam(calendarCalendarDetail.getId());
             return referencedWarning;
         }
         return null;

@@ -43,44 +43,41 @@ public class ScheduleResource {
         return ResponseEntity.ok(scheduleService.findAll());
     }
 
-    @GetMapping("/{scheduleId}")
-    public ResponseEntity<ScheduleDTO> getSchedule(
-            @PathVariable(name = "scheduleId") final Long scheduleId) {
-        return ResponseEntity.ok(scheduleService.get(scheduleId));
+    @GetMapping("/{id}")
+    public ResponseEntity<ScheduleDTO> getSchedule(@PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(scheduleService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createSchedule(@RequestBody @Valid final ScheduleDTO scheduleDTO) {
-        final Long createdScheduleId = scheduleService.create(scheduleDTO);
-        return new ResponseEntity<>(createdScheduleId, HttpStatus.CREATED);
+        final Long createdId = scheduleService.create(scheduleDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{scheduleId}")
-    public ResponseEntity<Long> updateSchedule(
-            @PathVariable(name = "scheduleId") final Long scheduleId,
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updateSchedule(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final ScheduleDTO scheduleDTO) {
-        scheduleService.update(scheduleId, scheduleDTO);
-        return ResponseEntity.ok(scheduleId);
+        scheduleService.update(id, scheduleDTO);
+        return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{scheduleId}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteSchedule(
-            @PathVariable(name = "scheduleId") final Long scheduleId) {
-        final ReferencedWarning referencedWarning = scheduleService.getReferencedWarning(scheduleId);
+    public ResponseEntity<Void> deleteSchedule(@PathVariable(name = "id") final Long id) {
+        final ReferencedWarning referencedWarning = scheduleService.getReferencedWarning(id);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
         }
-        scheduleService.delete(scheduleId);
+        scheduleService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/eventValues")
     public ResponseEntity<Map<Long, String>> getEventValues() {
-        return ResponseEntity.ok(eventRepository.findAll(Sort.by("eventId"))
+        return ResponseEntity.ok(eventRepository.findAll(Sort.by("id"))
                 .stream()
-                .collect(CustomCollectors.toSortedMap(Event::getEventId, Event::getTitle)));
+                .collect(CustomCollectors.toSortedMap(Event::getId, Event::getTitle)));
     }
 
 }

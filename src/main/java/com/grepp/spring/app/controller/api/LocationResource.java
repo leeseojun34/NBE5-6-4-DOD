@@ -5,6 +5,8 @@ import com.grepp.spring.app.model.location.service.LocationService;
 import com.grepp.spring.app.model.middle_region.domain.MiddleRegion;
 import com.grepp.spring.app.model.middle_region.repos.MiddleRegionRepository;
 import com.grepp.spring.util.CustomCollectors;
+import com.grepp.spring.util.ReferencedException;
+import com.grepp.spring.util.ReferencedWarning;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -41,40 +43,41 @@ public class LocationResource {
         return ResponseEntity.ok(locationService.findAll());
     }
 
-    @GetMapping("/{locationId}")
-    public ResponseEntity<LocationDTO> getLocation(
-            @PathVariable(name = "locationId") final Long locationId) {
-        return ResponseEntity.ok(locationService.get(locationId));
+    @GetMapping("/{id}")
+    public ResponseEntity<LocationDTO> getLocation(@PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(locationService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createLocation(@RequestBody @Valid final LocationDTO locationDTO) {
-        final Long createdLocationId = locationService.create(locationDTO);
-        return new ResponseEntity<>(createdLocationId, HttpStatus.CREATED);
+        final Long createdId = locationService.create(locationDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{locationId}")
-    public ResponseEntity<Long> updateLocation(
-            @PathVariable(name = "locationId") final Long locationId,
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updateLocation(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final LocationDTO locationDTO) {
-        locationService.update(locationId, locationDTO);
-        return ResponseEntity.ok(locationId);
+        locationService.update(id, locationDTO);
+        return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{locationId}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteLocation(
-            @PathVariable(name = "locationId") final Long locationId) {
-        locationService.delete(locationId);
+    public ResponseEntity<Void> deleteLocation(@PathVariable(name = "id") final Long id) {
+        final ReferencedWarning referencedWarning = locationService.getReferencedWarning(id);
+        if (referencedWarning != null) {
+            throw new ReferencedException(referencedWarning);
+        }
+        locationService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/middleRegionValues")
     public ResponseEntity<Map<Long, Long>> getMiddleRegionValues() {
-        return ResponseEntity.ok(middleRegionRepository.findAll(Sort.by("middleRegionId"))
+        return ResponseEntity.ok(middleRegionRepository.findAll(Sort.by("id"))
                 .stream()
-                .collect(CustomCollectors.toSortedMap(MiddleRegion::getMiddleRegionId, MiddleRegion::getMiddleRegionId)));
+                .collect(CustomCollectors.toSortedMap(MiddleRegion::getId, MiddleRegion::getId)));
     }
 
 }

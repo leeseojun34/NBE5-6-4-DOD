@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class ScheduleDTO {
 
-    private Long scheduleId;
+    private Long id;
 
     @NotNull
     private LocalDateTime startTime;
@@ -22,6 +22,19 @@ public class ScheduleDTO {
     @NotNull
     @Size(max = 255)
     private String status;
+
+    @Size(max = 255)
+    private String location;
+
+    private String description;
+
+    @Size(max = 255)
+    private String meetingPlatform;
+
+    private String platformUrl;
+
+    @Size(max = 255)
+    private String specificLocation;
 
     private Long event;
 

@@ -1,7 +1,7 @@
 package com.grepp.spring.app.controller.api;
 
-import com.grepp.spring.app.model.event_user.domain.EventUser;
-import com.grepp.spring.app.model.event_user.repos.EventUserRepository;
+import com.grepp.spring.app.model.event_member.domain.EventMember;
+import com.grepp.spring.app.model.event_member.repos.EventMemberRepository;
 import com.grepp.spring.app.model.temp_schedule.model.TempScheduleDTO;
 import com.grepp.spring.app.model.temp_schedule.service.TempScheduleService;
 import com.grepp.spring.util.CustomCollectors;
@@ -28,12 +28,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class TempScheduleResource {
 
     private final TempScheduleService tempScheduleService;
-    private final EventUserRepository eventUserRepository;
+    private final EventMemberRepository eventMemberRepository;
 
     public TempScheduleResource(final TempScheduleService tempScheduleService,
-            final EventUserRepository eventUserRepository) {
+            final EventMemberRepository eventMemberRepository) {
         this.tempScheduleService = tempScheduleService;
-        this.eventUserRepository = eventUserRepository;
+        this.eventMemberRepository = eventMemberRepository;
     }
 
     @GetMapping
@@ -41,41 +41,39 @@ public class TempScheduleResource {
         return ResponseEntity.ok(tempScheduleService.findAll());
     }
 
-    @GetMapping("/{tempScheduleId}")
+    @GetMapping("/{id}")
     public ResponseEntity<TempScheduleDTO> getTempSchedule(
-            @PathVariable(name = "tempScheduleId") final Long tempScheduleId) {
-        return ResponseEntity.ok(tempScheduleService.get(tempScheduleId));
+            @PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(tempScheduleService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createTempSchedule(
             @RequestBody @Valid final TempScheduleDTO tempScheduleDTO) {
-        final Long createdTempScheduleId = tempScheduleService.create(tempScheduleDTO);
-        return new ResponseEntity<>(createdTempScheduleId, HttpStatus.CREATED);
+        final Long createdId = tempScheduleService.create(tempScheduleDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{tempScheduleId}")
-    public ResponseEntity<Long> updateTempSchedule(
-            @PathVariable(name = "tempScheduleId") final Long tempScheduleId,
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updateTempSchedule(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final TempScheduleDTO tempScheduleDTO) {
-        tempScheduleService.update(tempScheduleId, tempScheduleDTO);
-        return ResponseEntity.ok(tempScheduleId);
+        tempScheduleService.update(id, tempScheduleDTO);
+        return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{tempScheduleId}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteTempSchedule(
-            @PathVariable(name = "tempScheduleId") final Long tempScheduleId) {
-        tempScheduleService.delete(tempScheduleId);
+    public ResponseEntity<Void> deleteTempSchedule(@PathVariable(name = "id") final Long id) {
+        tempScheduleService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/eventUserValues")
-    public ResponseEntity<Map<Long, Long>> getEventUserValues() {
-        return ResponseEntity.ok(eventUserRepository.findAll(Sort.by("eventUserId"))
+    @GetMapping("/eventMemberValues")
+    public ResponseEntity<Map<Long, String>> getEventMemberValues() {
+        return ResponseEntity.ok(eventMemberRepository.findAll(Sort.by("id"))
                 .stream()
-                .collect(CustomCollectors.toSortedMap(EventUser::getEventUserId, EventUser::getEventUserId)));
+                .collect(CustomCollectors.toSortedMap(EventMember::getId, EventMember::getRole)));
     }
 
 }

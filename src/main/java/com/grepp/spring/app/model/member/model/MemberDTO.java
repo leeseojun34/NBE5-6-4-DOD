@@ -11,8 +11,8 @@ import lombok.Setter;
 public class MemberDTO {
 
     @Size(max = 255)
-    @MemberUserIdValid
-    private String userId;
+    @MemberIdValid
+    private String id;
 
     @NotNull
     @Size(max = 255)
@@ -40,7 +40,7 @@ public class MemberDTO {
 
     @NotNull
     @Size(max = 255)
-    @MemberPhoneNumberUnique
-    private String phoneNumber;
+    @MemberTelUnique
+    private String tel;
 
 }

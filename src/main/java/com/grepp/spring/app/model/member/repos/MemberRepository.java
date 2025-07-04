@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberRepository extends JpaRepository<Member, String> {
 
-    boolean existsByUserIdIgnoreCase(String userId);
+    boolean existsByIdIgnoreCase(String id);
 
     boolean existsByEmailIgnoreCase(String email);
 
-    boolean existsByPhoneNumberIgnoreCase(String phoneNumber);
+    boolean existsByTelIgnoreCase(String tel);
 
 }

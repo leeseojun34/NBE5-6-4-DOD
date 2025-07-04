@@ -11,21 +11,20 @@ import lombok.Setter;
 @Setter
 public class CalendarDTO {
 
-    private Long calendarId;
+    private Long id;
 
     @NotNull
     @Size(max = 255)
-    private String calendarName;
+    private String name;
 
     @NotNull
-    @Size(max = 255)
-    private String synced;
+    private Boolean synced;
 
     @NotNull
     private LocalDateTime syncedAt;
 
     @Size(max = 255)
-    @CalendarUserUnique
-    private String user;
+    @CalendarMemberUnique
+    private String member;
 
 }

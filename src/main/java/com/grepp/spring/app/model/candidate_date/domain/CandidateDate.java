@@ -1,6 +1,7 @@
 package com.grepp.spring.app.model.candidate_date.domain;
 
 import com.grepp.spring.app.model.event.domain.Event;
+import com.grepp.spring.infra.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Table(name = "CandidateDates")
 @Getter
 @Setter
-public class CandidateDate {
+public class CandidateDate extends BaseEntity {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -34,9 +35,9 @@ public class CandidateDate {
             strategy = GenerationType.SEQUENCE,
             generator = "primary_sequence"
     )
-    private Long candidateDateId;
+    private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.LAZY)

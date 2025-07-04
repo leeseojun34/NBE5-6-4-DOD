@@ -2,20 +2,20 @@ package com.grepp.spring.app.model.member.service;
 
 import com.grepp.spring.app.model.calendar.domain.Calendar;
 import com.grepp.spring.app.model.calendar.repos.CalendarRepository;
-import com.grepp.spring.app.model.event_user.domain.EventUser;
-import com.grepp.spring.app.model.event_user.repos.EventUserRepository;
-import com.grepp.spring.app.model.group_user.domain.GroupUser;
-import com.grepp.spring.app.model.group_user.repos.GroupUserRepository;
-import com.grepp.spring.app.model.like_location.domain.LikeLocation;
-import com.grepp.spring.app.model.like_location.repos.LikeLocationRepository;
-import com.grepp.spring.app.model.like_timetable.domain.LikeTimetable;
-import com.grepp.spring.app.model.like_timetable.repos.LikeTimetableRepository;
+import com.grepp.spring.app.model.event_member.domain.EventMember;
+import com.grepp.spring.app.model.event_member.repos.EventMemberRepository;
+import com.grepp.spring.app.model.favorite_location.domain.FavoriteLocation;
+import com.grepp.spring.app.model.favorite_location.repos.FavoriteLocationRepository;
+import com.grepp.spring.app.model.favorite_timetable.domain.FavoriteTimetable;
+import com.grepp.spring.app.model.favorite_timetable.repos.FavoriteTimetableRepository;
+import com.grepp.spring.app.model.group_member.domain.GroupMember;
+import com.grepp.spring.app.model.group_member.repos.GroupMemberRepository;
 import com.grepp.spring.app.model.member.domain.Member;
 import com.grepp.spring.app.model.member.domain.Role;
 import com.grepp.spring.app.model.member.model.MemberDTO;
 import com.grepp.spring.app.model.member.repos.MemberRepository;
-import com.grepp.spring.app.model.schedule_user.domain.ScheduleUser;
-import com.grepp.spring.app.model.schedule_user.repos.ScheduleUserRepository;
+import com.grepp.spring.app.model.schedule_member.domain.ScheduleMember;
+import com.grepp.spring.app.model.schedule_member.repos.ScheduleMemberRepository;
 import com.grepp.spring.app.model.social_auth_tokens.domain.SocialAuthTokens;
 import com.grepp.spring.app.model.social_auth_tokens.repos.SocialAuthTokensRepository;
 import com.grepp.spring.util.NotFoundException;
@@ -30,40 +30,40 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final SocialAuthTokensRepository socialAuthTokensRepository;
-    private final LikeLocationRepository likeLocationRepository;
-    private final LikeTimetableRepository likeTimetableRepository;
+    private final FavoriteLocationRepository favoriteLocationRepository;
+    private final FavoriteTimetableRepository favoriteTimetableRepository;
     private final CalendarRepository calendarRepository;
-    private final GroupUserRepository groupUserRepository;
-    private final EventUserRepository eventUserRepository;
-    private final ScheduleUserRepository scheduleUserRepository;
+    private final GroupMemberRepository groupMemberRepository;
+    private final EventMemberRepository eventMemberRepository;
+    private final ScheduleMemberRepository scheduleMemberRepository;
 
     public MemberService(final MemberRepository memberRepository,
             final SocialAuthTokensRepository socialAuthTokensRepository,
-            final LikeLocationRepository likeLocationRepository,
-            final LikeTimetableRepository likeTimetableRepository,
+            final FavoriteLocationRepository favoriteLocationRepository,
+            final FavoriteTimetableRepository favoriteTimetableRepository,
             final CalendarRepository calendarRepository,
-            final GroupUserRepository groupUserRepository,
-            final EventUserRepository eventUserRepository,
-            final ScheduleUserRepository scheduleUserRepository) {
+            final GroupMemberRepository groupMemberRepository,
+            final EventMemberRepository eventMemberRepository,
+            final ScheduleMemberRepository scheduleMemberRepository) {
         this.memberRepository = memberRepository;
         this.socialAuthTokensRepository = socialAuthTokensRepository;
-        this.likeLocationRepository = likeLocationRepository;
-        this.likeTimetableRepository = likeTimetableRepository;
+        this.favoriteLocationRepository = favoriteLocationRepository;
+        this.favoriteTimetableRepository = favoriteTimetableRepository;
         this.calendarRepository = calendarRepository;
-        this.groupUserRepository = groupUserRepository;
-        this.eventUserRepository = eventUserRepository;
-        this.scheduleUserRepository = scheduleUserRepository;
+        this.groupMemberRepository = groupMemberRepository;
+        this.eventMemberRepository = eventMemberRepository;
+        this.scheduleMemberRepository = scheduleMemberRepository;
     }
 
     public List<MemberDTO> findAll() {
-        final List<Member> members = memberRepository.findAll(Sort.by("userId"));
+        final List<Member> members = memberRepository.findAll(Sort.by("id"));
         return members.stream()
                 .map(member -> mapToDTO(member, new MemberDTO()))
                 .toList();
     }
 
-    public MemberDTO get(final String userId) {
-        return memberRepository.findById(userId)
+    public MemberDTO get(final String id) {
+        return memberRepository.findById(id)
                 .map(member -> mapToDTO(member, new MemberDTO()))
                 .orElseThrow(NotFoundException::new);
     }
@@ -71,30 +71,30 @@ public class MemberService {
     public String create(final MemberDTO memberDTO) {
         final Member member = new Member();
         mapToEntity(memberDTO, member);
-        member.setUserId(memberDTO.getUserId());
-        return memberRepository.save(member).getUserId();
+        member.setId(memberDTO.getId());
+        return memberRepository.save(member).getId();
     }
 
-    public void update(final String userId, final MemberDTO memberDTO) {
-        final Member member = memberRepository.findById(userId)
+    public void update(final String id, final MemberDTO memberDTO) {
+        final Member member = memberRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(memberDTO, member);
         memberRepository.save(member);
     }
 
-    public void delete(final String userId) {
-        memberRepository.deleteById(userId);
+    public void delete(final String id) {
+        memberRepository.deleteById(id);
     }
 
     private MemberDTO mapToDTO(final Member member, final MemberDTO memberDTO) {
-        memberDTO.setUserId(member.getUserId());
+        memberDTO.setId(member.getId());
         memberDTO.setPassword(member.getPassword());
         memberDTO.setProvider(member.getProvider());
         memberDTO.setRole(String.valueOf(member.getRole()));
         memberDTO.setEmail(member.getEmail());
         memberDTO.setName(member.getName());
         memberDTO.setProfileImageNumber(member.getProfileImageNumber());
-        memberDTO.setPhoneNumber(member.getPhoneNumber());
+        memberDTO.setTel(member.getTel());
         return memberDTO;
     }
 
@@ -105,66 +105,66 @@ public class MemberService {
         member.setEmail(memberDTO.getEmail());
         member.setName(memberDTO.getName());
         member.setProfileImageNumber(memberDTO.getProfileImageNumber());
-        member.setPhoneNumber(memberDTO.getPhoneNumber());
+        member.setTel(memberDTO.getTel());
         return member;
     }
 
-    public boolean userIdExists(final String userId) {
-        return memberRepository.existsByUserIdIgnoreCase(userId);
+    public boolean idExists(final String id) {
+        return memberRepository.existsByIdIgnoreCase(id);
     }
 
     public boolean emailExists(final String email) {
         return memberRepository.existsByEmailIgnoreCase(email);
     }
 
-    public boolean phoneNumberExists(final String phoneNumber) {
-        return memberRepository.existsByPhoneNumberIgnoreCase(phoneNumber);
+    public boolean telExists(final String tel) {
+        return memberRepository.existsByTelIgnoreCase(tel);
     }
 
-    public ReferencedWarning getReferencedWarning(final String userId) {
+    public ReferencedWarning getReferencedWarning(final String id) {
         final ReferencedWarning referencedWarning = new ReferencedWarning();
-        final Member member = memberRepository.findById(userId)
+        final Member member = memberRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
-        final SocialAuthTokens userSocialAuthTokens = socialAuthTokensRepository.findFirstByUser(member);
-        if (userSocialAuthTokens != null) {
-            referencedWarning.setKey("member.socialAuthTokens.user.referenced");
-            referencedWarning.addParam(userSocialAuthTokens.getSocialAuthTokensId());
+        final SocialAuthTokens memberSocialAuthTokens = socialAuthTokensRepository.findFirstByMember(member);
+        if (memberSocialAuthTokens != null) {
+            referencedWarning.setKey("member.socialAuthTokens.member.referenced");
+            referencedWarning.addParam(memberSocialAuthTokens.getId());
             return referencedWarning;
         }
-        final LikeLocation userLikeLocation = likeLocationRepository.findFirstByUser(member);
-        if (userLikeLocation != null) {
-            referencedWarning.setKey("member.likeLocation.user.referenced");
-            referencedWarning.addParam(userLikeLocation.getLikeLocationId());
+        final FavoriteLocation memberFavoriteLocation = favoriteLocationRepository.findFirstByMember(member);
+        if (memberFavoriteLocation != null) {
+            referencedWarning.setKey("member.favoriteLocation.member.referenced");
+            referencedWarning.addParam(memberFavoriteLocation.getId());
             return referencedWarning;
         }
-        final LikeTimetable userLikeTimetable = likeTimetableRepository.findFirstByUser(member);
-        if (userLikeTimetable != null) {
-            referencedWarning.setKey("member.likeTimetable.user.referenced");
-            referencedWarning.addParam(userLikeTimetable.getLikeTimetableId());
+        final FavoriteTimetable memberFavoriteTimetable = favoriteTimetableRepository.findFirstByMember(member);
+        if (memberFavoriteTimetable != null) {
+            referencedWarning.setKey("member.favoriteTimetable.member.referenced");
+            referencedWarning.addParam(memberFavoriteTimetable.getId());
             return referencedWarning;
         }
-        final Calendar userCalendar = calendarRepository.findFirstByUser(member);
-        if (userCalendar != null) {
-            referencedWarning.setKey("member.calendar.user.referenced");
-            referencedWarning.addParam(userCalendar.getCalendarId());
+        final Calendar memberCalendar = calendarRepository.findFirstByMember(member);
+        if (memberCalendar != null) {
+            referencedWarning.setKey("member.calendar.member.referenced");
+            referencedWarning.addParam(memberCalendar.getId());
             return referencedWarning;
         }
-        final GroupUser userGroupUser = groupUserRepository.findFirstByUser(member);
-        if (userGroupUser != null) {
-            referencedWarning.setKey("member.groupUser.user.referenced");
-            referencedWarning.addParam(userGroupUser.getGroupUserId());
+        final GroupMember memberGroupMember = groupMemberRepository.findFirstByMember(member);
+        if (memberGroupMember != null) {
+            referencedWarning.setKey("member.groupMember.member.referenced");
+            referencedWarning.addParam(memberGroupMember.getId());
             return referencedWarning;
         }
-        final EventUser userEventUser = eventUserRepository.findFirstByUser(member);
-        if (userEventUser != null) {
-            referencedWarning.setKey("member.eventUser.user.referenced");
-            referencedWarning.addParam(userEventUser.getEventUserId());
+        final EventMember memberEventMember = eventMemberRepository.findFirstByMember(member);
+        if (memberEventMember != null) {
+            referencedWarning.setKey("member.eventMember.member.referenced");
+            referencedWarning.addParam(memberEventMember.getId());
             return referencedWarning;
         }
-        final ScheduleUser userScheduleUser = scheduleUserRepository.findFirstByUser(member);
-        if (userScheduleUser != null) {
-            referencedWarning.setKey("member.scheduleUser.user.referenced");
-            referencedWarning.addParam(userScheduleUser.getScheduleUserId());
+        final ScheduleMember memberScheduleMember = scheduleMemberRepository.findFirstByMember(member);
+        if (memberScheduleMember != null) {
+            referencedWarning.setKey("member.scheduleMember.member.referenced");
+            referencedWarning.addParam(memberScheduleMember.getId());
             return referencedWarning;
         }
         return null;

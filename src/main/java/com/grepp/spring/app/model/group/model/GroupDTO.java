@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class GroupDTO {
 
-    private Long groupId;
+    private Long id;
 
     @NotNull
     @Size(max = 255)

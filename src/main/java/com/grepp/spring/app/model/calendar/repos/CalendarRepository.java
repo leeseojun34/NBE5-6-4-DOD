@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CalendarRepository extends JpaRepository<Calendar, Long> {
 
-    Calendar findFirstByUser(Member member);
+    Calendar findFirstByMember(Member member);
 
-    boolean existsByUserUserIdIgnoreCase(String userId);
+    boolean existsByMemberIdIgnoreCase(String id);
 
 }

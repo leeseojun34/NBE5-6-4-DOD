@@ -24,14 +24,14 @@ public class SocialAuthTokensService {
     }
 
     public List<SocialAuthTokensDTO> findAll() {
-        final List<SocialAuthTokens> socialAuthTokenses = socialAuthTokensRepository.findAll(Sort.by("socialAuthTokensId"));
+        final List<SocialAuthTokens> socialAuthTokenses = socialAuthTokensRepository.findAll(Sort.by("id"));
         return socialAuthTokenses.stream()
                 .map(socialAuthTokens -> mapToDTO(socialAuthTokens, new SocialAuthTokensDTO()))
                 .toList();
     }
 
-    public SocialAuthTokensDTO get(final Long socialAuthTokensId) {
-        return socialAuthTokensRepository.findById(socialAuthTokensId)
+    public SocialAuthTokensDTO get(final Long id) {
+        return socialAuthTokensRepository.findById(id)
                 .map(socialAuthTokens -> mapToDTO(socialAuthTokens, new SocialAuthTokensDTO()))
                 .orElseThrow(NotFoundException::new);
     }
@@ -39,30 +39,29 @@ public class SocialAuthTokensService {
     public Long create(final SocialAuthTokensDTO socialAuthTokensDTO) {
         final SocialAuthTokens socialAuthTokens = new SocialAuthTokens();
         mapToEntity(socialAuthTokensDTO, socialAuthTokens);
-        return socialAuthTokensRepository.save(socialAuthTokens).getSocialAuthTokensId();
+        return socialAuthTokensRepository.save(socialAuthTokens).getId();
     }
 
-    public void update(final Long socialAuthTokensId,
-            final SocialAuthTokensDTO socialAuthTokensDTO) {
-        final SocialAuthTokens socialAuthTokens = socialAuthTokensRepository.findById(socialAuthTokensId)
+    public void update(final Long id, final SocialAuthTokensDTO socialAuthTokensDTO) {
+        final SocialAuthTokens socialAuthTokens = socialAuthTokensRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(socialAuthTokensDTO, socialAuthTokens);
         socialAuthTokensRepository.save(socialAuthTokens);
     }
 
-    public void delete(final Long socialAuthTokensId) {
-        socialAuthTokensRepository.deleteById(socialAuthTokensId);
+    public void delete(final Long id) {
+        socialAuthTokensRepository.deleteById(id);
     }
 
     private SocialAuthTokensDTO mapToDTO(final SocialAuthTokens socialAuthTokens,
             final SocialAuthTokensDTO socialAuthTokensDTO) {
-        socialAuthTokensDTO.setSocialAuthTokensId(socialAuthTokens.getSocialAuthTokensId());
+        socialAuthTokensDTO.setId(socialAuthTokens.getId());
         socialAuthTokensDTO.setAccessToken(socialAuthTokens.getAccessToken());
         socialAuthTokensDTO.setRefreshToken(socialAuthTokens.getRefreshToken());
         socialAuthTokensDTO.setTokenType(socialAuthTokens.getTokenType());
         socialAuthTokensDTO.setExpiresAt(socialAuthTokens.getExpiresAt());
         socialAuthTokensDTO.setProvider(socialAuthTokens.getProvider());
-        socialAuthTokensDTO.setUser(socialAuthTokens.getUser() == null ? null : socialAuthTokens.getUser().getUserId());
+        socialAuthTokensDTO.setMember(socialAuthTokens.getMember() == null ? null : socialAuthTokens.getMember().getId());
         return socialAuthTokensDTO;
     }
 
@@ -73,9 +72,9 @@ public class SocialAuthTokensService {
         socialAuthTokens.setTokenType(socialAuthTokensDTO.getTokenType());
         socialAuthTokens.setExpiresAt(socialAuthTokensDTO.getExpiresAt());
         socialAuthTokens.setProvider(socialAuthTokensDTO.getProvider());
-        final Member user = socialAuthTokensDTO.getUser() == null ? null : memberRepository.findById(socialAuthTokensDTO.getUser())
-                .orElseThrow(() -> new NotFoundException("user not found"));
-        socialAuthTokens.setUser(user);
+        final Member member = socialAuthTokensDTO.getMember() == null ? null : memberRepository.findById(socialAuthTokensDTO.getMember())
+                .orElseThrow(() -> new NotFoundException("member not found"));
+        socialAuthTokens.setMember(member);
         return socialAuthTokens;
     }
 

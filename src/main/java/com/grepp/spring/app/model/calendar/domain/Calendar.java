@@ -1,5 +1,6 @@
 package com.grepp.spring.app.model.calendar.domain;
 
+import com.grepp.spring.infra.entity.BaseEntity;
 import com.grepp.spring.app.model.member.domain.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Table(name = "Calendars")
 @Getter
 @Setter
-public class Calendar {
+public class Calendar extends BaseEntity {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -34,19 +35,19 @@ public class Calendar {
             strategy = GenerationType.SEQUENCE,
             generator = "primary_sequence"
     )
-    private Long calendarId;
+    private Long id;
 
     @Column(nullable = false)
-    private String calendarName;
+    private String name;
 
     @Column(nullable = false)
-    private String synced;
+    private Boolean synced;
 
     @Column(nullable = false)
     private LocalDateTime syncedAt;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", unique = true)
-    private Member user;
+    @JoinColumn(name = "member_id", unique = true)
+    private Member member;
 
 }

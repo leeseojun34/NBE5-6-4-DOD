@@ -1,6 +1,7 @@
 package com.grepp.spring.app.model.workspace.domain;
 
-import com.grepp.spring.app.model.detail.domain.Detail;
+import com.grepp.spring.infra.entity.BaseEntity;
+import com.grepp.spring.app.model.schedule.domain.Schedule;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Table(name = "Workspaces")
 @Getter
 @Setter
-public class Workspace {
+public class Workspace extends BaseEntity {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -33,13 +34,13 @@ public class Workspace {
             strategy = GenerationType.SEQUENCE,
             generator = "primary_sequence"
     )
-    private Long workspaceId;
+    private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text")
     private String url;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "detail_id")
-    private Detail detail;
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
 
 }

@@ -9,6 +9,4 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
 
     Location findFirstByMiddleRegion(MiddleRegion middleRegion);
 
-    boolean existsByMiddleRegionMiddleRegionId(Long middleRegionId);
-
 }

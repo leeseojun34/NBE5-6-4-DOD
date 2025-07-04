@@ -1,7 +1,7 @@
 package com.grepp.spring.app.model.workspace.service;
 
-import com.grepp.spring.app.model.detail.domain.Detail;
-import com.grepp.spring.app.model.detail.repos.DetailRepository;
+import com.grepp.spring.app.model.schedule.domain.Schedule;
+import com.grepp.spring.app.model.schedule.repos.ScheduleRepository;
 import com.grepp.spring.util.NotFoundException;
 import com.grepp.spring.app.model.workspace.domain.Workspace;
 import com.grepp.spring.app.model.workspace.model.WorkspaceDTO;
@@ -15,23 +15,23 @@ import org.springframework.stereotype.Service;
 public class WorkspaceService {
 
     private final WorkspaceRepository workspaceRepository;
-    private final DetailRepository detailRepository;
+    private final ScheduleRepository scheduleRepository;
 
     public WorkspaceService(final WorkspaceRepository workspaceRepository,
-            final DetailRepository detailRepository) {
+            final ScheduleRepository scheduleRepository) {
         this.workspaceRepository = workspaceRepository;
-        this.detailRepository = detailRepository;
+        this.scheduleRepository = scheduleRepository;
     }
 
     public List<WorkspaceDTO> findAll() {
-        final List<Workspace> workspaces = workspaceRepository.findAll(Sort.by("workspaceId"));
+        final List<Workspace> workspaces = workspaceRepository.findAll(Sort.by("id"));
         return workspaces.stream()
                 .map(workspace -> mapToDTO(workspace, new WorkspaceDTO()))
                 .toList();
     }
 
-    public WorkspaceDTO get(final Long workspaceId) {
-        return workspaceRepository.findById(workspaceId)
+    public WorkspaceDTO get(final Long id) {
+        return workspaceRepository.findById(id)
                 .map(workspace -> mapToDTO(workspace, new WorkspaceDTO()))
                 .orElseThrow(NotFoundException::new);
     }
@@ -39,32 +39,32 @@ public class WorkspaceService {
     public Long create(final WorkspaceDTO workspaceDTO) {
         final Workspace workspace = new Workspace();
         mapToEntity(workspaceDTO, workspace);
-        return workspaceRepository.save(workspace).getWorkspaceId();
+        return workspaceRepository.save(workspace).getId();
     }
 
-    public void update(final Long workspaceId, final WorkspaceDTO workspaceDTO) {
-        final Workspace workspace = workspaceRepository.findById(workspaceId)
+    public void update(final Long id, final WorkspaceDTO workspaceDTO) {
+        final Workspace workspace = workspaceRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(workspaceDTO, workspace);
         workspaceRepository.save(workspace);
     }
 
-    public void delete(final Long workspaceId) {
-        workspaceRepository.deleteById(workspaceId);
+    public void delete(final Long id) {
+        workspaceRepository.deleteById(id);
     }
 
     private WorkspaceDTO mapToDTO(final Workspace workspace, final WorkspaceDTO workspaceDTO) {
-        workspaceDTO.setWorkspaceId(workspace.getWorkspaceId());
+        workspaceDTO.setId(workspace.getId());
         workspaceDTO.setUrl(workspace.getUrl());
-        workspaceDTO.setDetail(workspace.getDetail() == null ? null : workspace.getDetail().getDetailId());
+        workspaceDTO.setSchedule(workspace.getSchedule() == null ? null : workspace.getSchedule().getId());
         return workspaceDTO;
     }
 
     private Workspace mapToEntity(final WorkspaceDTO workspaceDTO, final Workspace workspace) {
         workspace.setUrl(workspaceDTO.getUrl());
-        final Detail detail = workspaceDTO.getDetail() == null ? null : detailRepository.findById(workspaceDTO.getDetail())
-                .orElseThrow(() -> new NotFoundException("detail not found"));
-        workspace.setDetail(detail);
+        final Schedule schedule = workspaceDTO.getSchedule() == null ? null : scheduleRepository.findById(workspaceDTO.getSchedule())
+                .orElseThrow(() -> new NotFoundException("schedule not found"));
+        workspace.setSchedule(schedule);
         return workspace;
     }
 

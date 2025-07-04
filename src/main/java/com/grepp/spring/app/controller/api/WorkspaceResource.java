@@ -1,7 +1,7 @@
 package com.grepp.spring.app.controller.api;
 
-import com.grepp.spring.app.model.detail.domain.Detail;
-import com.grepp.spring.app.model.detail.repos.DetailRepository;
+import com.grepp.spring.app.model.schedule.domain.Schedule;
+import com.grepp.spring.app.model.schedule.repos.ScheduleRepository;
 import com.grepp.spring.util.CustomCollectors;
 import com.grepp.spring.app.model.workspace.model.WorkspaceDTO;
 import com.grepp.spring.app.model.workspace.service.WorkspaceService;
@@ -28,12 +28,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class WorkspaceResource {
 
     private final WorkspaceService workspaceService;
-    private final DetailRepository detailRepository;
+    private final ScheduleRepository scheduleRepository;
 
     public WorkspaceResource(final WorkspaceService workspaceService,
-            final DetailRepository detailRepository) {
+            final ScheduleRepository scheduleRepository) {
         this.workspaceService = workspaceService;
-        this.detailRepository = detailRepository;
+        this.scheduleRepository = scheduleRepository;
     }
 
     @GetMapping
@@ -41,41 +41,38 @@ public class WorkspaceResource {
         return ResponseEntity.ok(workspaceService.findAll());
     }
 
-    @GetMapping("/{workspaceId}")
-    public ResponseEntity<WorkspaceDTO> getWorkspace(
-            @PathVariable(name = "workspaceId") final Long workspaceId) {
-        return ResponseEntity.ok(workspaceService.get(workspaceId));
+    @GetMapping("/{id}")
+    public ResponseEntity<WorkspaceDTO> getWorkspace(@PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(workspaceService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createWorkspace(
             @RequestBody @Valid final WorkspaceDTO workspaceDTO) {
-        final Long createdWorkspaceId = workspaceService.create(workspaceDTO);
-        return new ResponseEntity<>(createdWorkspaceId, HttpStatus.CREATED);
+        final Long createdId = workspaceService.create(workspaceDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{workspaceId}")
-    public ResponseEntity<Long> updateWorkspace(
-            @PathVariable(name = "workspaceId") final Long workspaceId,
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updateWorkspace(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final WorkspaceDTO workspaceDTO) {
-        workspaceService.update(workspaceId, workspaceDTO);
-        return ResponseEntity.ok(workspaceId);
+        workspaceService.update(id, workspaceDTO);
+        return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{workspaceId}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteWorkspace(
-            @PathVariable(name = "workspaceId") final Long workspaceId) {
-        workspaceService.delete(workspaceId);
+    public ResponseEntity<Void> deleteWorkspace(@PathVariable(name = "id") final Long id) {
+        workspaceService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/detailValues")
-    public ResponseEntity<Map<Long, String>> getDetailValues() {
-        return ResponseEntity.ok(detailRepository.findAll(Sort.by("detailId"))
+    @GetMapping("/scheduleValues")
+    public ResponseEntity<Map<Long, String>> getScheduleValues() {
+        return ResponseEntity.ok(scheduleRepository.findAll(Sort.by("id"))
                 .stream()
-                .collect(CustomCollectors.toSortedMap(Detail::getDetailId, Detail::getLocation)));
+                .collect(CustomCollectors.toSortedMap(Schedule::getId, Schedule::getStatus)));
     }
 
 }

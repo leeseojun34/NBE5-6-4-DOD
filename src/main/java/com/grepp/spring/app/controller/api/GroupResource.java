@@ -35,33 +35,33 @@ public class GroupResource {
         return ResponseEntity.ok(groupService.findAll());
     }
 
-    @GetMapping("/{groupId}")
-    public ResponseEntity<GroupDTO> getGroup(@PathVariable(name = "groupId") final Long groupId) {
-        return ResponseEntity.ok(groupService.get(groupId));
+    @GetMapping("/{id}")
+    public ResponseEntity<GroupDTO> getGroup(@PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(groupService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createGroup(@RequestBody @Valid final GroupDTO groupDTO) {
-        final Long createdGroupId = groupService.create(groupDTO);
-        return new ResponseEntity<>(createdGroupId, HttpStatus.CREATED);
+        final Long createdId = groupService.create(groupDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{groupId}")
-    public ResponseEntity<Long> updateGroup(@PathVariable(name = "groupId") final Long groupId,
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updateGroup(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final GroupDTO groupDTO) {
-        groupService.update(groupId, groupDTO);
-        return ResponseEntity.ok(groupId);
+        groupService.update(id, groupDTO);
+        return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{groupId}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteGroup(@PathVariable(name = "groupId") final Long groupId) {
-        final ReferencedWarning referencedWarning = groupService.getReferencedWarning(groupId);
+    public ResponseEntity<Void> deleteGroup(@PathVariable(name = "id") final Long id) {
+        final ReferencedWarning referencedWarning = groupService.getReferencedWarning(id);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
         }
-        groupService.delete(groupId);
+        groupService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

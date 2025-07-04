@@ -41,41 +41,39 @@ public class CalendarDetailResource {
         return ResponseEntity.ok(calendarDetailService.findAll());
     }
 
-    @GetMapping("/{calendarDetailId}")
+    @GetMapping("/{id}")
     public ResponseEntity<CalendarDetailDTO> getCalendarDetail(
-            @PathVariable(name = "calendarDetailId") final Long calendarDetailId) {
-        return ResponseEntity.ok(calendarDetailService.get(calendarDetailId));
+            @PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(calendarDetailService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createCalendarDetail(
             @RequestBody @Valid final CalendarDetailDTO calendarDetailDTO) {
-        final Long createdCalendarDetailId = calendarDetailService.create(calendarDetailDTO);
-        return new ResponseEntity<>(createdCalendarDetailId, HttpStatus.CREATED);
+        final Long createdId = calendarDetailService.create(calendarDetailDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{calendarDetailId}")
-    public ResponseEntity<Long> updateCalendarDetail(
-            @PathVariable(name = "calendarDetailId") final Long calendarDetailId,
+    @PutMapping("/{id}")
+    public ResponseEntity<Long> updateCalendarDetail(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final CalendarDetailDTO calendarDetailDTO) {
-        calendarDetailService.update(calendarDetailId, calendarDetailDTO);
-        return ResponseEntity.ok(calendarDetailId);
+        calendarDetailService.update(id, calendarDetailDTO);
+        return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{calendarDetailId}")
+    @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteCalendarDetail(
-            @PathVariable(name = "calendarDetailId") final Long calendarDetailId) {
-        calendarDetailService.delete(calendarDetailId);
+    public ResponseEntity<Void> deleteCalendarDetail(@PathVariable(name = "id") final Long id) {
+        calendarDetailService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/calendarValues")
     public ResponseEntity<Map<Long, String>> getCalendarValues() {
-        return ResponseEntity.ok(calendarRepository.findAll(Sort.by("calendarId"))
+        return ResponseEntity.ok(calendarRepository.findAll(Sort.by("id"))
                 .stream()
-                .collect(CustomCollectors.toSortedMap(Calendar::getCalendarId, Calendar::getCalendarName)));
+                .collect(CustomCollectors.toSortedMap(Calendar::getId, Calendar::getName)));
     }
 
 }

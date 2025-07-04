@@ -10,10 +10,9 @@ import lombok.Setter;
 @Setter
 public class CandidateDateDTO {
 
-    private Long candidateDateId;
+    private Long id;
 
     @NotNull
-    @CandidateDateDateUnique
     private LocalDateTime date;
 
     private Long event;

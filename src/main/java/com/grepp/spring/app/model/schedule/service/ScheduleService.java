@@ -1,18 +1,16 @@
 package com.grepp.spring.app.model.schedule.service;
 
-import com.grepp.spring.app.model.detail.domain.Detail;
-import com.grepp.spring.app.model.detail.repos.DetailRepository;
 import com.grepp.spring.app.model.event.domain.Event;
 import com.grepp.spring.app.model.event.repos.EventRepository;
-import com.grepp.spring.app.model.meeting.domain.Meeting;
-import com.grepp.spring.app.model.meeting.repos.MeetingRepository;
 import com.grepp.spring.app.model.schedule.domain.Schedule;
 import com.grepp.spring.app.model.schedule.model.ScheduleDTO;
 import com.grepp.spring.app.model.schedule.repos.ScheduleRepository;
-import com.grepp.spring.app.model.schedule_user.domain.ScheduleUser;
-import com.grepp.spring.app.model.schedule_user.repos.ScheduleUserRepository;
+import com.grepp.spring.app.model.schedule_member.domain.ScheduleMember;
+import com.grepp.spring.app.model.schedule_member.repos.ScheduleMemberRepository;
 import com.grepp.spring.util.NotFoundException;
 import com.grepp.spring.util.ReferencedWarning;
+import com.grepp.spring.app.model.workspace.domain.Workspace;
+import com.grepp.spring.app.model.workspace.repos.WorkspaceRepository;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -23,30 +21,28 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final EventRepository eventRepository;
-    private final ScheduleUserRepository scheduleUserRepository;
-    private final DetailRepository detailRepository;
-    private final MeetingRepository meetingRepository;
+    private final ScheduleMemberRepository scheduleMemberRepository;
+    private final WorkspaceRepository workspaceRepository;
 
     public ScheduleService(final ScheduleRepository scheduleRepository,
             final EventRepository eventRepository,
-            final ScheduleUserRepository scheduleUserRepository,
-            final DetailRepository detailRepository, final MeetingRepository meetingRepository) {
+            final ScheduleMemberRepository scheduleMemberRepository,
+            final WorkspaceRepository workspaceRepository) {
         this.scheduleRepository = scheduleRepository;
         this.eventRepository = eventRepository;
-        this.scheduleUserRepository = scheduleUserRepository;
-        this.detailRepository = detailRepository;
-        this.meetingRepository = meetingRepository;
+        this.scheduleMemberRepository = scheduleMemberRepository;
+        this.workspaceRepository = workspaceRepository;
     }
 
     public List<ScheduleDTO> findAll() {
-        final List<Schedule> schedules = scheduleRepository.findAll(Sort.by("scheduleId"));
+        final List<Schedule> schedules = scheduleRepository.findAll(Sort.by("id"));
         return schedules.stream()
                 .map(schedule -> mapToDTO(schedule, new ScheduleDTO()))
                 .toList();
     }
 
-    public ScheduleDTO get(final Long scheduleId) {
-        return scheduleRepository.findById(scheduleId)
+    public ScheduleDTO get(final Long id) {
+        return scheduleRepository.findById(id)
                 .map(schedule -> mapToDTO(schedule, new ScheduleDTO()))
                 .orElseThrow(NotFoundException::new);
     }
@@ -54,26 +50,31 @@ public class ScheduleService {
     public Long create(final ScheduleDTO scheduleDTO) {
         final Schedule schedule = new Schedule();
         mapToEntity(scheduleDTO, schedule);
-        return scheduleRepository.save(schedule).getScheduleId();
+        return scheduleRepository.save(schedule).getId();
     }
 
-    public void update(final Long scheduleId, final ScheduleDTO scheduleDTO) {
-        final Schedule schedule = scheduleRepository.findById(scheduleId)
+    public void update(final Long id, final ScheduleDTO scheduleDTO) {
+        final Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(scheduleDTO, schedule);
         scheduleRepository.save(schedule);
     }
 
-    public void delete(final Long scheduleId) {
-        scheduleRepository.deleteById(scheduleId);
+    public void delete(final Long id) {
+        scheduleRepository.deleteById(id);
     }
 
     private ScheduleDTO mapToDTO(final Schedule schedule, final ScheduleDTO scheduleDTO) {
-        scheduleDTO.setScheduleId(schedule.getScheduleId());
+        scheduleDTO.setId(schedule.getId());
         scheduleDTO.setStartTime(schedule.getStartTime());
         scheduleDTO.setEndTime(schedule.getEndTime());
         scheduleDTO.setStatus(schedule.getStatus());
-        scheduleDTO.setEvent(schedule.getEvent() == null ? null : schedule.getEvent().getEventId());
+        scheduleDTO.setLocation(schedule.getLocation());
+        scheduleDTO.setDescription(schedule.getDescription());
+        scheduleDTO.setMeetingPlatform(schedule.getMeetingPlatform());
+        scheduleDTO.setPlatformUrl(schedule.getPlatformUrl());
+        scheduleDTO.setSpecificLocation(schedule.getSpecificLocation());
+        scheduleDTO.setEvent(schedule.getEvent() == null ? null : schedule.getEvent().getId());
         return scheduleDTO;
     }
 
@@ -81,32 +82,31 @@ public class ScheduleService {
         schedule.setStartTime(scheduleDTO.getStartTime());
         schedule.setEndTime(scheduleDTO.getEndTime());
         schedule.setStatus(scheduleDTO.getStatus());
+        schedule.setLocation(scheduleDTO.getLocation());
+        schedule.setDescription(scheduleDTO.getDescription());
+        schedule.setMeetingPlatform(scheduleDTO.getMeetingPlatform());
+        schedule.setPlatformUrl(scheduleDTO.getPlatformUrl());
+        schedule.setSpecificLocation(scheduleDTO.getSpecificLocation());
         final Event event = scheduleDTO.getEvent() == null ? null : eventRepository.findById(scheduleDTO.getEvent())
                 .orElseThrow(() -> new NotFoundException("event not found"));
         schedule.setEvent(event);
         return schedule;
     }
 
-    public ReferencedWarning getReferencedWarning(final Long scheduleId) {
+    public ReferencedWarning getReferencedWarning(final Long id) {
         final ReferencedWarning referencedWarning = new ReferencedWarning();
-        final Schedule schedule = scheduleRepository.findById(scheduleId)
+        final Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
-        final ScheduleUser scheduleScheduleUser = scheduleUserRepository.findFirstBySchedule(schedule);
-        if (scheduleScheduleUser != null) {
-            referencedWarning.setKey("schedule.scheduleUser.schedule.referenced");
-            referencedWarning.addParam(scheduleScheduleUser.getScheduleUserId());
+        final ScheduleMember scheduleScheduleMember = scheduleMemberRepository.findFirstBySchedule(schedule);
+        if (scheduleScheduleMember != null) {
+            referencedWarning.setKey("schedule.scheduleMember.schedule.referenced");
+            referencedWarning.addParam(scheduleScheduleMember.getId());
             return referencedWarning;
         }
-        final Detail scheduleDetail = detailRepository.findFirstBySchedule(schedule);
-        if (scheduleDetail != null) {
-            referencedWarning.setKey("schedule.detail.schedule.referenced");
-            referencedWarning.addParam(scheduleDetail.getDetailId());
-            return referencedWarning;
-        }
-        final Meeting scheduleMeeting = meetingRepository.findFirstBySchedule(schedule);
-        if (scheduleMeeting != null) {
-            referencedWarning.setKey("schedule.meeting.schedule.referenced");
-            referencedWarning.addParam(scheduleMeeting.getMeetingId());
+        final Workspace scheduleWorkspace = workspaceRepository.findFirstBySchedule(schedule);
+        if (scheduleWorkspace != null) {
+            referencedWarning.setKey("schedule.workspace.schedule.referenced");
+            referencedWarning.addParam(scheduleWorkspace.getId());
             return referencedWarning;
         }
         return null;

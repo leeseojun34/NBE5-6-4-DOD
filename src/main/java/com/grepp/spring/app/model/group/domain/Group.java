@@ -1,5 +1,6 @@
 package com.grepp.spring.app.model.group.domain;
 
+import com.grepp.spring.infra.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import lombok.Setter;
 @Table(name = "Groups")
 @Getter
 @Setter
-public class Group {
+public class Group extends BaseEntity {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -29,7 +30,7 @@ public class Group {
             strategy = GenerationType.SEQUENCE,
             generator = "primary_sequence"
     )
-    private Long groupId;
+    private Long id;
 
     @Column(nullable = false)
     private String name;

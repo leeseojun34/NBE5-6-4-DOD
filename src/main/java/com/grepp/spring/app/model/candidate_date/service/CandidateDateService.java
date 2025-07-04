@@ -6,7 +6,6 @@ import com.grepp.spring.app.model.candidate_date.repos.CandidateDateRepository;
 import com.grepp.spring.app.model.event.domain.Event;
 import com.grepp.spring.app.model.event.repos.EventRepository;
 import com.grepp.spring.util.NotFoundException;
-import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -25,14 +24,14 @@ public class CandidateDateService {
     }
 
     public List<CandidateDateDTO> findAll() {
-        final List<CandidateDate> candidateDates = candidateDateRepository.findAll(Sort.by("candidateDateId"));
+        final List<CandidateDate> candidateDates = candidateDateRepository.findAll(Sort.by("id"));
         return candidateDates.stream()
                 .map(candidateDate -> mapToDTO(candidateDate, new CandidateDateDTO()))
                 .toList();
     }
 
-    public CandidateDateDTO get(final Long candidateDateId) {
-        return candidateDateRepository.findById(candidateDateId)
+    public CandidateDateDTO get(final Long id) {
+        return candidateDateRepository.findById(id)
                 .map(candidateDate -> mapToDTO(candidateDate, new CandidateDateDTO()))
                 .orElseThrow(NotFoundException::new);
     }
@@ -40,25 +39,25 @@ public class CandidateDateService {
     public Long create(final CandidateDateDTO candidateDateDTO) {
         final CandidateDate candidateDate = new CandidateDate();
         mapToEntity(candidateDateDTO, candidateDate);
-        return candidateDateRepository.save(candidateDate).getCandidateDateId();
+        return candidateDateRepository.save(candidateDate).getId();
     }
 
-    public void update(final Long candidateDateId, final CandidateDateDTO candidateDateDTO) {
-        final CandidateDate candidateDate = candidateDateRepository.findById(candidateDateId)
+    public void update(final Long id, final CandidateDateDTO candidateDateDTO) {
+        final CandidateDate candidateDate = candidateDateRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(candidateDateDTO, candidateDate);
         candidateDateRepository.save(candidateDate);
     }
 
-    public void delete(final Long candidateDateId) {
-        candidateDateRepository.deleteById(candidateDateId);
+    public void delete(final Long id) {
+        candidateDateRepository.deleteById(id);
     }
 
     private CandidateDateDTO mapToDTO(final CandidateDate candidateDate,
             final CandidateDateDTO candidateDateDTO) {
-        candidateDateDTO.setCandidateDateId(candidateDate.getCandidateDateId());
+        candidateDateDTO.setId(candidateDate.getId());
         candidateDateDTO.setDate(candidateDate.getDate());
-        candidateDateDTO.setEvent(candidateDate.getEvent() == null ? null : candidateDate.getEvent().getEventId());
+        candidateDateDTO.setEvent(candidateDate.getEvent() == null ? null : candidateDate.getEvent().getId());
         return candidateDateDTO;
     }
 
@@ -69,10 +68,6 @@ public class CandidateDateService {
                 .orElseThrow(() -> new NotFoundException("event not found"));
         candidateDate.setEvent(event);
         return candidateDate;
-    }
-
-    public boolean dateExists(final LocalDateTime date) {
-        return candidateDateRepository.existsByDate(date);
     }
 
 }

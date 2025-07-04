@@ -5,8 +5,8 @@ import com.grepp.spring.app.model.event.repos.EventRepository;
 import com.grepp.spring.app.model.group.domain.Group;
 import com.grepp.spring.app.model.group.model.GroupDTO;
 import com.grepp.spring.app.model.group.repos.GroupRepository;
-import com.grepp.spring.app.model.group_user.domain.GroupUser;
-import com.grepp.spring.app.model.group_user.repos.GroupUserRepository;
+import com.grepp.spring.app.model.group_member.domain.GroupMember;
+import com.grepp.spring.app.model.group_member.repos.GroupMemberRepository;
 import com.grepp.spring.util.NotFoundException;
 import com.grepp.spring.util.ReferencedWarning;
 import java.util.List;
@@ -18,25 +18,26 @@ import org.springframework.stereotype.Service;
 public class GroupService {
 
     private final GroupRepository groupRepository;
-    private final GroupUserRepository groupUserRepository;
+    private final GroupMemberRepository groupMemberRepository;
     private final EventRepository eventRepository;
 
     public GroupService(final GroupRepository groupRepository,
-            final GroupUserRepository groupUserRepository, final EventRepository eventRepository) {
+            final GroupMemberRepository groupMemberRepository,
+            final EventRepository eventRepository) {
         this.groupRepository = groupRepository;
-        this.groupUserRepository = groupUserRepository;
+        this.groupMemberRepository = groupMemberRepository;
         this.eventRepository = eventRepository;
     }
 
     public List<GroupDTO> findAll() {
-        final List<Group> groups = groupRepository.findAll(Sort.by("groupId"));
+        final List<Group> groups = groupRepository.findAll(Sort.by("id"));
         return groups.stream()
                 .map(group -> mapToDTO(group, new GroupDTO()))
                 .toList();
     }
 
-    public GroupDTO get(final Long groupId) {
-        return groupRepository.findById(groupId)
+    public GroupDTO get(final Long id) {
+        return groupRepository.findById(id)
                 .map(group -> mapToDTO(group, new GroupDTO()))
                 .orElseThrow(NotFoundException::new);
     }
@@ -44,22 +45,22 @@ public class GroupService {
     public Long create(final GroupDTO groupDTO) {
         final Group group = new Group();
         mapToEntity(groupDTO, group);
-        return groupRepository.save(group).getGroupId();
+        return groupRepository.save(group).getId();
     }
 
-    public void update(final Long groupId, final GroupDTO groupDTO) {
-        final Group group = groupRepository.findById(groupId)
+    public void update(final Long id, final GroupDTO groupDTO) {
+        final Group group = groupRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(groupDTO, group);
         groupRepository.save(group);
     }
 
-    public void delete(final Long groupId) {
-        groupRepository.deleteById(groupId);
+    public void delete(final Long id) {
+        groupRepository.deleteById(id);
     }
 
     private GroupDTO mapToDTO(final Group group, final GroupDTO groupDTO) {
-        groupDTO.setGroupId(group.getGroupId());
+        groupDTO.setId(group.getId());
         groupDTO.setName(group.getName());
         groupDTO.setDescription(group.getDescription());
         groupDTO.setIsGrouped(group.getIsGrouped());
@@ -73,20 +74,20 @@ public class GroupService {
         return group;
     }
 
-    public ReferencedWarning getReferencedWarning(final Long groupId) {
+    public ReferencedWarning getReferencedWarning(final Long id) {
         final ReferencedWarning referencedWarning = new ReferencedWarning();
-        final Group group = groupRepository.findById(groupId)
+        final Group group = groupRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
-        final GroupUser groupGroupUser = groupUserRepository.findFirstByGroup(group);
-        if (groupGroupUser != null) {
-            referencedWarning.setKey("group.groupUser.group.referenced");
-            referencedWarning.addParam(groupGroupUser.getGroupUserId());
+        final GroupMember groupGroupMember = groupMemberRepository.findFirstByGroup(group);
+        if (groupGroupMember != null) {
+            referencedWarning.setKey("group.groupMember.group.referenced");
+            referencedWarning.addParam(groupGroupMember.getId());
             return referencedWarning;
         }
         final Event groupEvent = eventRepository.findFirstByGroup(group);
         if (groupEvent != null) {
             referencedWarning.setKey("group.event.group.referenced");
-            referencedWarning.addParam(groupEvent.getEventId());
+            referencedWarning.addParam(groupEvent.getId());
             return referencedWarning;
         }
         return null;

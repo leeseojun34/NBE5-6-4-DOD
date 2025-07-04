@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class SocialAuthTokensDTO {
 
-    private Long socialAuthTokensId;
+    private Long id;
 
     @NotNull
     @Size(max = 255)
@@ -35,6 +35,6 @@ public class SocialAuthTokensDTO {
     private String provider;
 
     @Size(max = 255)
-    private String user;
+    private String member;
 
 }
