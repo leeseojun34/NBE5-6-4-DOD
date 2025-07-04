@@ -1,12 +1,10 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.candidate_date.rest;
 
+import com.grepp.spring.app.model.candidate_date.model.CandidateDateDTO;
+import com.grepp.spring.app.model.candidate_date.service.CandidateDateService;
 import com.grepp.spring.app.model.event.domain.Event;
 import com.grepp.spring.app.model.event.repos.EventRepository;
-import com.grepp.spring.app.model.schedule.model.ScheduleDTO;
-import com.grepp.spring.app.model.schedule.service.ScheduleService;
 import com.grepp.spring.util.CustomCollectors;
-import com.grepp.spring.util.ReferencedException;
-import com.grepp.spring.util.ReferencedWarning;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -26,50 +24,48 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(value = "/api/schedules", produces = MediaType.APPLICATION_JSON_VALUE)
-public class ScheduleResource {
+@RequestMapping(value = "/api/candidateDates", produces = MediaType.APPLICATION_JSON_VALUE)
+public class CandidateDateResource {
 
-    private final ScheduleService scheduleService;
+    private final CandidateDateService candidateDateService;
     private final EventRepository eventRepository;
 
-    public ScheduleResource(final ScheduleService scheduleService,
+    public CandidateDateResource(final CandidateDateService candidateDateService,
             final EventRepository eventRepository) {
-        this.scheduleService = scheduleService;
+        this.candidateDateService = candidateDateService;
         this.eventRepository = eventRepository;
     }
 
     @GetMapping
-    public ResponseEntity<List<ScheduleDTO>> getAllSchedules() {
-        return ResponseEntity.ok(scheduleService.findAll());
+    public ResponseEntity<List<CandidateDateDTO>> getAllCandidateDates() {
+        return ResponseEntity.ok(candidateDateService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleDTO> getSchedule(@PathVariable(name = "id") final Long id) {
-        return ResponseEntity.ok(scheduleService.get(id));
+    public ResponseEntity<CandidateDateDTO> getCandidateDate(
+            @PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(candidateDateService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<Long> createSchedule(@RequestBody @Valid final ScheduleDTO scheduleDTO) {
-        final Long createdId = scheduleService.create(scheduleDTO);
+    public ResponseEntity<Long> createCandidateDate(
+            @RequestBody @Valid final CandidateDateDTO candidateDateDTO) {
+        final Long createdId = candidateDateService.create(candidateDateDTO);
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Long> updateSchedule(@PathVariable(name = "id") final Long id,
-            @RequestBody @Valid final ScheduleDTO scheduleDTO) {
-        scheduleService.update(id, scheduleDTO);
+    public ResponseEntity<Long> updateCandidateDate(@PathVariable(name = "id") final Long id,
+            @RequestBody @Valid final CandidateDateDTO candidateDateDTO) {
+        candidateDateService.update(id, candidateDateDTO);
         return ResponseEntity.ok(id);
     }
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteSchedule(@PathVariable(name = "id") final Long id) {
-        final ReferencedWarning referencedWarning = scheduleService.getReferencedWarning(id);
-        if (referencedWarning != null) {
-            throw new ReferencedException(referencedWarning);
-        }
-        scheduleService.delete(id);
+    public ResponseEntity<Void> deleteCandidateDate(@PathVariable(name = "id") final Long id) {
+        candidateDateService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

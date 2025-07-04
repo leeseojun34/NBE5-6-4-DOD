@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.schedule_member.rest;
 
 import com.grepp.spring.app.model.member.domain.Member;
 import com.grepp.spring.app.model.member.repos.MemberRepository;

@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.social_auth_tokens.rest;
 
 import com.grepp.spring.app.model.member.domain.Member;
 import com.grepp.spring.app.model.member.repos.MemberRepository;

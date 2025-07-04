@@ -1,6 +1,5 @@
 package com.grepp.spring.app.model.schedule_member.domain;
 
-import com.grepp.spring.infra.entity.BaseEntity;
 import com.grepp.spring.app.model.member.domain.Member;
 import com.grepp.spring.app.model.middle_region.domain.MiddleRegion;
 import com.grepp.spring.app.model.schedule.domain.Schedule;
@@ -22,7 +21,7 @@ import lombok.Setter;
 @Table(name = "ScheduleMembers")
 @Getter
 @Setter
-public class ScheduleMember extends BaseEntity {
+public class ScheduleMember {
 
     @Id
     @Column(nullable = false, updatable = false)

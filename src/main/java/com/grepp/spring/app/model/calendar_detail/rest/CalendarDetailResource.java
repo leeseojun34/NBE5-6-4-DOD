@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.calendar_detail.rest;
 
 import com.grepp.spring.app.model.calendar.domain.Calendar;
 import com.grepp.spring.app.model.calendar.repos.CalendarRepository;

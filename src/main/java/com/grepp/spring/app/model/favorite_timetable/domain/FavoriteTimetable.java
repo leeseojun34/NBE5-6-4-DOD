@@ -1,6 +1,5 @@
 package com.grepp.spring.app.model.favorite_timetable.domain;
 
-import com.grepp.spring.infra.entity.BaseEntity;
 import com.grepp.spring.app.model.member.domain.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +20,7 @@ import lombok.Setter;
 @Table(name = "FavoriteTimetables")
 @Getter
 @Setter
-public class FavoriteTimetable extends BaseEntity {
+public class FavoriteTimetable {
 
     @Id
     @Column(nullable = false, updatable = false)

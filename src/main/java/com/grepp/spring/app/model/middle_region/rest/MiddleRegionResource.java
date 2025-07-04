@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.middle_region.rest;
 
 import com.grepp.spring.app.model.middle_region.model.MiddleRegionDTO;
 import com.grepp.spring.app.model.middle_region.service.MiddleRegionService;

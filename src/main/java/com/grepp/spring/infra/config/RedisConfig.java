@@ -15,19 +15,19 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @EnableRedisRepositories
 public class RedisConfig {
-
+    
     @Value("${spring.data.redis.port}")
     private int port;
-
+    
     @Value("${spring.data.redis.host}")
     private String host;
-
+    
     @Value("${spring.data.redis.username}")
     private String username;
-
+    
     @Value("${spring.data.redis.password}")
     private String password;
-
+    
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
@@ -37,12 +37,12 @@ public class RedisConfig {
         redisStandaloneConfiguration.setPassword(password);
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
-
+    
     @Bean
     public RedisTemplate<String, Object> redisTemplate(
         RedisConnectionFactory redisConnectionFactory,
         ObjectMapper objectMapper) {
-
+        
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());

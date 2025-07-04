@@ -1,9 +1,8 @@
 package com.grepp.spring.infra.response;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 public class PageResponse<T> {

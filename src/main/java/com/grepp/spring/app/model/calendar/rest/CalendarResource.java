@@ -1,10 +1,12 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.calendar.rest;
 
-import com.grepp.spring.app.model.favorite_location.model.FavoriteLocationDTO;
-import com.grepp.spring.app.model.favorite_location.service.FavoriteLocationService;
+import com.grepp.spring.app.model.calendar.model.CalendarDTO;
+import com.grepp.spring.app.model.calendar.service.CalendarService;
 import com.grepp.spring.app.model.member.domain.Member;
 import com.grepp.spring.app.model.member.repos.MemberRepository;
 import com.grepp.spring.util.CustomCollectors;
+import com.grepp.spring.util.ReferencedException;
+import com.grepp.spring.util.ReferencedWarning;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -24,48 +26,50 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(value = "/api/favoriteLocations", produces = MediaType.APPLICATION_JSON_VALUE)
-public class FavoriteLocationResource {
+@RequestMapping(value = "/api/calendars", produces = MediaType.APPLICATION_JSON_VALUE)
+public class CalendarResource {
 
-    private final FavoriteLocationService favoriteLocationService;
+    private final CalendarService calendarService;
     private final MemberRepository memberRepository;
 
-    public FavoriteLocationResource(final FavoriteLocationService favoriteLocationService,
+    public CalendarResource(final CalendarService calendarService,
             final MemberRepository memberRepository) {
-        this.favoriteLocationService = favoriteLocationService;
+        this.calendarService = calendarService;
         this.memberRepository = memberRepository;
     }
 
     @GetMapping
-    public ResponseEntity<List<FavoriteLocationDTO>> getAllFavoriteLocations() {
-        return ResponseEntity.ok(favoriteLocationService.findAll());
+    public ResponseEntity<List<CalendarDTO>> getAllCalendars() {
+        return ResponseEntity.ok(calendarService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FavoriteLocationDTO> getFavoriteLocation(
-            @PathVariable(name = "id") final Long id) {
-        return ResponseEntity.ok(favoriteLocationService.get(id));
+    public ResponseEntity<CalendarDTO> getCalendar(@PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(calendarService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<Long> createFavoriteLocation(
-            @RequestBody @Valid final FavoriteLocationDTO favoriteLocationDTO) {
-        final Long createdId = favoriteLocationService.create(favoriteLocationDTO);
+    public ResponseEntity<Long> createCalendar(@RequestBody @Valid final CalendarDTO calendarDTO) {
+        final Long createdId = calendarService.create(calendarDTO);
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Long> updateFavoriteLocation(@PathVariable(name = "id") final Long id,
-            @RequestBody @Valid final FavoriteLocationDTO favoriteLocationDTO) {
-        favoriteLocationService.update(id, favoriteLocationDTO);
+    public ResponseEntity<Long> updateCalendar(@PathVariable(name = "id") final Long id,
+            @RequestBody @Valid final CalendarDTO calendarDTO) {
+        calendarService.update(id, calendarDTO);
         return ResponseEntity.ok(id);
     }
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteFavoriteLocation(@PathVariable(name = "id") final Long id) {
-        favoriteLocationService.delete(id);
+    public ResponseEntity<Void> deleteCalendar(@PathVariable(name = "id") final Long id) {
+        final ReferencedWarning referencedWarning = calendarService.getReferencedWarning(id);
+        if (referencedWarning != null) {
+            throw new ReferencedException(referencedWarning);
+        }
+        calendarService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

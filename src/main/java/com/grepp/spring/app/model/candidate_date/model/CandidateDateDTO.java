@@ -12,8 +12,10 @@ public class CandidateDateDTO {
 
     private Long id;
 
+    private LocalDateTime startTime;
+
     @NotNull
-    private LocalDateTime date;
+    private LocalDateTime endTime;
 
     private Long event;
 

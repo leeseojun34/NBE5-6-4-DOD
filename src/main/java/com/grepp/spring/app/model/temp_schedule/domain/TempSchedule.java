@@ -1,7 +1,6 @@
 package com.grepp.spring.app.model.temp_schedule.domain;
 
 import com.grepp.spring.app.model.event_member.domain.EventMember;
-import com.grepp.spring.infra.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,7 +20,7 @@ import lombok.Setter;
 @Table(name = "TempSchedules")
 @Getter
 @Setter
-public class TempSchedule extends BaseEntity {
+public class TempSchedule {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -38,10 +37,10 @@ public class TempSchedule extends BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime startTime;
+    private LocalDateTime date;
 
     @Column(nullable = false)
-    private LocalDateTime endTime;
+    private Long timeBit;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_member_id")

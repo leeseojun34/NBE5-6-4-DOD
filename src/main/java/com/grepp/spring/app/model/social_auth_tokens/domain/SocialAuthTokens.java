@@ -1,6 +1,5 @@
 package com.grepp.spring.app.model.social_auth_tokens.domain;
 
-import com.grepp.spring.infra.entity.BaseEntity;
 import com.grepp.spring.app.model.member.domain.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +20,7 @@ import lombok.Setter;
 @Table(name = "SocialAuthTokenses")
 @Getter
 @Setter
-public class SocialAuthTokens extends BaseEntity {
+public class SocialAuthTokens {
 
     @Id
     @Column(nullable = false, updatable = false)

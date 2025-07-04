@@ -14,7 +14,8 @@ import * as yup from 'yup';
 function getSchema() {
   setYupDefaults();
   return yup.object({
-    date: yup.string().emptyToNull().required(),
+    startTime: yup.string().emptyToNull(),
+    endTime: yup.string().emptyToNull().required(),
     event: yup.number().integer().emptyToNull()
   });
 }
@@ -70,7 +71,8 @@ export default function CandidateDateEdit() {
     </div>
     <form onSubmit={useFormResult.handleSubmit(updateCandidateDate)} noValidate>
       <InputRow useFormResult={useFormResult} object="candidateDate" field="id" disabled={true} type="number" />
-      <InputRow useFormResult={useFormResult} object="candidateDate" field="date" required={true} type="datetimepicker" />
+      <InputRow useFormResult={useFormResult} object="candidateDate" field="startTime" type="datetimepicker" />
+      <InputRow useFormResult={useFormResult} object="candidateDate" field="endTime" required={true} type="datetimepicker" />
       <InputRow useFormResult={useFormResult} object="candidateDate" field="event" type="select" options={eventValues} />
       <input type="submit" value={t('candidateDate.edit.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>

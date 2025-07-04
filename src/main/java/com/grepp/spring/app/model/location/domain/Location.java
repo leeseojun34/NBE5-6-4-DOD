@@ -1,6 +1,5 @@
 package com.grepp.spring.app.model.location.domain;
 
-import com.grepp.spring.infra.entity.BaseEntity;
 import com.grepp.spring.app.model.middle_region.domain.MiddleRegion;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +19,7 @@ import lombok.Setter;
 @Table(name = "Locations")
 @Getter
 @Setter
-public class Location extends BaseEntity {
+public class Location {
 
     @Id
     @Column(nullable = false, updatable = false)

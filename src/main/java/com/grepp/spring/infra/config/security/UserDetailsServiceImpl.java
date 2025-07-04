@@ -1,6 +1,9 @@
 package com.grepp.spring.infra.config.security;
 
 import com.grepp.spring.app.model.auth.domain.Principal;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.grepp.spring.app.model.member.domain.Member;
 import com.grepp.spring.app.model.member.repos.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,9 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

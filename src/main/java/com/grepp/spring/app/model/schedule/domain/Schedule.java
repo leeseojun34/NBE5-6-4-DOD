@@ -1,7 +1,6 @@
 package com.grepp.spring.app.model.schedule.domain;
 
 import com.grepp.spring.app.model.event.domain.Event;
-import com.grepp.spring.infra.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,7 +20,7 @@ import lombok.Setter;
 @Table(name = "Schedules")
 @Getter
 @Setter
-public class Schedule extends BaseEntity {
+public class Schedule {
 
     @Id
     @Column(nullable = false, updatable = false)

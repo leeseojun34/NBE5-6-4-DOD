@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.group.rest;
 
 import com.grepp.spring.app.model.group.model.GroupDTO;
 import com.grepp.spring.app.model.group.service.GroupService;

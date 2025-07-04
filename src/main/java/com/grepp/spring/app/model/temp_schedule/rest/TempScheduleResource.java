@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.temp_schedule.rest;
 
 import com.grepp.spring.app.model.event_member.domain.EventMember;
 import com.grepp.spring.app.model.event_member.repos.EventMemberRepository;

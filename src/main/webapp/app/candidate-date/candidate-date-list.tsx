@@ -59,7 +59,8 @@ export default function CandidateDateList() {
         <thead>
           <tr>
             <th scope="col" className="text-left p-2">{t('candidateDate.id.label')}</th>
-            <th scope="col" className="text-left p-2">{t('candidateDate.date.label')}</th>
+            <th scope="col" className="text-left p-2">{t('candidateDate.startTime.label')}</th>
+            <th scope="col" className="text-left p-2">{t('candidateDate.endTime.label')}</th>
             <th scope="col" className="text-left p-2">{t('candidateDate.event.label')}</th>
             <th></th>
           </tr>
@@ -68,7 +69,8 @@ export default function CandidateDateList() {
           {candidateDates.map((candidateDate) => (
           <tr key={candidateDate.id} className="odd:bg-gray-100">
             <td className="p-2">{candidateDate.id}</td>
-            <td className="p-2">{candidateDate.date}</td>
+            <td className="p-2">{candidateDate.startTime}</td>
+            <td className="p-2">{candidateDate.endTime}</td>
             <td className="p-2">{candidateDate.event}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">

@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.member.rest;
 
 import com.grepp.spring.app.model.member.model.MemberDTO;
 import com.grepp.spring.app.model.member.service.MemberService;

@@ -14,8 +14,8 @@ import * as yup from 'yup';
 function getSchema() {
   setYupDefaults();
   return yup.object({
-    startTime: yup.string().emptyToNull().required(),
-    endTime: yup.string().emptyToNull().required(),
+    date: yup.string().emptyToNull().required(),
+    timeBit: yup.number().integer().emptyToNull().required(),
     eventMember: yup.number().integer().emptyToNull()
   });
 }
@@ -66,8 +66,8 @@ export default function TempScheduleAdd() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(createTempSchedule)} noValidate>
-      <InputRow useFormResult={useFormResult} object="tempSchedule" field="startTime" required={true} type="datetimepicker" />
-      <InputRow useFormResult={useFormResult} object="tempSchedule" field="endTime" required={true} type="datetimepicker" />
+      <InputRow useFormResult={useFormResult} object="tempSchedule" field="date" required={true} type="datetimepicker" />
+      <InputRow useFormResult={useFormResult} object="tempSchedule" field="timeBit" required={true} type="number" />
       <InputRow useFormResult={useFormResult} object="tempSchedule" field="eventMember" type="select" options={eventMemberValues} />
       <input type="submit" value={t('tempSchedule.add.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>

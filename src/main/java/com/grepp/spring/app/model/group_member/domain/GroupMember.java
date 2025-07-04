@@ -1,7 +1,6 @@
 package com.grepp.spring.app.model.group_member.domain;
 
 import com.grepp.spring.app.model.group.domain.Group;
-import com.grepp.spring.infra.entity.BaseEntity;
 import com.grepp.spring.app.model.member.domain.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +20,7 @@ import lombok.Setter;
 @Table(name = "GroupMembers")
 @Getter
 @Setter
-public class GroupMember extends BaseEntity {
+public class GroupMember {
 
     @Id
     @Column(nullable = false, updatable = false)

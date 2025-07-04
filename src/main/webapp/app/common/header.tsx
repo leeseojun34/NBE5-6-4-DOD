@@ -63,17 +63,17 @@ export default function Header() {
                   <li><Link to="/favoriteTimetables" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('favoriteTimetable.list.headline')}</Link></li>
                   <li><Link to="/calendars" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('calendar.list.headline')}</Link></li>
                   <li><Link to="/calendarDetails" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('calendarDetail.list.headline')}</Link></li>
-                  <li><Link to="/eventMembers" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('eventMember.list.headline')}</Link></li>
-                  <li><Link to="/memberVotes" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('memberVote.list.headline')}</Link></li>
-                  <li><Link to="/locations" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('location.list.headline')}</Link></li>
-                  <li><Link to="/middleRegions" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('middleRegion.list.headline')}</Link></li>
-                  <li><Link to="/workspaces" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('workspace.list.headline')}</Link></li>
-                  <li><Link to="/scheduleMembers" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('scheduleMember.list.headline')}</Link></li>
                   <li><Link to="/events" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('event.list.headline')}</Link></li>
                   <li><Link to="/groups" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('group.list.headline')}</Link></li>
                   <li><Link to="/tempSchedules" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('tempSchedule.list.headline')}</Link></li>
                   <li><Link to="/groupMembers" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('groupMember.list.headline')}</Link></li>
                   <li><Link to="/schedules" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('schedule.list.headline')}</Link></li>
+                  <li><Link to="/scheduleMembers" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('scheduleMember.list.headline')}</Link></li>
+                  <li><Link to="/workspaces" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('workspace.list.headline')}</Link></li>
+                  <li><Link to="/middleRegions" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('middleRegion.list.headline')}</Link></li>
+                  <li><Link to="/locations" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('location.list.headline')}</Link></li>
+                  <li><Link to="/memberVotes" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('memberVote.list.headline')}</Link></li>
+                  <li><Link to="/eventMembers" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('eventMember.list.headline')}</Link></li>
                   <li><Link to="/candidateDates" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('candidateDate.list.headline')}</Link></li>
                 </ul>
               </li>

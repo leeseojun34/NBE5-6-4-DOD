@@ -5,8 +5,8 @@ export class TempScheduleDTO {
   }
 
   id?: number|null;
-  startTime?: string|null;
-  endTime?: string|null;
+  date?: string|null;
+  timeBit?: number|null;
   eventMember?: number|null;
 
 }

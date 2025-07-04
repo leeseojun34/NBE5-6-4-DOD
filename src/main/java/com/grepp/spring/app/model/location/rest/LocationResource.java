@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.location.rest;
 
 import com.grepp.spring.app.model.location.model.LocationDTO;
 import com.grepp.spring.app.model.location.service.LocationService;

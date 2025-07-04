@@ -1,6 +1,6 @@
 package com.grepp.spring.infra.payload;
 
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Data

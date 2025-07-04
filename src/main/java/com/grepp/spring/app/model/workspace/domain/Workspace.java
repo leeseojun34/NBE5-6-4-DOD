@@ -1,6 +1,5 @@
 package com.grepp.spring.app.model.workspace.domain;
 
-import com.grepp.spring.infra.entity.BaseEntity;
 import com.grepp.spring.app.model.schedule.domain.Schedule;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +19,7 @@ import lombok.Setter;
 @Table(name = "Workspaces")
 @Getter
 @Setter
-public class Workspace extends BaseEntity {
+public class Workspace {
 
     @Id
     @Column(nullable = false, updatable = false)

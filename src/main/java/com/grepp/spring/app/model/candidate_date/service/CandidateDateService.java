@@ -56,14 +56,16 @@ public class CandidateDateService {
     private CandidateDateDTO mapToDTO(final CandidateDate candidateDate,
             final CandidateDateDTO candidateDateDTO) {
         candidateDateDTO.setId(candidateDate.getId());
-        candidateDateDTO.setDate(candidateDate.getDate());
+        candidateDateDTO.setStartTime(candidateDate.getStartTime());
+        candidateDateDTO.setEndTime(candidateDate.getEndTime());
         candidateDateDTO.setEvent(candidateDate.getEvent() == null ? null : candidateDate.getEvent().getId());
         return candidateDateDTO;
     }
 
     private CandidateDate mapToEntity(final CandidateDateDTO candidateDateDTO,
             final CandidateDate candidateDate) {
-        candidateDate.setDate(candidateDateDTO.getDate());
+        candidateDate.setStartTime(candidateDateDTO.getStartTime());
+        candidateDate.setEndTime(candidateDateDTO.getEndTime());
         final Event event = candidateDateDTO.getEvent() == null ? null : eventRepository.findById(candidateDateDTO.getEvent())
                 .orElseThrow(() -> new NotFoundException("event not found"));
         candidateDate.setEvent(event);

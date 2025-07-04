@@ -1,6 +1,5 @@
 package com.grepp.spring.app.model.favorite_location.domain;
 
-import com.grepp.spring.infra.entity.BaseEntity;
 import com.grepp.spring.app.model.member.domain.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +19,7 @@ import lombok.Setter;
 @Table(name = "FavoriteLocations")
 @Getter
 @Setter
-public class FavoriteLocation extends BaseEntity {
+public class FavoriteLocation {
 
     @Id
     @Column(nullable = false, updatable = false)

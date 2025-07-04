@@ -1,6 +1,5 @@
 package com.grepp.spring.app.model.member.domain;
 
-import com.grepp.spring.infra.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,7 +12,7 @@ import lombok.Setter;
 @Table(name = "Members")
 @Getter
 @Setter
-public class Member extends BaseEntity {
+public class Member {
 
     @Id
     @Column(nullable = false, updatable = false)

@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.member_vote.rest;
 
 import com.grepp.spring.app.model.location.domain.Location;
 import com.grepp.spring.app.model.location.repos.LocationRepository;

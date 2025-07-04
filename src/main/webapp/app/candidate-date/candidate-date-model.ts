@@ -5,7 +5,8 @@ export class CandidateDateDTO {
   }
 
   id?: number|null;
-  date?: string|null;
+  startTime?: string|null;
+  endTime?: string|null;
   event?: number|null;
 
 }

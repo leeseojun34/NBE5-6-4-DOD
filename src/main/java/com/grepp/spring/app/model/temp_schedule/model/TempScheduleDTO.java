@@ -13,10 +13,10 @@ public class TempScheduleDTO {
     private Long id;
 
     @NotNull
-    private LocalDateTime startTime;
+    private LocalDateTime date;
 
     @NotNull
-    private LocalDateTime endTime;
+    private Long timeBit;
 
     private Long eventMember;
 

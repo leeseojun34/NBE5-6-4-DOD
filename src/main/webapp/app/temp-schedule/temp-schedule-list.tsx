@@ -59,8 +59,8 @@ export default function TempScheduleList() {
         <thead>
           <tr>
             <th scope="col" className="text-left p-2">{t('tempSchedule.id.label')}</th>
-            <th scope="col" className="text-left p-2">{t('tempSchedule.startTime.label')}</th>
-            <th scope="col" className="text-left p-2">{t('tempSchedule.endTime.label')}</th>
+            <th scope="col" className="text-left p-2">{t('tempSchedule.date.label')}</th>
+            <th scope="col" className="text-left p-2">{t('tempSchedule.timeBit.label')}</th>
             <th scope="col" className="text-left p-2">{t('tempSchedule.eventMember.label')}</th>
             <th></th>
           </tr>
@@ -69,8 +69,8 @@ export default function TempScheduleList() {
           {tempSchedules.map((tempSchedule) => (
           <tr key={tempSchedule.id} className="odd:bg-gray-100">
             <td className="p-2">{tempSchedule.id}</td>
-            <td className="p-2">{tempSchedule.startTime}</td>
-            <td className="p-2">{tempSchedule.endTime}</td>
+            <td className="p-2">{tempSchedule.date}</td>
+            <td className="p-2">{tempSchedule.timeBit}</td>
             <td className="p-2">{tempSchedule.eventMember}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">

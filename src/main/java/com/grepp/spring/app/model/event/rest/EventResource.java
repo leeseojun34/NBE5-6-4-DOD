@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.event.rest;
 
 import com.grepp.spring.app.model.event.model.EventDTO;
 import com.grepp.spring.app.model.event.service.EventService;

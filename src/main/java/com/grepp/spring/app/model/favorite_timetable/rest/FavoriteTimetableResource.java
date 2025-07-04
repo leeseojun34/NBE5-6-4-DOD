@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.favorite_timetable.rest;
 
 import com.grepp.spring.app.model.favorite_timetable.model.FavoriteTimetableDTO;
 import com.grepp.spring.app.model.favorite_timetable.service.FavoriteTimetableService;

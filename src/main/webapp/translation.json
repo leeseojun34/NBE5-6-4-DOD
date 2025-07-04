@@ -334,269 +334,6 @@
       "success": "Calendar Detail was removed successfully."
     }
   },
-  "eventMember": {
-    "list": {
-      "headline": "Event Members",
-      "createNew": "Create new Event Member",
-      "empty": "No Event Members could be found.",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
-    "add": {
-      "headline": "Add Event Member",
-      "back": "Back to list"
-    },
-    "id": {
-      "label": "Id"
-    },
-    "role": {
-      "label": "Role"
-    },
-    "member": {
-      "label": "Member"
-    },
-    "event": {
-      "label": "Event"
-    },
-    "edit": {
-      "headline": "Edit Event Member",
-      "back": "Back to list"
-    },
-    "tempSchedule": {
-      "eventMember": {
-        "referenced": "This entity is still referenced by Temp Schedule {{id}} via field Event Member."
-      }
-    },
-    "create": {
-      "success": "Event Member was created successfully."
-    },
-    "update": {
-      "success": "Event Member was updated successfully."
-    },
-    "delete": {
-      "success": "Event Member was removed successfully."
-    }
-  },
-  "memberVote": {
-    "list": {
-      "headline": "Member Votes",
-      "createNew": "Create new Member Vote",
-      "empty": "No Member Votes could be found.",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
-    "add": {
-      "headline": "Add Member Vote",
-      "back": "Back to list"
-    },
-    "id": {
-      "label": "Id"
-    },
-    "voter": {
-      "label": "Voter"
-    },
-    "location": {
-      "label": "Location"
-    },
-    "edit": {
-      "headline": "Edit Member Vote",
-      "back": "Back to list"
-    },
-    "create": {
-      "success": "Member Vote was created successfully."
-    },
-    "update": {
-      "success": "Member Vote was updated successfully."
-    },
-    "delete": {
-      "success": "Member Vote was removed successfully."
-    }
-  },
-  "location": {
-    "list": {
-      "headline": "Locations",
-      "createNew": "Create new Location",
-      "empty": "No Locations could be found.",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
-    "add": {
-      "headline": "Add Location",
-      "back": "Back to list"
-    },
-    "id": {
-      "label": "Id"
-    },
-    "latitude": {
-      "label": "Latitude"
-    },
-    "longitude": {
-      "label": "Longitude"
-    },
-    "name": {
-      "label": "Name"
-    },
-    "suggestedMemberId": {
-      "label": "Suggested Member Id"
-    },
-    "voteCount": {
-      "label": "Vote Count"
-    },
-    "status": {
-      "label": "Status"
-    },
-    "middleRegion": {
-      "label": "Middle Region"
-    },
-    "edit": {
-      "headline": "Edit Location",
-      "back": "Back to list"
-    },
-    "memberVote": {
-      "location": {
-        "referenced": "This entity is still referenced by Member Vote {{id}} via field Location."
-      }
-    },
-    "create": {
-      "success": "Location was created successfully."
-    },
-    "update": {
-      "success": "Location was updated successfully."
-    },
-    "delete": {
-      "success": "Location was removed successfully."
-    }
-  },
-  "middleRegion": {
-    "list": {
-      "headline": "Middle Regions",
-      "createNew": "Create new Middle Region",
-      "empty": "No Middle Regions could be found.",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
-    "add": {
-      "headline": "Add Middle Region",
-      "back": "Back to list"
-    },
-    "id": {
-      "label": "Id"
-    },
-    "latitude": {
-      "label": "Latitude"
-    },
-    "longitude": {
-      "label": "Longitude"
-    },
-    "edit": {
-      "headline": "Edit Middle Region",
-      "back": "Back to list"
-    },
-    "location": {
-      "middleRegion": {
-        "referenced": "This entity is still referenced by Location {{id}} via field Middle Region."
-      }
-    },
-    "scheduleMember": {
-      "middleRegion": {
-        "referenced": "This entity is still referenced by Schedule Member {{id}} via field Middle Region."
-      }
-    },
-    "create": {
-      "success": "Middle Region was created successfully."
-    },
-    "update": {
-      "success": "Middle Region was updated successfully."
-    },
-    "delete": {
-      "success": "Middle Region was removed successfully."
-    }
-  },
-  "workspace": {
-    "list": {
-      "headline": "Workspaces",
-      "createNew": "Create new Workspace",
-      "empty": "No Workspaces could be found.",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
-    "add": {
-      "headline": "Add Workspace",
-      "back": "Back to list"
-    },
-    "id": {
-      "label": "Id"
-    },
-    "url": {
-      "label": "Url"
-    },
-    "schedule": {
-      "label": "Schedule"
-    },
-    "edit": {
-      "headline": "Edit Workspace",
-      "back": "Back to list"
-    },
-    "create": {
-      "success": "Workspace was created successfully."
-    },
-    "update": {
-      "success": "Workspace was updated successfully."
-    },
-    "delete": {
-      "success": "Workspace was removed successfully."
-    }
-  },
-  "scheduleMember": {
-    "list": {
-      "headline": "Schedule Members",
-      "createNew": "Create new Schedule Member",
-      "empty": "No Schedule Members could be found.",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
-    "add": {
-      "headline": "Add Schedule Member",
-      "back": "Back to list"
-    },
-    "id": {
-      "label": "Id"
-    },
-    "role": {
-      "label": "Role"
-    },
-    "departLocationName": {
-      "label": "Depart Location Name"
-    },
-    "latitude": {
-      "label": "Latitude"
-    },
-    "longitude": {
-      "label": "Longitude"
-    },
-    "member": {
-      "label": "Member"
-    },
-    "schedule": {
-      "label": "Schedule"
-    },
-    "middleRegion": {
-      "label": "Middle Region"
-    },
-    "edit": {
-      "headline": "Edit Schedule Member",
-      "back": "Back to list"
-    },
-    "create": {
-      "success": "Schedule Member was created successfully."
-    },
-    "update": {
-      "success": "Schedule Member was updated successfully."
-    },
-    "delete": {
-      "success": "Schedule Member was removed successfully."
-    }
-  },
   "event": {
     "list": {
       "headline": "Events",
@@ -719,11 +456,11 @@
     "id": {
       "label": "Id"
     },
-    "startTime": {
-      "label": "Start Time"
+    "date": {
+      "label": "Date"
     },
-    "endTime": {
-      "label": "End Time"
+    "timeBit": {
+      "label": "Time Bit"
     },
     "eventMember": {
       "label": "Event Member"
@@ -846,6 +583,269 @@
       "success": "Schedule was removed successfully."
     }
   },
+  "scheduleMember": {
+    "list": {
+      "headline": "Schedule Members",
+      "createNew": "Create new Schedule Member",
+      "empty": "No Schedule Members could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Schedule Member",
+      "back": "Back to list"
+    },
+    "id": {
+      "label": "Id"
+    },
+    "role": {
+      "label": "Role"
+    },
+    "departLocationName": {
+      "label": "Depart Location Name"
+    },
+    "latitude": {
+      "label": "Latitude"
+    },
+    "longitude": {
+      "label": "Longitude"
+    },
+    "member": {
+      "label": "Member"
+    },
+    "schedule": {
+      "label": "Schedule"
+    },
+    "middleRegion": {
+      "label": "Middle Region"
+    },
+    "edit": {
+      "headline": "Edit Schedule Member",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Schedule Member was created successfully."
+    },
+    "update": {
+      "success": "Schedule Member was updated successfully."
+    },
+    "delete": {
+      "success": "Schedule Member was removed successfully."
+    }
+  },
+  "workspace": {
+    "list": {
+      "headline": "Workspaces",
+      "createNew": "Create new Workspace",
+      "empty": "No Workspaces could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Workspace",
+      "back": "Back to list"
+    },
+    "id": {
+      "label": "Id"
+    },
+    "url": {
+      "label": "Url"
+    },
+    "schedule": {
+      "label": "Schedule"
+    },
+    "edit": {
+      "headline": "Edit Workspace",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Workspace was created successfully."
+    },
+    "update": {
+      "success": "Workspace was updated successfully."
+    },
+    "delete": {
+      "success": "Workspace was removed successfully."
+    }
+  },
+  "middleRegion": {
+    "list": {
+      "headline": "Middle Regions",
+      "createNew": "Create new Middle Region",
+      "empty": "No Middle Regions could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Middle Region",
+      "back": "Back to list"
+    },
+    "id": {
+      "label": "Id"
+    },
+    "latitude": {
+      "label": "Latitude"
+    },
+    "longitude": {
+      "label": "Longitude"
+    },
+    "edit": {
+      "headline": "Edit Middle Region",
+      "back": "Back to list"
+    },
+    "location": {
+      "middleRegion": {
+        "referenced": "This entity is still referenced by Location {{id}} via field Middle Region."
+      }
+    },
+    "scheduleMember": {
+      "middleRegion": {
+        "referenced": "This entity is still referenced by Schedule Member {{id}} via field Middle Region."
+      }
+    },
+    "create": {
+      "success": "Middle Region was created successfully."
+    },
+    "update": {
+      "success": "Middle Region was updated successfully."
+    },
+    "delete": {
+      "success": "Middle Region was removed successfully."
+    }
+  },
+  "location": {
+    "list": {
+      "headline": "Locations",
+      "createNew": "Create new Location",
+      "empty": "No Locations could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Location",
+      "back": "Back to list"
+    },
+    "id": {
+      "label": "Id"
+    },
+    "latitude": {
+      "label": "Latitude"
+    },
+    "longitude": {
+      "label": "Longitude"
+    },
+    "name": {
+      "label": "Name"
+    },
+    "suggestedMemberId": {
+      "label": "Suggested Member Id"
+    },
+    "voteCount": {
+      "label": "Vote Count"
+    },
+    "status": {
+      "label": "Status"
+    },
+    "middleRegion": {
+      "label": "Middle Region"
+    },
+    "edit": {
+      "headline": "Edit Location",
+      "back": "Back to list"
+    },
+    "memberVote": {
+      "location": {
+        "referenced": "This entity is still referenced by Member Vote {{id}} via field Location."
+      }
+    },
+    "create": {
+      "success": "Location was created successfully."
+    },
+    "update": {
+      "success": "Location was updated successfully."
+    },
+    "delete": {
+      "success": "Location was removed successfully."
+    }
+  },
+  "memberVote": {
+    "list": {
+      "headline": "Member Votes",
+      "createNew": "Create new Member Vote",
+      "empty": "No Member Votes could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Member Vote",
+      "back": "Back to list"
+    },
+    "id": {
+      "label": "Id"
+    },
+    "voter": {
+      "label": "Voter"
+    },
+    "location": {
+      "label": "Location"
+    },
+    "edit": {
+      "headline": "Edit Member Vote",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Member Vote was created successfully."
+    },
+    "update": {
+      "success": "Member Vote was updated successfully."
+    },
+    "delete": {
+      "success": "Member Vote was removed successfully."
+    }
+  },
+  "eventMember": {
+    "list": {
+      "headline": "Event Members",
+      "createNew": "Create new Event Member",
+      "empty": "No Event Members could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Event Member",
+      "back": "Back to list"
+    },
+    "id": {
+      "label": "Id"
+    },
+    "role": {
+      "label": "Role"
+    },
+    "member": {
+      "label": "Member"
+    },
+    "event": {
+      "label": "Event"
+    },
+    "edit": {
+      "headline": "Edit Event Member",
+      "back": "Back to list"
+    },
+    "tempSchedule": {
+      "eventMember": {
+        "referenced": "This entity is still referenced by Temp Schedule {{id}} via field Event Member."
+      }
+    },
+    "create": {
+      "success": "Event Member was created successfully."
+    },
+    "update": {
+      "success": "Event Member was updated successfully."
+    },
+    "delete": {
+      "success": "Event Member was removed successfully."
+    }
+  },
   "candidateDate": {
     "list": {
       "headline": "Candidate Dates",
@@ -861,8 +861,11 @@
     "id": {
       "label": "Id"
     },
-    "date": {
-      "label": "Date"
+    "startTime": {
+      "label": "Start Time"
+    },
+    "endTime": {
+      "label": "End Time"
     },
     "event": {
       "label": "Event"

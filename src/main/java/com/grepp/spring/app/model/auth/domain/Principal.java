@@ -1,13 +1,13 @@
 package com.grepp.spring.app.model.auth.domain;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
 import com.grepp.spring.app.model.member.domain.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 public class Principal extends User {
     

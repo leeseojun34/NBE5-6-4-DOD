@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.workspace.rest;
 
 import com.grepp.spring.app.model.schedule.domain.Schedule;
 import com.grepp.spring.app.model.schedule.repos.ScheduleRepository;

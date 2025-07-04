@@ -56,16 +56,16 @@ public class TempScheduleService {
     private TempScheduleDTO mapToDTO(final TempSchedule tempSchedule,
             final TempScheduleDTO tempScheduleDTO) {
         tempScheduleDTO.setId(tempSchedule.getId());
-        tempScheduleDTO.setStartTime(tempSchedule.getStartTime());
-        tempScheduleDTO.setEndTime(tempSchedule.getEndTime());
+        tempScheduleDTO.setDate(tempSchedule.getDate());
+        tempScheduleDTO.setTimeBit(tempSchedule.getTimeBit());
         tempScheduleDTO.setEventMember(tempSchedule.getEventMember() == null ? null : tempSchedule.getEventMember().getId());
         return tempScheduleDTO;
     }
 
     private TempSchedule mapToEntity(final TempScheduleDTO tempScheduleDTO,
             final TempSchedule tempSchedule) {
-        tempSchedule.setStartTime(tempScheduleDTO.getStartTime());
-        tempSchedule.setEndTime(tempScheduleDTO.getEndTime());
+        tempSchedule.setDate(tempScheduleDTO.getDate());
+        tempSchedule.setTimeBit(tempScheduleDTO.getTimeBit());
         final EventMember eventMember = tempScheduleDTO.getEventMember() == null ? null : eventMemberRepository.findById(tempScheduleDTO.getEventMember())
                 .orElseThrow(() -> new NotFoundException("eventMember not found"));
         tempSchedule.setEventMember(eventMember);

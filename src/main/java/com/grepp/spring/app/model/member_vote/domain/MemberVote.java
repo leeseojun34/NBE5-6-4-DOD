@@ -1,6 +1,5 @@
 package com.grepp.spring.app.model.member_vote.domain;
 
-import com.grepp.spring.infra.entity.BaseEntity;
 import com.grepp.spring.app.model.location.domain.Location;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +19,7 @@ import lombok.Setter;
 @Table(name = "MemberVotes")
 @Getter
 @Setter
-public class MemberVote extends BaseEntity {
+public class MemberVote {
 
     @Id
     @Column(nullable = false, updatable = false)

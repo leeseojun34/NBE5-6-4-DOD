@@ -4,11 +4,12 @@ This app was created with Bootify.io - tips on working with the code [can be fou
 
 ## Development
 
-Update your local database connection in `application.yml` or create your own `application-local.yml` file to override
-settings for development.
+When starting the application `docker compose up` is called and the app will connect to the contained services.
+[Docker](https://www.docker.com/get-started/) must be available on the current system.
 
 During development it is recommended to use the profile `local`. In IntelliJ `-Dspring.profiles.active=local` can be
-added in the VM options of the Run Configuration after enabling this property in "Modify options".
+added in the VM options of the Run Configuration after enabling this property in "Modify options". Create your own
+`application-local.yml` file to override settings for development.
 
 Lombok must be supported by your IDE. For IntelliJ install the Lombok plugin and enable annotation processing -
 [learn more](https://bootify.io/next-steps/spring-boot-with-lombok.html).
@@ -54,7 +55,7 @@ gradlew bootBuildImage --imageName=com.grepp/spring
 
 ## Further readings
 
-* [Gradle user manual](https://docs.gradle.org/)  
+* [Gradle member manual](https://docs.gradle.org/)  
 * [Spring Boot reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)  
 * [Spring Data JPA reference](https://docs.spring.io/spring-data/jpa/reference/jpa.html)
 * [Learn React](https://react.dev/learn)

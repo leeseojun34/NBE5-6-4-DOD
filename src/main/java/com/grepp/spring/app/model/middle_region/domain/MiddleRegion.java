@@ -1,6 +1,5 @@
 package com.grepp.spring.app.model.middle_region.domain;
 
-import com.grepp.spring.infra.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +15,7 @@ import lombok.Setter;
 @Table(name = "MiddleRegions")
 @Getter
 @Setter
-public class MiddleRegion extends BaseEntity {
+public class MiddleRegion {
 
     @Id
     @Column(nullable = false, updatable = false)

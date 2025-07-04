@@ -20,24 +20,6 @@ import CalendarEdit from './calendar/calendar-edit';
 import CalendarDetailList from './calendar-detail/calendar-detail-list';
 import CalendarDetailAdd from './calendar-detail/calendar-detail-add';
 import CalendarDetailEdit from './calendar-detail/calendar-detail-edit';
-import EventMemberList from './event-member/event-member-list';
-import EventMemberAdd from './event-member/event-member-add';
-import EventMemberEdit from './event-member/event-member-edit';
-import MemberVoteList from './member-vote/member-vote-list';
-import MemberVoteAdd from './member-vote/member-vote-add';
-import MemberVoteEdit from './member-vote/member-vote-edit';
-import LocationList from './location/location-list';
-import LocationAdd from './location/location-add';
-import LocationEdit from './location/location-edit';
-import MiddleRegionList from './middle-region/middle-region-list';
-import MiddleRegionAdd from './middle-region/middle-region-add';
-import MiddleRegionEdit from './middle-region/middle-region-edit';
-import WorkspaceList from './workspace/workspace-list';
-import WorkspaceAdd from './workspace/workspace-add';
-import WorkspaceEdit from './workspace/workspace-edit';
-import ScheduleMemberList from './schedule-member/schedule-member-list';
-import ScheduleMemberAdd from './schedule-member/schedule-member-add';
-import ScheduleMemberEdit from './schedule-member/schedule-member-edit';
 import EventList from './event/event-list';
 import EventAdd from './event/event-add';
 import EventEdit from './event/event-edit';
@@ -53,6 +35,24 @@ import GroupMemberEdit from './group-member/group-member-edit';
 import ScheduleList from './schedule/schedule-list';
 import ScheduleAdd from './schedule/schedule-add';
 import ScheduleEdit from './schedule/schedule-edit';
+import ScheduleMemberList from './schedule-member/schedule-member-list';
+import ScheduleMemberAdd from './schedule-member/schedule-member-add';
+import ScheduleMemberEdit from './schedule-member/schedule-member-edit';
+import WorkspaceList from './workspace/workspace-list';
+import WorkspaceAdd from './workspace/workspace-add';
+import WorkspaceEdit from './workspace/workspace-edit';
+import MiddleRegionList from './middle-region/middle-region-list';
+import MiddleRegionAdd from './middle-region/middle-region-add';
+import MiddleRegionEdit from './middle-region/middle-region-edit';
+import LocationList from './location/location-list';
+import LocationAdd from './location/location-add';
+import LocationEdit from './location/location-edit';
+import MemberVoteList from './member-vote/member-vote-list';
+import MemberVoteAdd from './member-vote/member-vote-add';
+import MemberVoteEdit from './member-vote/member-vote-edit';
+import EventMemberList from './event-member/event-member-list';
+import EventMemberAdd from './event-member/event-member-add';
+import EventMemberEdit from './event-member/event-member-edit';
 import CandidateDateList from './candidate-date/candidate-date-list';
 import CandidateDateAdd from './candidate-date/candidate-date-add';
 import CandidateDateEdit from './candidate-date/candidate-date-edit';
@@ -83,24 +83,6 @@ export default function AppRoutes() {
         { path: 'calendarDetails', element: <CalendarDetailList /> },
         { path: 'calendarDetails/add', element: <CalendarDetailAdd /> },
         { path: 'calendarDetails/edit/:id', element: <CalendarDetailEdit /> },
-        { path: 'eventMembers', element: <EventMemberList /> },
-        { path: 'eventMembers/add', element: <EventMemberAdd /> },
-        { path: 'eventMembers/edit/:id', element: <EventMemberEdit /> },
-        { path: 'memberVotes', element: <MemberVoteList /> },
-        { path: 'memberVotes/add', element: <MemberVoteAdd /> },
-        { path: 'memberVotes/edit/:id', element: <MemberVoteEdit /> },
-        { path: 'locations', element: <LocationList /> },
-        { path: 'locations/add', element: <LocationAdd /> },
-        { path: 'locations/edit/:id', element: <LocationEdit /> },
-        { path: 'middleRegions', element: <MiddleRegionList /> },
-        { path: 'middleRegions/add', element: <MiddleRegionAdd /> },
-        { path: 'middleRegions/edit/:id', element: <MiddleRegionEdit /> },
-        { path: 'workspaces', element: <WorkspaceList /> },
-        { path: 'workspaces/add', element: <WorkspaceAdd /> },
-        { path: 'workspaces/edit/:id', element: <WorkspaceEdit /> },
-        { path: 'scheduleMembers', element: <ScheduleMemberList /> },
-        { path: 'scheduleMembers/add', element: <ScheduleMemberAdd /> },
-        { path: 'scheduleMembers/edit/:id', element: <ScheduleMemberEdit /> },
         { path: 'events', element: <EventList /> },
         { path: 'events/add', element: <EventAdd /> },
         { path: 'events/edit/:id', element: <EventEdit /> },
@@ -116,6 +98,24 @@ export default function AppRoutes() {
         { path: 'schedules', element: <ScheduleList /> },
         { path: 'schedules/add', element: <ScheduleAdd /> },
         { path: 'schedules/edit/:id', element: <ScheduleEdit /> },
+        { path: 'scheduleMembers', element: <ScheduleMemberList /> },
+        { path: 'scheduleMembers/add', element: <ScheduleMemberAdd /> },
+        { path: 'scheduleMembers/edit/:id', element: <ScheduleMemberEdit /> },
+        { path: 'workspaces', element: <WorkspaceList /> },
+        { path: 'workspaces/add', element: <WorkspaceAdd /> },
+        { path: 'workspaces/edit/:id', element: <WorkspaceEdit /> },
+        { path: 'middleRegions', element: <MiddleRegionList /> },
+        { path: 'middleRegions/add', element: <MiddleRegionAdd /> },
+        { path: 'middleRegions/edit/:id', element: <MiddleRegionEdit /> },
+        { path: 'locations', element: <LocationList /> },
+        { path: 'locations/add', element: <LocationAdd /> },
+        { path: 'locations/edit/:id', element: <LocationEdit /> },
+        { path: 'memberVotes', element: <MemberVoteList /> },
+        { path: 'memberVotes/add', element: <MemberVoteAdd /> },
+        { path: 'memberVotes/edit/:id', element: <MemberVoteEdit /> },
+        { path: 'eventMembers', element: <EventMemberList /> },
+        { path: 'eventMembers/add', element: <EventMemberAdd /> },
+        { path: 'eventMembers/edit/:id', element: <EventMemberEdit /> },
         { path: 'candidateDates', element: <CandidateDateList /> },
         { path: 'candidateDates/add', element: <CandidateDateAdd /> },
         { path: 'candidateDates/edit/:id', element: <CandidateDateEdit /> },

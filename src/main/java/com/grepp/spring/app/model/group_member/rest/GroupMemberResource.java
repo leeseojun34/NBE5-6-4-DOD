@@ -1,4 +1,4 @@
-package com.grepp.spring.app.controller.api;
+package com.grepp.spring.app.model.group_member.rest;
 
 import com.grepp.spring.app.model.group.domain.Group;
 import com.grepp.spring.app.model.group.repos.GroupRepository;
