@@ -14,8 +14,8 @@ import * as yup from 'yup';
 function getSchema() {
   setYupDefaults();
   return yup.object({
-    url: yup.string().emptyToNull().max(255).required(),
-    detail: yup.number().integer().emptyToNull()
+    url: yup.string().emptyToNull().required(),
+    schedule: yup.number().integer().emptyToNull()
   });
 }
 
@@ -24,7 +24,7 @@ export default function WorkspaceAdd() {
   useDocumentTitle(t('workspace.add.headline'));
 
   const navigate = useNavigate();
-  const [detailValues, setDetailValues] = useState<Map<number,string>>(new Map());
+  const [scheduleValues, setScheduleValues] = useState<Map<number,string>>(new Map());
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
@@ -32,8 +32,8 @@ export default function WorkspaceAdd() {
 
   const prepareRelations = async () => {
     try {
-      const detailValuesResponse = await axios.get('/api/workspaces/detailValues');
-      setDetailValues(detailValuesResponse.data);
+      const scheduleValuesResponse = await axios.get('/api/workspaces/scheduleValues');
+      setScheduleValues(scheduleValuesResponse.data);
     } catch (error: any) {
       handleServerError(error, navigate);
     }
@@ -65,8 +65,8 @@ export default function WorkspaceAdd() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(createWorkspace)} noValidate>
-      <InputRow useFormResult={useFormResult} object="workspace" field="url" required={true} />
-      <InputRow useFormResult={useFormResult} object="workspace" field="detail" type="select" options={detailValues} />
+      <InputRow useFormResult={useFormResult} object="workspace" field="url" required={true} type="textarea" />
+      <InputRow useFormResult={useFormResult} object="workspace" field="schedule" type="select" options={scheduleValues} />
       <input type="submit" value={t('workspace.add.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>
   </>);

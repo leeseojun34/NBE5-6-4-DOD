@@ -4,7 +4,7 @@ export class GroupDTO {
     Object.assign(this, data);
   }
 
-  groupId?: number|null;
+  id?: number|null;
   name?: string|null;
   description?: string|null;
   isGrouped?: boolean|null;

@@ -25,7 +25,7 @@ export default function MiddleRegionEdit() {
 
   const navigate = useNavigate();
   const params = useParams();
-  const currentMiddleRegionId = +params.middleRegionId!;
+  const currentId = +params.id!;
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
@@ -33,7 +33,7 @@ export default function MiddleRegionEdit() {
 
   const prepareForm = async () => {
     try {
-      const data = (await axios.get('/api/middleRegions/' + currentMiddleRegionId)).data;
+      const data = (await axios.get('/api/middleRegions/' + currentId)).data;
       useFormResult.reset(data);
     } catch (error: any) {
       handleServerError(error, navigate);
@@ -47,7 +47,7 @@ export default function MiddleRegionEdit() {
   const updateMiddleRegion = async (data: MiddleRegionDTO) => {
     window.scrollTo(0, 0);
     try {
-      await axios.put('/api/middleRegions/' + currentMiddleRegionId, data);
+      await axios.put('/api/middleRegions/' + currentId, data);
       navigate('/middleRegions', {
             state: {
               msgSuccess: t('middleRegion.update.success')
@@ -66,7 +66,7 @@ export default function MiddleRegionEdit() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(updateMiddleRegion)} noValidate>
-      <InputRow useFormResult={useFormResult} object="middleRegion" field="middleRegionId" disabled={true} type="number" />
+      <InputRow useFormResult={useFormResult} object="middleRegion" field="id" disabled={true} type="number" />
       <InputRow useFormResult={useFormResult} object="middleRegion" field="latitude" required={true} />
       <InputRow useFormResult={useFormResult} object="middleRegion" field="longitude" required={true} />
       <input type="submit" value={t('middleRegion.edit.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />

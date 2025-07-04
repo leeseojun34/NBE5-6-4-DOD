@@ -4,10 +4,10 @@ export class CalendarDTO {
     Object.assign(this, data);
   }
 
-  calendarId?: number|null;
-  calendarName?: string|null;
-  synced?: string|null;
+  id?: number|null;
+  name?: string|null;
+  synced?: boolean|null;
   syncedAt?: string|null;
-  user?: string|null;
+  member?: string|null;
 
 }

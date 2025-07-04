@@ -16,7 +16,6 @@ function getSchema() {
   return yup.object({
     title: yup.string().emptyToNull().max(255).required(),
     description: yup.string().emptyToNull(),
-    creator: yup.number().integer().emptyToNull().required(),
     meetingType: yup.string().emptyToNull().max(255).required(),
     maxMember: yup.number().integer().emptyToNull().required(),
     group: yup.number().integer().emptyToNull()
@@ -71,7 +70,6 @@ export default function EventAdd() {
     <form onSubmit={useFormResult.handleSubmit(createEvent)} noValidate>
       <InputRow useFormResult={useFormResult} object="event" field="title" required={true} />
       <InputRow useFormResult={useFormResult} object="event" field="description" type="textarea" />
-      <InputRow useFormResult={useFormResult} object="event" field="creator" required={true} type="number" />
       <InputRow useFormResult={useFormResult} object="event" field="meetingType" required={true} />
       <InputRow useFormResult={useFormResult} object="event" field="maxMember" required={true} type="number" />
       <InputRow useFormResult={useFormResult} object="event" field="group" type="select" options={groupValues} />

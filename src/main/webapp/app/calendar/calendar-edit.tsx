@@ -14,10 +14,10 @@ import * as yup from 'yup';
 function getSchema() {
   setYupDefaults();
   return yup.object({
-    calendarName: yup.string().emptyToNull().max(255).required(),
-    synced: yup.string().emptyToNull().max(255).required(),
+    name: yup.string().emptyToNull().max(255).required(),
+    synced: yup.bool(),
     syncedAt: yup.string().emptyToNull().required(),
-    user: yup.string().emptyToNull().max(255)
+    member: yup.string().emptyToNull().max(255)
   });
 }
 
@@ -26,9 +26,9 @@ export default function CalendarEdit() {
   useDocumentTitle(t('calendar.edit.headline'));
 
   const navigate = useNavigate();
-  const [userValues, setUserValues] = useState<Record<string,string>>({});
+  const [memberValues, setMemberValues] = useState<Record<string,string>>({});
   const params = useParams();
-  const currentCalendarId = +params.calendarId!;
+  const currentId = +params.id!;
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
@@ -36,16 +36,16 @@ export default function CalendarEdit() {
 
   const getMessage = (key: string) => {
     const messages: Record<string, string> = {
-      CALENDAR_USER_UNIQUE: t('Exists.calendar.user')
+      CALENDAR_MEMBER_UNIQUE: t('Exists.calendar.member')
     };
     return messages[key];
   };
 
   const prepareForm = async () => {
     try {
-      const userValuesResponse = await axios.get('/api/calendars/userValues');
-      setUserValues(userValuesResponse.data);
-      const data = (await axios.get('/api/calendars/' + currentCalendarId)).data;
+      const memberValuesResponse = await axios.get('/api/calendars/memberValues');
+      setMemberValues(memberValuesResponse.data);
+      const data = (await axios.get('/api/calendars/' + currentId)).data;
       useFormResult.reset(data);
     } catch (error: any) {
       handleServerError(error, navigate);
@@ -59,7 +59,7 @@ export default function CalendarEdit() {
   const updateCalendar = async (data: CalendarDTO) => {
     window.scrollTo(0, 0);
     try {
-      await axios.put('/api/calendars/' + currentCalendarId, data);
+      await axios.put('/api/calendars/' + currentId, data);
       navigate('/calendars', {
             state: {
               msgSuccess: t('calendar.update.success')
@@ -78,11 +78,11 @@ export default function CalendarEdit() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(updateCalendar)} noValidate>
-      <InputRow useFormResult={useFormResult} object="calendar" field="calendarId" disabled={true} type="number" />
-      <InputRow useFormResult={useFormResult} object="calendar" field="calendarName" required={true} />
-      <InputRow useFormResult={useFormResult} object="calendar" field="synced" required={true} />
+      <InputRow useFormResult={useFormResult} object="calendar" field="id" disabled={true} type="number" />
+      <InputRow useFormResult={useFormResult} object="calendar" field="name" required={true} />
+      <InputRow useFormResult={useFormResult} object="calendar" field="synced" type="checkbox" />
       <InputRow useFormResult={useFormResult} object="calendar" field="syncedAt" required={true} type="datetimepicker" />
-      <InputRow useFormResult={useFormResult} object="calendar" field="user" type="select" options={userValues} />
+      <InputRow useFormResult={useFormResult} object="calendar" field="member" type="select" options={memberValues} />
       <input type="submit" value={t('calendar.edit.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>
   </>);

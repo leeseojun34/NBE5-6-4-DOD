@@ -19,7 +19,7 @@ function getSchema() {
     tokenType: yup.string().emptyToNull().max(255).required(),
     expiresAt: yup.string().emptyToNull().required(),
     provider: yup.string().emptyToNull().max(255).required(),
-    user: yup.string().emptyToNull().max(255)
+    member: yup.string().emptyToNull().max(255)
   });
 }
 
@@ -28,9 +28,9 @@ export default function SocialAuthTokensEdit() {
   useDocumentTitle(t('socialAuthTokens.edit.headline'));
 
   const navigate = useNavigate();
-  const [userValues, setUserValues] = useState<Record<string,string>>({});
+  const [memberValues, setMemberValues] = useState<Record<string,string>>({});
   const params = useParams();
-  const currentSocialAuthTokensId = +params.socialAuthTokensId!;
+  const currentId = +params.id!;
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
@@ -46,9 +46,9 @@ export default function SocialAuthTokensEdit() {
 
   const prepareForm = async () => {
     try {
-      const userValuesResponse = await axios.get('/api/socialAuthTokenss/userValues');
-      setUserValues(userValuesResponse.data);
-      const data = (await axios.get('/api/socialAuthTokenss/' + currentSocialAuthTokensId)).data;
+      const memberValuesResponse = await axios.get('/api/socialAuthTokenss/memberValues');
+      setMemberValues(memberValuesResponse.data);
+      const data = (await axios.get('/api/socialAuthTokenss/' + currentId)).data;
       useFormResult.reset(data);
     } catch (error: any) {
       handleServerError(error, navigate);
@@ -62,7 +62,7 @@ export default function SocialAuthTokensEdit() {
   const updateSocialAuthTokens = async (data: SocialAuthTokensDTO) => {
     window.scrollTo(0, 0);
     try {
-      await axios.put('/api/socialAuthTokenss/' + currentSocialAuthTokensId, data);
+      await axios.put('/api/socialAuthTokenss/' + currentId, data);
       navigate('/socialAuthTokenss', {
             state: {
               msgSuccess: t('socialAuthTokens.update.success')
@@ -81,13 +81,13 @@ export default function SocialAuthTokensEdit() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(updateSocialAuthTokens)} noValidate>
-      <InputRow useFormResult={useFormResult} object="socialAuthTokens" field="socialAuthTokensId" disabled={true} type="number" />
+      <InputRow useFormResult={useFormResult} object="socialAuthTokens" field="id" disabled={true} type="number" />
       <InputRow useFormResult={useFormResult} object="socialAuthTokens" field="accessToken" required={true} />
       <InputRow useFormResult={useFormResult} object="socialAuthTokens" field="refreshToken" required={true} />
       <InputRow useFormResult={useFormResult} object="socialAuthTokens" field="tokenType" required={true} />
       <InputRow useFormResult={useFormResult} object="socialAuthTokens" field="expiresAt" required={true} type="datetimepicker" />
       <InputRow useFormResult={useFormResult} object="socialAuthTokens" field="provider" required={true} />
-      <InputRow useFormResult={useFormResult} object="socialAuthTokens" field="user" type="select" options={userValues} />
+      <InputRow useFormResult={useFormResult} object="socialAuthTokens" field="member" type="select" options={memberValues} />
       <input type="submit" value={t('socialAuthTokens.edit.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>
   </>);

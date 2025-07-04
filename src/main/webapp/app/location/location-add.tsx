@@ -16,7 +16,10 @@ function getSchema() {
   return yup.object({
     latitude: yup.number().emptyToNull().required(),
     longitude: yup.number().emptyToNull().required(),
-    locationName: yup.string().emptyToNull().max(255).required(),
+    name: yup.string().emptyToNull().max(255).required(),
+    suggestedMemberId: yup.string().emptyToNull().max(255),
+    voteCount: yup.number().integer().emptyToNull(),
+    status: yup.string().emptyToNull().max(255).required(),
     middleRegion: yup.number().integer().emptyToNull()
   });
 }
@@ -31,13 +34,6 @@ export default function LocationAdd() {
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
   });
-
-  const getMessage = (key: string) => {
-    const messages: Record<string, string> = {
-      LOCATION_MIDDLE_REGION_UNIQUE: t('Exists.location.middle-region')
-    };
-    return messages[key];
-  };
 
   const prepareRelations = async () => {
     try {
@@ -62,7 +58,7 @@ export default function LocationAdd() {
             }
           });
     } catch (error: any) {
-      handleServerError(error, navigate, useFormResult.setError, t, getMessage);
+      handleServerError(error, navigate, useFormResult.setError, t);
     }
   };
 
@@ -76,7 +72,10 @@ export default function LocationAdd() {
     <form onSubmit={useFormResult.handleSubmit(createLocation)} noValidate>
       <InputRow useFormResult={useFormResult} object="location" field="latitude" required={true} />
       <InputRow useFormResult={useFormResult} object="location" field="longitude" required={true} />
-      <InputRow useFormResult={useFormResult} object="location" field="locationName" required={true} />
+      <InputRow useFormResult={useFormResult} object="location" field="name" required={true} />
+      <InputRow useFormResult={useFormResult} object="location" field="suggestedMemberId" />
+      <InputRow useFormResult={useFormResult} object="location" field="voteCount" type="number" />
+      <InputRow useFormResult={useFormResult} object="location" field="status" required={true} />
       <InputRow useFormResult={useFormResult} object="location" field="middleRegion" type="select" options={middleRegionValues} />
       <input type="submit" value={t('location.add.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>

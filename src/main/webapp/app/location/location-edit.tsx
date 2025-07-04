@@ -16,7 +16,10 @@ function getSchema() {
   return yup.object({
     latitude: yup.number().emptyToNull().required(),
     longitude: yup.number().emptyToNull().required(),
-    locationName: yup.string().emptyToNull().max(255).required(),
+    name: yup.string().emptyToNull().max(255).required(),
+    suggestedMemberId: yup.string().emptyToNull().max(255),
+    voteCount: yup.number().integer().emptyToNull(),
+    status: yup.string().emptyToNull().max(255).required(),
     middleRegion: yup.number().integer().emptyToNull()
   });
 }
@@ -28,24 +31,17 @@ export default function LocationEdit() {
   const navigate = useNavigate();
   const [middleRegionValues, setMiddleRegionValues] = useState<Map<number,string>>(new Map());
   const params = useParams();
-  const currentLocationId = +params.locationId!;
+  const currentId = +params.id!;
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
   });
 
-  const getMessage = (key: string) => {
-    const messages: Record<string, string> = {
-      LOCATION_MIDDLE_REGION_UNIQUE: t('Exists.location.middle-region')
-    };
-    return messages[key];
-  };
-
   const prepareForm = async () => {
     try {
       const middleRegionValuesResponse = await axios.get('/api/locations/middleRegionValues');
       setMiddleRegionValues(middleRegionValuesResponse.data);
-      const data = (await axios.get('/api/locations/' + currentLocationId)).data;
+      const data = (await axios.get('/api/locations/' + currentId)).data;
       useFormResult.reset(data);
     } catch (error: any) {
       handleServerError(error, navigate);
@@ -59,14 +55,14 @@ export default function LocationEdit() {
   const updateLocation = async (data: LocationDTO) => {
     window.scrollTo(0, 0);
     try {
-      await axios.put('/api/locations/' + currentLocationId, data);
+      await axios.put('/api/locations/' + currentId, data);
       navigate('/locations', {
             state: {
               msgSuccess: t('location.update.success')
             }
           });
     } catch (error: any) {
-      handleServerError(error, navigate, useFormResult.setError, t, getMessage);
+      handleServerError(error, navigate, useFormResult.setError, t);
     }
   };
 
@@ -78,10 +74,13 @@ export default function LocationEdit() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(updateLocation)} noValidate>
-      <InputRow useFormResult={useFormResult} object="location" field="locationId" disabled={true} type="number" />
+      <InputRow useFormResult={useFormResult} object="location" field="id" disabled={true} type="number" />
       <InputRow useFormResult={useFormResult} object="location" field="latitude" required={true} />
       <InputRow useFormResult={useFormResult} object="location" field="longitude" required={true} />
-      <InputRow useFormResult={useFormResult} object="location" field="locationName" required={true} />
+      <InputRow useFormResult={useFormResult} object="location" field="name" required={true} />
+      <InputRow useFormResult={useFormResult} object="location" field="suggestedMemberId" />
+      <InputRow useFormResult={useFormResult} object="location" field="voteCount" type="number" />
+      <InputRow useFormResult={useFormResult} object="location" field="status" required={true} />
       <InputRow useFormResult={useFormResult} object="location" field="middleRegion" type="select" options={middleRegionValues} />
       <input type="submit" value={t('location.edit.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>

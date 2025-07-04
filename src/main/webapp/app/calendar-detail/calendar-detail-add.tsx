@@ -18,6 +18,8 @@ function getSchema() {
     startDatetime: yup.string().emptyToNull().max(255).required(),
     endDatetime: yup.string().emptyToNull().max(255).required(),
     syncedAt: yup.string().emptyToNull().required(),
+    isAllDay: yup.bool(),
+    externalEtag: yup.string().emptyToNull().required(),
     calendar: yup.number().integer().emptyToNull()
   });
 }
@@ -72,6 +74,8 @@ export default function CalendarDetailAdd() {
       <InputRow useFormResult={useFormResult} object="calendarDetail" field="startDatetime" required={true} />
       <InputRow useFormResult={useFormResult} object="calendarDetail" field="endDatetime" required={true} />
       <InputRow useFormResult={useFormResult} object="calendarDetail" field="syncedAt" required={true} type="datetimepicker" />
+      <InputRow useFormResult={useFormResult} object="calendarDetail" field="isAllDay" type="checkbox" />
+      <InputRow useFormResult={useFormResult} object="calendarDetail" field="externalEtag" required={true} type="textarea" />
       <InputRow useFormResult={useFormResult} object="calendarDetail" field="calendar" type="select" options={calendarValues} />
       <input type="submit" value={t('calendarDetail.add.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>

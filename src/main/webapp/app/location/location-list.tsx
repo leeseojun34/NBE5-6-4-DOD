@@ -23,12 +23,12 @@ export default function LocationList() {
     }
   };
 
-  const confirmDelete = async (locationId: number) => {
+  const confirmDelete = async (id: number) => {
     if (!confirm(t('delete.confirm'))) {
       return;
     }
     try {
-      await axios.delete('/api/locations/' + locationId);
+      await axios.delete('/api/locations/' + id);
       navigate('/locations', {
             state: {
               msgInfo: t('location.delete.success')
@@ -36,6 +36,15 @@ export default function LocationList() {
           });
       getAllLocations();
     } catch (error: any) {
+      if (error?.response?.data?.code === 'REFERENCED') {
+        const messageParts = error.response.data.message.split(',');
+        navigate('/locations', {
+              state: {
+                msgError: t(messageParts[0]!, { id: messageParts[1]! })
+              }
+            });
+        return;
+      }
       handleServerError(error, navigate);
     }
   };
@@ -58,27 +67,33 @@ export default function LocationList() {
       <table className="w-full">
         <thead>
           <tr>
-            <th scope="col" className="text-left p-2">{t('location.locationId.label')}</th>
+            <th scope="col" className="text-left p-2">{t('location.id.label')}</th>
             <th scope="col" className="text-left p-2">{t('location.latitude.label')}</th>
             <th scope="col" className="text-left p-2">{t('location.longitude.label')}</th>
-            <th scope="col" className="text-left p-2">{t('location.locationName.label')}</th>
+            <th scope="col" className="text-left p-2">{t('location.name.label')}</th>
+            <th scope="col" className="text-left p-2">{t('location.suggestedMemberId.label')}</th>
+            <th scope="col" className="text-left p-2">{t('location.voteCount.label')}</th>
+            <th scope="col" className="text-left p-2">{t('location.status.label')}</th>
             <th scope="col" className="text-left p-2">{t('location.middleRegion.label')}</th>
             <th></th>
           </tr>
         </thead>
         <tbody className="border-t-2 border-black">
           {locations.map((location) => (
-          <tr key={location.locationId} className="odd:bg-gray-100">
-            <td className="p-2">{location.locationId}</td>
+          <tr key={location.id} className="odd:bg-gray-100">
+            <td className="p-2">{location.id}</td>
             <td className="p-2">{location.latitude}</td>
             <td className="p-2">{location.longitude}</td>
-            <td className="p-2">{location.locationName}</td>
+            <td className="p-2">{location.name}</td>
+            <td className="p-2">{location.suggestedMemberId}</td>
+            <td className="p-2">{location.voteCount}</td>
+            <td className="p-2">{location.status}</td>
             <td className="p-2">{location.middleRegion}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">
-                <Link to={'/locations/edit/' + location.locationId} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('location.list.edit')}</Link>
+                <Link to={'/locations/edit/' + location.id} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('location.list.edit')}</Link>
                 <span> </span>
-                <button type="button" onClick={() => confirmDelete(location.locationId!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('location.list.delete')}</button>
+                <button type="button" onClick={() => confirmDelete(location.id!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('location.list.delete')}</button>
               </div>
             </td>
           </tr>

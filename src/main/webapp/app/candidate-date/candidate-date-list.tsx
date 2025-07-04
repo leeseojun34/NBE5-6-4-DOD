@@ -23,12 +23,12 @@ export default function CandidateDateList() {
     }
   };
 
-  const confirmDelete = async (candidateDateId: number) => {
+  const confirmDelete = async (id: number) => {
     if (!confirm(t('delete.confirm'))) {
       return;
     }
     try {
-      await axios.delete('/api/candidateDates/' + candidateDateId);
+      await axios.delete('/api/candidateDates/' + id);
       navigate('/candidateDates', {
             state: {
               msgInfo: t('candidateDate.delete.success')
@@ -58,7 +58,7 @@ export default function CandidateDateList() {
       <table className="w-full">
         <thead>
           <tr>
-            <th scope="col" className="text-left p-2">{t('candidateDate.candidateDateId.label')}</th>
+            <th scope="col" className="text-left p-2">{t('candidateDate.id.label')}</th>
             <th scope="col" className="text-left p-2">{t('candidateDate.date.label')}</th>
             <th scope="col" className="text-left p-2">{t('candidateDate.event.label')}</th>
             <th></th>
@@ -66,15 +66,15 @@ export default function CandidateDateList() {
         </thead>
         <tbody className="border-t-2 border-black">
           {candidateDates.map((candidateDate) => (
-          <tr key={candidateDate.candidateDateId} className="odd:bg-gray-100">
-            <td className="p-2">{candidateDate.candidateDateId}</td>
+          <tr key={candidateDate.id} className="odd:bg-gray-100">
+            <td className="p-2">{candidateDate.id}</td>
             <td className="p-2">{candidateDate.date}</td>
             <td className="p-2">{candidateDate.event}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">
-                <Link to={'/candidateDates/edit/' + candidateDate.candidateDateId} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('candidateDate.list.edit')}</Link>
+                <Link to={'/candidateDates/edit/' + candidateDate.id} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('candidateDate.list.edit')}</Link>
                 <span> </span>
-                <button type="button" onClick={() => confirmDelete(candidateDate.candidateDateId!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('candidateDate.list.delete')}</button>
+                <button type="button" onClick={() => confirmDelete(candidateDate.id!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('candidateDate.list.delete')}</button>
               </div>
             </td>
           </tr>

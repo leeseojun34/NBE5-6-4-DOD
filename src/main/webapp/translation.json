@@ -36,8 +36,8 @@
       "headline": "Add Member",
       "back": "Back to list"
     },
-    "userId": {
-      "label": "User Id"
+    "id": {
+      "label": "Id"
     },
     "password": {
       "label": "Password"
@@ -57,46 +57,46 @@
     "profileImageNumber": {
       "label": "Profile Image Number"
     },
-    "phoneNumber": {
-      "label": "Phone Number"
+    "tel": {
+      "label": "Tel"
     },
     "edit": {
       "headline": "Edit Member",
       "back": "Back to list"
     },
     "socialAuthTokens": {
-      "user": {
-        "referenced": "This entity is still referenced by Social Auth Tokens {{id}} via field User."
+      "member": {
+        "referenced": "This entity is still referenced by Social Auth Tokens {{id}} via field Member."
       }
     },
-    "likeLocation": {
-      "user": {
-        "referenced": "This entity is still referenced by Like Location {{id}} via field User."
+    "favoriteLocation": {
+      "member": {
+        "referenced": "This entity is still referenced by Favorite Location {{id}} via field Member."
       }
     },
-    "likeTimetable": {
-      "user": {
-        "referenced": "This entity is still referenced by Like Timetable {{id}} via field User."
+    "favoriteTimetable": {
+      "member": {
+        "referenced": "This entity is still referenced by Favorite Timetable {{id}} via field Member."
       }
     },
     "calendar": {
-      "user": {
-        "referenced": "This entity is still referenced by Calendar {{id}} via field User."
+      "member": {
+        "referenced": "This entity is still referenced by Calendar {{id}} via field Member."
       }
     },
-    "groupUser": {
-      "user": {
-        "referenced": "This entity is still referenced by Group User {{id}} via field User."
+    "groupMember": {
+      "member": {
+        "referenced": "This entity is still referenced by Group Member {{id}} via field Member."
       }
     },
-    "eventUser": {
-      "user": {
-        "referenced": "This entity is still referenced by Event User {{id}} via field User."
+    "eventMember": {
+      "member": {
+        "referenced": "This entity is still referenced by Event Member {{id}} via field Member."
       }
     },
-    "scheduleUser": {
-      "user": {
-        "referenced": "This entity is still referenced by Schedule User {{id}} via field User."
+    "scheduleMember": {
+      "member": {
+        "referenced": "This entity is still referenced by Schedule Member {{id}} via field Member."
       }
     },
     "create": {
@@ -121,8 +121,8 @@
       "headline": "Add Social Auth Tokens",
       "back": "Back to list"
     },
-    "socialAuthTokensId": {
-      "label": "Social Auth Tokens Id"
+    "id": {
+      "label": "Id"
     },
     "accessToken": {
       "label": "Access Token"
@@ -139,8 +139,8 @@
     "provider": {
       "label": "Provider"
     },
-    "user": {
-      "label": "User"
+    "member": {
+      "label": "Member"
     },
     "edit": {
       "headline": "Edit Social Auth Tokens",
@@ -156,20 +156,20 @@
       "success": "Social Auth Tokens was removed successfully."
     }
   },
-  "likeLocation": {
+  "favoriteLocation": {
     "list": {
-      "headline": "Like Locations",
-      "createNew": "Create new Like Location",
-      "empty": "No Like Locations could be found.",
+      "headline": "Favorite Locations",
+      "createNew": "Create new Favorite Location",
+      "empty": "No Favorite Locations could be found.",
       "edit": "Edit",
       "delete": "Delete"
     },
     "add": {
-      "headline": "Add Like Location",
+      "headline": "Add Favorite Location",
       "back": "Back to list"
     },
-    "likeLocationId": {
-      "label": "Like Location Id"
+    "id": {
+      "label": "Id"
     },
     "longitude": {
       "label": "Longitude"
@@ -177,40 +177,40 @@
     "latitude": {
       "label": "Latitude"
     },
-    "locationName": {
-      "label": "Location Name"
+    "name": {
+      "label": "Name"
     },
-    "user": {
-      "label": "User"
+    "member": {
+      "label": "Member"
     },
     "edit": {
-      "headline": "Edit Like Location",
+      "headline": "Edit Favorite Location",
       "back": "Back to list"
     },
     "create": {
-      "success": "Like Location was created successfully."
+      "success": "Favorite Location was created successfully."
     },
     "update": {
-      "success": "Like Location was updated successfully."
+      "success": "Favorite Location was updated successfully."
     },
     "delete": {
-      "success": "Like Location was removed successfully."
+      "success": "Favorite Location was removed successfully."
     }
   },
-  "likeTimetable": {
+  "favoriteTimetable": {
     "list": {
-      "headline": "Like Timetables",
-      "createNew": "Create new Like Timetable",
-      "empty": "No Like Timetables could be found.",
+      "headline": "Favorite Timetables",
+      "createNew": "Create new Favorite Timetable",
+      "empty": "No Favorite Timetables could be found.",
       "edit": "Edit",
       "delete": "Delete"
     },
     "add": {
-      "headline": "Add Like Timetable",
+      "headline": "Add Favorite Timetable",
       "back": "Back to list"
     },
-    "likeTimetableId": {
-      "label": "Like Timetable Id"
+    "id": {
+      "label": "Id"
     },
     "startTime": {
       "label": "Start Time"
@@ -221,21 +221,21 @@
     "weekday": {
       "label": "Weekday"
     },
-    "user": {
-      "label": "User"
+    "member": {
+      "label": "Member"
     },
     "edit": {
-      "headline": "Edit Like Timetable",
+      "headline": "Edit Favorite Timetable",
       "back": "Back to list"
     },
     "create": {
-      "success": "Like Timetable was created successfully."
+      "success": "Favorite Timetable was created successfully."
     },
     "update": {
-      "success": "Like Timetable was updated successfully."
+      "success": "Favorite Timetable was updated successfully."
     },
     "delete": {
-      "success": "Like Timetable was removed successfully."
+      "success": "Favorite Timetable was removed successfully."
     }
   },
   "calendar": {
@@ -250,11 +250,11 @@
       "headline": "Add Calendar",
       "back": "Back to list"
     },
-    "calendarId": {
-      "label": "Calendar Id"
+    "id": {
+      "label": "Id"
     },
-    "calendarName": {
-      "label": "Calendar Name"
+    "name": {
+      "label": "Name"
     },
     "synced": {
       "label": "Synced"
@@ -262,8 +262,8 @@
     "syncedAt": {
       "label": "Synced At"
     },
-    "user": {
-      "label": "User"
+    "member": {
+      "label": "Member"
     },
     "edit": {
       "headline": "Edit Calendar",
@@ -296,8 +296,8 @@
       "headline": "Add Calendar Detail",
       "back": "Back to list"
     },
-    "calendarDetailId": {
-      "label": "Calendar Detail Id"
+    "id": {
+      "label": "Id"
     },
     "title": {
       "label": "Title"
@@ -310,6 +310,12 @@
     },
     "syncedAt": {
       "label": "Synced At"
+    },
+    "isAllDay": {
+      "label": "Is All Day"
+    },
+    "externalEtag": {
+      "label": "External Etag"
     },
     "calendar": {
       "label": "Calendar"
@@ -328,177 +334,82 @@
       "success": "Calendar Detail was removed successfully."
     }
   },
-  "locationCandidate": {
+  "eventMember": {
     "list": {
-      "headline": "Location Candidates",
-      "createNew": "Create new Location Candidate",
-      "empty": "No Location Candidates could be found.",
+      "headline": "Event Members",
+      "createNew": "Create new Event Member",
+      "empty": "No Event Members could be found.",
       "edit": "Edit",
       "delete": "Delete"
     },
     "add": {
-      "headline": "Add Location Candidate",
+      "headline": "Add Event Member",
       "back": "Back to list"
     },
-    "locationCandidateId": {
-      "label": "Location Candidate Id"
+    "id": {
+      "label": "Id"
     },
-    "suggestUserId": {
-      "label": "Suggest User Id"
+    "role": {
+      "label": "Role"
     },
-    "locationName": {
-      "label": "Location Name"
-    },
-    "latitude": {
-      "label": "Latitude"
-    },
-    "longitude": {
-      "label": "Longitude"
-    },
-    "voteCount": {
-      "label": "Vote Count"
-    },
-    "status": {
-      "label": "Status"
-    },
-    "detail": {
-      "label": "Detail"
-    },
-    "edit": {
-      "headline": "Edit Location Candidate",
-      "back": "Back to list"
-    },
-    "userVote": {
-      "locationCandidate": {
-        "referenced": "This entity is still referenced by User Vote {{id}} via field Location Candidate."
-      }
-    },
-    "create": {
-      "success": "Location Candidate was created successfully."
-    },
-    "update": {
-      "success": "Location Candidate was updated successfully."
-    },
-    "delete": {
-      "success": "Location Candidate was removed successfully."
-    }
-  },
-  "meeting": {
-    "list": {
-      "headline": "Meetings",
-      "createNew": "Create new Meeting",
-      "empty": "No Meetings could be found.",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
-    "add": {
-      "headline": "Add Meeting",
-      "back": "Back to list"
-    },
-    "meetingId": {
-      "label": "Meeting Id"
-    },
-    "meetingPlatform": {
-      "label": "Meeting Platform"
-    },
-    "platformUrl": {
-      "label": "Platform Url"
-    },
-    "schedule": {
-      "label": "Schedule"
-    },
-    "edit": {
-      "headline": "Edit Meeting",
-      "back": "Back to list"
-    },
-    "departRegion": {
-      "meeting": {
-        "referenced": "This entity is still referenced by Depart Region {{id}} via field Meeting."
-      }
-    },
-    "create": {
-      "success": "Meeting was created successfully."
-    },
-    "update": {
-      "success": "Meeting was updated successfully."
-    },
-    "delete": {
-      "success": "Meeting was removed successfully."
-    }
-  },
-  "eventUser": {
-    "list": {
-      "headline": "Event Users",
-      "createNew": "Create new Event User",
-      "empty": "No Event Users could be found.",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
-    "add": {
-      "headline": "Add Event User",
-      "back": "Back to list"
-    },
-    "eventUserId": {
-      "label": "Event User Id"
-    },
-    "user": {
-      "label": "User"
+    "member": {
+      "label": "Member"
     },
     "event": {
       "label": "Event"
     },
     "edit": {
-      "headline": "Edit Event User",
+      "headline": "Edit Event Member",
       "back": "Back to list"
     },
     "tempSchedule": {
-      "eventUser": {
-        "referenced": "This entity is still referenced by Temp Schedule {{id}} via field Event User."
+      "eventMember": {
+        "referenced": "This entity is still referenced by Temp Schedule {{id}} via field Event Member."
       }
     },
     "create": {
-      "success": "Event User was created successfully."
+      "success": "Event Member was created successfully."
     },
     "update": {
-      "success": "Event User was updated successfully."
+      "success": "Event Member was updated successfully."
     },
     "delete": {
-      "success": "Event User was removed successfully."
+      "success": "Event Member was removed successfully."
     }
   },
-  "userVote": {
+  "memberVote": {
     "list": {
-      "headline": "User Votes",
-      "createNew": "Create new User Vote",
-      "empty": "No User Votes could be found.",
+      "headline": "Member Votes",
+      "createNew": "Create new Member Vote",
+      "empty": "No Member Votes could be found.",
       "edit": "Edit",
       "delete": "Delete"
     },
     "add": {
-      "headline": "Add User Vote",
+      "headline": "Add Member Vote",
       "back": "Back to list"
     },
-    "userVoteId": {
-      "label": "User Vote Id"
+    "id": {
+      "label": "Id"
     },
-    "userId": {
-      "label": "User Id"
+    "voter": {
+      "label": "Voter"
     },
-    "locationCandidate": {
-      "label": "Location Candidate"
+    "location": {
+      "label": "Location"
     },
     "edit": {
-      "headline": "Edit User Vote",
+      "headline": "Edit Member Vote",
       "back": "Back to list"
     },
     "create": {
-      "success": "User Vote was created successfully."
+      "success": "Member Vote was created successfully."
     },
     "update": {
-      "success": "User Vote was updated successfully."
+      "success": "Member Vote was updated successfully."
     },
     "delete": {
-      "success": "User Vote was removed successfully."
+      "success": "Member Vote was removed successfully."
     }
   },
   "location": {
@@ -513,8 +424,8 @@
       "headline": "Add Location",
       "back": "Back to list"
     },
-    "locationId": {
-      "label": "Location Id"
+    "id": {
+      "label": "Id"
     },
     "latitude": {
       "label": "Latitude"
@@ -522,8 +433,17 @@
     "longitude": {
       "label": "Longitude"
     },
-    "locationName": {
-      "label": "Location Name"
+    "name": {
+      "label": "Name"
+    },
+    "suggestedMemberId": {
+      "label": "Suggested Member Id"
+    },
+    "voteCount": {
+      "label": "Vote Count"
+    },
+    "status": {
+      "label": "Status"
     },
     "middleRegion": {
       "label": "Middle Region"
@@ -531,6 +451,11 @@
     "edit": {
       "headline": "Edit Location",
       "back": "Back to list"
+    },
+    "memberVote": {
+      "location": {
+        "referenced": "This entity is still referenced by Member Vote {{id}} via field Location."
+      }
     },
     "create": {
       "success": "Location was created successfully."
@@ -554,8 +479,8 @@
       "headline": "Add Middle Region",
       "back": "Back to list"
     },
-    "middleRegionId": {
-      "label": "Middle Region Id"
+    "id": {
+      "label": "Id"
     },
     "latitude": {
       "label": "Latitude"
@@ -567,14 +492,14 @@
       "headline": "Edit Middle Region",
       "back": "Back to list"
     },
-    "departRegion": {
-      "middleRegion": {
-        "referenced": "This entity is still referenced by Depart Region {{id}} via field Middle Region."
-      }
-    },
     "location": {
       "middleRegion": {
         "referenced": "This entity is still referenced by Location {{id}} via field Middle Region."
+      }
+    },
+    "scheduleMember": {
+      "middleRegion": {
+        "referenced": "This entity is still referenced by Schedule Member {{id}} via field Middle Region."
       }
     },
     "create": {
@@ -585,85 +510,6 @@
     },
     "delete": {
       "success": "Middle Region was removed successfully."
-    }
-  },
-  "departRegion": {
-    "list": {
-      "headline": "Depart Regions",
-      "createNew": "Create new Depart Region",
-      "empty": "No Depart Regions could be found.",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
-    "add": {
-      "headline": "Add Depart Region",
-      "back": "Back to list"
-    },
-    "departRegionId": {
-      "label": "Depart Region Id"
-    },
-    "dapartLocationName": {
-      "label": "Dapart Location Name"
-    },
-    "latitude": {
-      "label": "Latitude"
-    },
-    "longitude": {
-      "label": "Longitude"
-    },
-    "meeting": {
-      "label": "Meeting"
-    },
-    "middleRegion": {
-      "label": "Middle Region"
-    },
-    "edit": {
-      "headline": "Edit Depart Region",
-      "back": "Back to list"
-    },
-    "create": {
-      "success": "Depart Region was created successfully."
-    },
-    "update": {
-      "success": "Depart Region was updated successfully."
-    },
-    "delete": {
-      "success": "Depart Region was removed successfully."
-    }
-  },
-  "candidateDate": {
-    "list": {
-      "headline": "Candidate Dates",
-      "createNew": "Create new Candidate Date",
-      "empty": "No Candidate Dates could be found.",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
-    "add": {
-      "headline": "Add Candidate Date",
-      "back": "Back to list"
-    },
-    "candidateDateId": {
-      "label": "Candidate Date Id"
-    },
-    "date": {
-      "label": "Date"
-    },
-    "event": {
-      "label": "Event"
-    },
-    "edit": {
-      "headline": "Edit Candidate Date",
-      "back": "Back to list"
-    },
-    "create": {
-      "success": "Candidate Date was created successfully."
-    },
-    "update": {
-      "success": "Candidate Date was updated successfully."
-    },
-    "delete": {
-      "success": "Candidate Date was removed successfully."
     }
   },
   "workspace": {
@@ -678,14 +524,14 @@
       "headline": "Add Workspace",
       "back": "Back to list"
     },
-    "workspaceId": {
-      "label": "Workspace Id"
+    "id": {
+      "label": "Id"
     },
     "url": {
       "label": "Url"
     },
-    "detail": {
-      "label": "Detail"
+    "schedule": {
+      "label": "Schedule"
     },
     "edit": {
       "headline": "Edit Workspace",
@@ -701,87 +547,54 @@
       "success": "Workspace was removed successfully."
     }
   },
-  "detail": {
+  "scheduleMember": {
     "list": {
-      "headline": "Details",
-      "createNew": "Create new Detail",
-      "empty": "No Details could be found.",
+      "headline": "Schedule Members",
+      "createNew": "Create new Schedule Member",
+      "empty": "No Schedule Members could be found.",
       "edit": "Edit",
       "delete": "Delete"
     },
     "add": {
-      "headline": "Add Detail",
+      "headline": "Add Schedule Member",
       "back": "Back to list"
     },
-    "detailId": {
-      "label": "Detail Id"
-    },
-    "location": {
-      "label": "Location"
-    },
-    "schedule": {
-      "label": "Schedule"
-    },
-    "edit": {
-      "headline": "Edit Detail",
-      "back": "Back to list"
-    },
-    "workspace": {
-      "detail": {
-        "referenced": "This entity is still referenced by Workspace {{id}} via field Detail."
-      }
-    },
-    "locationCandidate": {
-      "detail": {
-        "referenced": "This entity is still referenced by Location Candidate {{id}} via field Detail."
-      }
-    },
-    "create": {
-      "success": "Detail was created successfully."
-    },
-    "update": {
-      "success": "Detail was updated successfully."
-    },
-    "delete": {
-      "success": "Detail was removed successfully."
-    }
-  },
-  "scheduleUser": {
-    "list": {
-      "headline": "Schedule Users",
-      "createNew": "Create new Schedule User",
-      "empty": "No Schedule Users could be found.",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
-    "add": {
-      "headline": "Add Schedule User",
-      "back": "Back to list"
-    },
-    "scheduleUserId": {
-      "label": "Schedule User Id"
+    "id": {
+      "label": "Id"
     },
     "role": {
       "label": "Role"
     },
-    "user": {
-      "label": "User"
+    "departLocationName": {
+      "label": "Depart Location Name"
+    },
+    "latitude": {
+      "label": "Latitude"
+    },
+    "longitude": {
+      "label": "Longitude"
+    },
+    "member": {
+      "label": "Member"
     },
     "schedule": {
       "label": "Schedule"
     },
+    "middleRegion": {
+      "label": "Middle Region"
+    },
     "edit": {
-      "headline": "Edit Schedule User",
+      "headline": "Edit Schedule Member",
       "back": "Back to list"
     },
     "create": {
-      "success": "Schedule User was created successfully."
+      "success": "Schedule Member was created successfully."
     },
     "update": {
-      "success": "Schedule User was updated successfully."
+      "success": "Schedule Member was updated successfully."
     },
     "delete": {
-      "success": "Schedule User was removed successfully."
+      "success": "Schedule Member was removed successfully."
     }
   },
   "event": {
@@ -796,17 +609,14 @@
       "headline": "Add Event",
       "back": "Back to list"
     },
-    "eventId": {
-      "label": "Event Id"
+    "id": {
+      "label": "Id"
     },
     "title": {
       "label": "Title"
     },
     "description": {
       "label": "Description"
-    },
-    "creator": {
-      "label": "Creator"
     },
     "meetingType": {
       "label": "Meeting Type"
@@ -821,19 +631,19 @@
       "headline": "Edit Event",
       "back": "Back to list"
     },
-    "eventUser": {
+    "eventMember": {
       "event": {
-        "referenced": "This entity is still referenced by Event User {{id}} via field Event."
-      }
-    },
-    "candidateDate": {
-      "event": {
-        "referenced": "This entity is still referenced by Candidate Date {{id}} via field Event."
+        "referenced": "This entity is still referenced by Event Member {{id}} via field Event."
       }
     },
     "schedule": {
       "event": {
         "referenced": "This entity is still referenced by Schedule {{id}} via field Event."
+      }
+    },
+    "candidateDate": {
+      "event": {
+        "referenced": "This entity is still referenced by Candidate Date {{id}} via field Event."
       }
     },
     "create": {
@@ -858,8 +668,8 @@
       "headline": "Add Group",
       "back": "Back to list"
     },
-    "groupId": {
-      "label": "Group Id"
+    "id": {
+      "label": "Id"
     },
     "name": {
       "label": "Name"
@@ -874,9 +684,9 @@
       "headline": "Edit Group",
       "back": "Back to list"
     },
-    "groupUser": {
+    "groupMember": {
       "group": {
-        "referenced": "This entity is still referenced by Group User {{id}} via field Group."
+        "referenced": "This entity is still referenced by Group Member {{id}} via field Group."
       }
     },
     "event": {
@@ -906,8 +716,8 @@
       "headline": "Add Temp Schedule",
       "back": "Back to list"
     },
-    "tempScheduleId": {
-      "label": "Temp Schedule Id"
+    "id": {
+      "label": "Id"
     },
     "startTime": {
       "label": "Start Time"
@@ -915,8 +725,8 @@
     "endTime": {
       "label": "End Time"
     },
-    "eventUser": {
-      "label": "Event User"
+    "eventMember": {
+      "label": "Event Member"
     },
     "edit": {
       "headline": "Edit Temp Schedule",
@@ -932,42 +742,42 @@
       "success": "Temp Schedule was removed successfully."
     }
   },
-  "groupUser": {
+  "groupMember": {
     "list": {
-      "headline": "Group Users",
-      "createNew": "Create new Group User",
-      "empty": "No Group Users could be found.",
+      "headline": "Group Members",
+      "createNew": "Create new Group Member",
+      "empty": "No Group Members could be found.",
       "edit": "Edit",
       "delete": "Delete"
     },
     "add": {
-      "headline": "Add Group User",
+      "headline": "Add Group Member",
       "back": "Back to list"
     },
-    "groupUserId": {
-      "label": "Group User Id"
+    "id": {
+      "label": "Id"
     },
-    "groupRole": {
-      "label": "Group Role"
+    "role": {
+      "label": "Role"
     },
-    "user": {
-      "label": "User"
+    "member": {
+      "label": "Member"
     },
     "group": {
       "label": "Group"
     },
     "edit": {
-      "headline": "Edit Group User",
+      "headline": "Edit Group Member",
       "back": "Back to list"
     },
     "create": {
-      "success": "Group User was created successfully."
+      "success": "Group Member was created successfully."
     },
     "update": {
-      "success": "Group User was updated successfully."
+      "success": "Group Member was updated successfully."
     },
     "delete": {
-      "success": "Group User was removed successfully."
+      "success": "Group Member was removed successfully."
     }
   },
   "schedule": {
@@ -982,8 +792,8 @@
       "headline": "Add Schedule",
       "back": "Back to list"
     },
-    "scheduleId": {
-      "label": "Schedule Id"
+    "id": {
+      "label": "Id"
     },
     "startTime": {
       "label": "Start Time"
@@ -994,6 +804,21 @@
     "status": {
       "label": "Status"
     },
+    "location": {
+      "label": "Location"
+    },
+    "description": {
+      "label": "Description"
+    },
+    "meetingPlatform": {
+      "label": "Meeting Platform"
+    },
+    "platformUrl": {
+      "label": "Platform Url"
+    },
+    "specificLocation": {
+      "label": "Specific Location"
+    },
     "event": {
       "label": "Event"
     },
@@ -1001,19 +826,14 @@
       "headline": "Edit Schedule",
       "back": "Back to list"
     },
-    "scheduleUser": {
+    "scheduleMember": {
       "schedule": {
-        "referenced": "This entity is still referenced by Schedule User {{id}} via field Schedule."
+        "referenced": "This entity is still referenced by Schedule Member {{id}} via field Schedule."
       }
     },
-    "detail": {
+    "workspace": {
       "schedule": {
-        "referenced": "This entity is still referenced by Detail {{id}} via field Schedule."
-      }
-    },
-    "meeting": {
-      "schedule": {
-        "referenced": "This entity is still referenced by Meeting {{id}} via field Schedule."
+        "referenced": "This entity is still referenced by Workspace {{id}} via field Schedule."
       }
     },
     "create": {
@@ -1026,41 +846,58 @@
       "success": "Schedule was removed successfully."
     }
   },
+  "candidateDate": {
+    "list": {
+      "headline": "Candidate Dates",
+      "createNew": "Create new Candidate Date",
+      "empty": "No Candidate Dates could be found.",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "add": {
+      "headline": "Add Candidate Date",
+      "back": "Back to list"
+    },
+    "id": {
+      "label": "Id"
+    },
+    "date": {
+      "label": "Date"
+    },
+    "event": {
+      "label": "Event"
+    },
+    "edit": {
+      "headline": "Edit Candidate Date",
+      "back": "Back to list"
+    },
+    "create": {
+      "success": "Candidate Date was created successfully."
+    },
+    "update": {
+      "success": "Candidate Date was updated successfully."
+    },
+    "delete": {
+      "success": "Candidate Date was removed successfully."
+    }
+  },
   "exists": {
     "member": {
-      "userId": "This User Id is already taken.",
+      "id": "This Id is already taken.",
       "email": "This Email is already taken.",
-      "phoneNumber": "This Phone Number is already taken."
+      "tel": "This Tel is already taken."
     },
     "socialAuthTokens": {
       "accessToken": "This Access Token is already taken.",
       "refreshToken": "This Refresh Token is already taken."
-    },
-    "locationCandidate": {
-      "locationName": "This Location Name is already taken."
-    },
-    "candidateDate": {
-      "date": "This Date is already taken."
     }
   },
   "Exists": {
-    "likeLocation": {
-      "user": "This Member is already referenced by another Like Location."
+    "favoriteLocation": {
+      "member": "This Member is already referenced by another Favorite Location."
     },
     "calendar": {
-      "user": "This Member is already referenced by another Calendar."
-    },
-    "meeting": {
-      "schedule": "This Schedule is already referenced by another Meeting."
-    },
-    "userVote": {
-      "location-candidate": "This Location Candidate is already referenced by another User Vote."
-    },
-    "location": {
-      "middle-region": "This Middle Region is already referenced by another Location."
-    },
-    "detail": {
-      "schedule": "This Schedule is already referenced by another Detail."
+      "member": "This Member is already referenced by another Calendar."
     }
   },
   "select": {

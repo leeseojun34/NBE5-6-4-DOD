@@ -4,12 +4,12 @@ export class SocialAuthTokensDTO {
     Object.assign(this, data);
   }
 
-  socialAuthTokensId?: number|null;
+  id?: number|null;
   accessToken?: string|null;
   refreshToken?: string|null;
   tokenType?: string|null;
   expiresAt?: string|null;
   provider?: string|null;
-  user?: string|null;
+  member?: string|null;
 
 }

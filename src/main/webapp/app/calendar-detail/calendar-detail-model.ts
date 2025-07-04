@@ -4,11 +4,13 @@ export class CalendarDetailDTO {
     Object.assign(this, data);
   }
 
-  calendarDetailId?: number|null;
+  id?: number|null;
   title?: string|null;
   startDatetime?: string|null;
   endDatetime?: string|null;
   syncedAt?: string|null;
+  isAllDay?: boolean|null;
+  externalEtag?: string|null;
   calendar?: number|null;
 
 }

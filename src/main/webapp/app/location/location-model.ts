@@ -4,10 +4,13 @@ export class LocationDTO {
     Object.assign(this, data);
   }
 
-  locationId?: number|null;
+  id?: number|null;
   latitude?: number|null;
   longitude?: number|null;
-  locationName?: string|null;
+  name?: string|null;
+  suggestedMemberId?: string|null;
+  voteCount?: number|null;
+  status?: string|null;
   middleRegion?: number|null;
 
 }

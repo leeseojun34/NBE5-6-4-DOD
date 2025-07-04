@@ -17,6 +17,11 @@ function getSchema() {
     startTime: yup.string().emptyToNull().required(),
     endTime: yup.string().emptyToNull().required(),
     status: yup.string().emptyToNull().max(255).required(),
+    location: yup.string().emptyToNull().max(255),
+    description: yup.string().emptyToNull(),
+    meetingPlatform: yup.string().emptyToNull().max(255),
+    platformUrl: yup.string().emptyToNull(),
+    specificLocation: yup.string().emptyToNull().max(255),
     event: yup.number().integer().emptyToNull()
   });
 }
@@ -70,6 +75,11 @@ export default function ScheduleAdd() {
       <InputRow useFormResult={useFormResult} object="schedule" field="startTime" required={true} type="datetimepicker" />
       <InputRow useFormResult={useFormResult} object="schedule" field="endTime" required={true} type="datetimepicker" />
       <InputRow useFormResult={useFormResult} object="schedule" field="status" required={true} />
+      <InputRow useFormResult={useFormResult} object="schedule" field="location" />
+      <InputRow useFormResult={useFormResult} object="schedule" field="description" type="textarea" />
+      <InputRow useFormResult={useFormResult} object="schedule" field="meetingPlatform" />
+      <InputRow useFormResult={useFormResult} object="schedule" field="platformUrl" type="textarea" />
+      <InputRow useFormResult={useFormResult} object="schedule" field="specificLocation" />
       <InputRow useFormResult={useFormResult} object="schedule" field="event" type="select" options={eventValues} />
       <input type="submit" value={t('schedule.add.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>

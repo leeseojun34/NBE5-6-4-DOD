@@ -4,7 +4,7 @@ export class CandidateDateDTO {
     Object.assign(this, data);
   }
 
-  candidateDateId?: number|null;
+  id?: number|null;
   date?: string|null;
   event?: number|null;
 

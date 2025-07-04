@@ -14,14 +14,14 @@ import * as yup from 'yup';
 function getSchema() {
   setYupDefaults();
   return yup.object({
-    userId: yup.string().emptyToNull().max(255),
+    id: yup.string().emptyToNull().max(255),
     password: yup.string().emptyToNull().max(255).required(),
     provider: yup.string().emptyToNull().max(255).required(),
     role: yup.string().emptyToNull().max(255).required(),
     email: yup.string().emptyToNull().max(255).required(),
     name: yup.string().emptyToNull().max(255).required(),
     profileImageNumber: yup.number().integer().emptyToNull().required(),
-    phoneNumber: yup.string().emptyToNull().max(255).required()
+    tel: yup.string().emptyToNull().max(255).required()
   });
 }
 
@@ -37,9 +37,9 @@ export default function MemberAdd() {
 
   const getMessage = (key: string) => {
     const messages: Record<string, string> = {
-      MEMBER_USER_ID_VALID: t('exists.member.userId'),
+      MEMBER_ID_VALID: t('exists.member.id'),
       MEMBER_EMAIL_UNIQUE: t('exists.member.email'),
-      MEMBER_PHONE_NUMBER_UNIQUE: t('exists.member.phoneNumber')
+      MEMBER_TEL_UNIQUE: t('exists.member.tel')
     };
     return messages[key];
   };
@@ -66,14 +66,14 @@ export default function MemberAdd() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(createMember)} noValidate>
-      <InputRow useFormResult={useFormResult} object="member" field="userId" required={true} />
+      <InputRow useFormResult={useFormResult} object="member" field="id" required={true} />
       <InputRow useFormResult={useFormResult} object="member" field="password" required={true} />
       <InputRow useFormResult={useFormResult} object="member" field="provider" required={true} />
       <InputRow useFormResult={useFormResult} object="member" field="role" required={true} />
       <InputRow useFormResult={useFormResult} object="member" field="email" required={true} />
       <InputRow useFormResult={useFormResult} object="member" field="name" required={true} />
       <InputRow useFormResult={useFormResult} object="member" field="profileImageNumber" required={true} type="number" />
-      <InputRow useFormResult={useFormResult} object="member" field="phoneNumber" required={true} />
+      <InputRow useFormResult={useFormResult} object="member" field="tel" required={true} />
       <input type="submit" value={t('member.add.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>
   </>);

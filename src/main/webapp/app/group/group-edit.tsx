@@ -26,7 +26,7 @@ export default function GroupEdit() {
 
   const navigate = useNavigate();
   const params = useParams();
-  const currentGroupId = +params.groupId!;
+  const currentId = +params.id!;
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
@@ -34,7 +34,7 @@ export default function GroupEdit() {
 
   const prepareForm = async () => {
     try {
-      const data = (await axios.get('/api/groups/' + currentGroupId)).data;
+      const data = (await axios.get('/api/groups/' + currentId)).data;
       useFormResult.reset(data);
     } catch (error: any) {
       handleServerError(error, navigate);
@@ -48,7 +48,7 @@ export default function GroupEdit() {
   const updateGroup = async (data: GroupDTO) => {
     window.scrollTo(0, 0);
     try {
-      await axios.put('/api/groups/' + currentGroupId, data);
+      await axios.put('/api/groups/' + currentId, data);
       navigate('/groups', {
             state: {
               msgSuccess: t('group.update.success')
@@ -67,7 +67,7 @@ export default function GroupEdit() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(updateGroup)} noValidate>
-      <InputRow useFormResult={useFormResult} object="group" field="groupId" disabled={true} type="number" />
+      <InputRow useFormResult={useFormResult} object="group" field="id" disabled={true} type="number" />
       <InputRow useFormResult={useFormResult} object="group" field="name" required={true} />
       <InputRow useFormResult={useFormResult} object="group" field="description" />
       <InputRow useFormResult={useFormResult} object="group" field="isGrouped" type="checkbox" />

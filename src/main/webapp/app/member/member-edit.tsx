@@ -20,7 +20,7 @@ function getSchema() {
     email: yup.string().emptyToNull().max(255).required(),
     name: yup.string().emptyToNull().max(255).required(),
     profileImageNumber: yup.number().integer().emptyToNull().required(),
-    phoneNumber: yup.string().emptyToNull().max(255).required()
+    tel: yup.string().emptyToNull().max(255).required()
   });
 }
 
@@ -30,7 +30,7 @@ export default function MemberEdit() {
 
   const navigate = useNavigate();
   const params = useParams();
-  const currentUserId = params.userId!;
+  const currentId = params.id!;
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
@@ -39,14 +39,14 @@ export default function MemberEdit() {
   const getMessage = (key: string) => {
     const messages: Record<string, string> = {
       MEMBER_EMAIL_UNIQUE: t('exists.member.email'),
-      MEMBER_PHONE_NUMBER_UNIQUE: t('exists.member.phoneNumber')
+      MEMBER_TEL_UNIQUE: t('exists.member.tel')
     };
     return messages[key];
   };
 
   const prepareForm = async () => {
     try {
-      const data = (await axios.get('/api/members/' + currentUserId)).data;
+      const data = (await axios.get('/api/members/' + currentId)).data;
       useFormResult.reset(data);
     } catch (error: any) {
       handleServerError(error, navigate);
@@ -60,7 +60,7 @@ export default function MemberEdit() {
   const updateMember = async (data: MemberDTO) => {
     window.scrollTo(0, 0);
     try {
-      await axios.put('/api/members/' + currentUserId, data);
+      await axios.put('/api/members/' + currentId, data);
       navigate('/members', {
             state: {
               msgSuccess: t('member.update.success')
@@ -79,14 +79,14 @@ export default function MemberEdit() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(updateMember)} noValidate>
-      <InputRow useFormResult={useFormResult} object="member" field="userId" disabled={true} />
+      <InputRow useFormResult={useFormResult} object="member" field="id" disabled={true} />
       <InputRow useFormResult={useFormResult} object="member" field="password" required={true} />
       <InputRow useFormResult={useFormResult} object="member" field="provider" required={true} />
       <InputRow useFormResult={useFormResult} object="member" field="role" required={true} />
       <InputRow useFormResult={useFormResult} object="member" field="email" required={true} />
       <InputRow useFormResult={useFormResult} object="member" field="name" required={true} />
       <InputRow useFormResult={useFormResult} object="member" field="profileImageNumber" required={true} type="number" />
-      <InputRow useFormResult={useFormResult} object="member" field="phoneNumber" required={true} />
+      <InputRow useFormResult={useFormResult} object="member" field="tel" required={true} />
       <input type="submit" value={t('member.edit.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>
   </>);

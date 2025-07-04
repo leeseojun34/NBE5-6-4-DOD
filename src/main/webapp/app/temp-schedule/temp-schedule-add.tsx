@@ -16,7 +16,7 @@ function getSchema() {
   return yup.object({
     startTime: yup.string().emptyToNull().required(),
     endTime: yup.string().emptyToNull().required(),
-    eventUser: yup.number().integer().emptyToNull()
+    eventMember: yup.number().integer().emptyToNull()
   });
 }
 
@@ -25,7 +25,7 @@ export default function TempScheduleAdd() {
   useDocumentTitle(t('tempSchedule.add.headline'));
 
   const navigate = useNavigate();
-  const [eventUserValues, setEventUserValues] = useState<Map<number,string>>(new Map());
+  const [eventMemberValues, setEventMemberValues] = useState<Map<number,string>>(new Map());
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
@@ -33,8 +33,8 @@ export default function TempScheduleAdd() {
 
   const prepareRelations = async () => {
     try {
-      const eventUserValuesResponse = await axios.get('/api/tempSchedules/eventUserValues');
-      setEventUserValues(eventUserValuesResponse.data);
+      const eventMemberValuesResponse = await axios.get('/api/tempSchedules/eventMemberValues');
+      setEventMemberValues(eventMemberValuesResponse.data);
     } catch (error: any) {
       handleServerError(error, navigate);
     }
@@ -68,7 +68,7 @@ export default function TempScheduleAdd() {
     <form onSubmit={useFormResult.handleSubmit(createTempSchedule)} noValidate>
       <InputRow useFormResult={useFormResult} object="tempSchedule" field="startTime" required={true} type="datetimepicker" />
       <InputRow useFormResult={useFormResult} object="tempSchedule" field="endTime" required={true} type="datetimepicker" />
-      <InputRow useFormResult={useFormResult} object="tempSchedule" field="eventUser" type="select" options={eventUserValues} />
+      <InputRow useFormResult={useFormResult} object="tempSchedule" field="eventMember" type="select" options={eventMemberValues} />
       <input type="submit" value={t('tempSchedule.add.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>
   </>);

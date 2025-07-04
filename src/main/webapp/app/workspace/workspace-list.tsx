@@ -23,12 +23,12 @@ export default function WorkspaceList() {
     }
   };
 
-  const confirmDelete = async (workspaceId: number) => {
+  const confirmDelete = async (id: number) => {
     if (!confirm(t('delete.confirm'))) {
       return;
     }
     try {
-      await axios.delete('/api/workspaces/' + workspaceId);
+      await axios.delete('/api/workspaces/' + id);
       navigate('/workspaces', {
             state: {
               msgInfo: t('workspace.delete.success')
@@ -58,23 +58,21 @@ export default function WorkspaceList() {
       <table className="w-full">
         <thead>
           <tr>
-            <th scope="col" className="text-left p-2">{t('workspace.workspaceId.label')}</th>
-            <th scope="col" className="text-left p-2">{t('workspace.url.label')}</th>
-            <th scope="col" className="text-left p-2">{t('workspace.detail.label')}</th>
+            <th scope="col" className="text-left p-2">{t('workspace.id.label')}</th>
+            <th scope="col" className="text-left p-2">{t('workspace.schedule.label')}</th>
             <th></th>
           </tr>
         </thead>
         <tbody className="border-t-2 border-black">
           {workspaces.map((workspace) => (
-          <tr key={workspace.workspaceId} className="odd:bg-gray-100">
-            <td className="p-2">{workspace.workspaceId}</td>
-            <td className="p-2">{workspace.url}</td>
-            <td className="p-2">{workspace.detail}</td>
+          <tr key={workspace.id} className="odd:bg-gray-100">
+            <td className="p-2">{workspace.id}</td>
+            <td className="p-2">{workspace.schedule}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">
-                <Link to={'/workspaces/edit/' + workspace.workspaceId} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('workspace.list.edit')}</Link>
+                <Link to={'/workspaces/edit/' + workspace.id} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('workspace.list.edit')}</Link>
                 <span> </span>
-                <button type="button" onClick={() => confirmDelete(workspace.workspaceId!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('workspace.list.delete')}</button>
+                <button type="button" onClick={() => confirmDelete(workspace.id!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('workspace.list.delete')}</button>
               </div>
             </td>
           </tr>

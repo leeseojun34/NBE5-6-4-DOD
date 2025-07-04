@@ -23,12 +23,12 @@ export default function MemberList() {
     }
   };
 
-  const confirmDelete = async (userId: string) => {
+  const confirmDelete = async (id: string) => {
     if (!confirm(t('delete.confirm'))) {
       return;
     }
     try {
-      await axios.delete('/api/members/' + userId);
+      await axios.delete('/api/members/' + id);
       navigate('/members', {
             state: {
               msgInfo: t('member.delete.success')
@@ -67,33 +67,33 @@ export default function MemberList() {
       <table className="w-full">
         <thead>
           <tr>
-            <th scope="col" className="text-left p-2">{t('member.userId.label')}</th>
+            <th scope="col" className="text-left p-2">{t('member.id.label')}</th>
             <th scope="col" className="text-left p-2">{t('member.password.label')}</th>
             <th scope="col" className="text-left p-2">{t('member.provider.label')}</th>
             <th scope="col" className="text-left p-2">{t('member.role.label')}</th>
             <th scope="col" className="text-left p-2">{t('member.email.label')}</th>
             <th scope="col" className="text-left p-2">{t('member.name.label')}</th>
             <th scope="col" className="text-left p-2">{t('member.profileImageNumber.label')}</th>
-            <th scope="col" className="text-left p-2">{t('member.phoneNumber.label')}</th>
+            <th scope="col" className="text-left p-2">{t('member.tel.label')}</th>
             <th></th>
           </tr>
         </thead>
         <tbody className="border-t-2 border-black">
           {members.map((member) => (
-          <tr key={member.userId} className="odd:bg-gray-100">
-            <td className="p-2">{member.userId}</td>
+          <tr key={member.id} className="odd:bg-gray-100">
+            <td className="p-2">{member.id}</td>
             <td className="p-2">{member.password}</td>
             <td className="p-2">{member.provider}</td>
             <td className="p-2">{member.role}</td>
             <td className="p-2">{member.email}</td>
             <td className="p-2">{member.name}</td>
             <td className="p-2">{member.profileImageNumber}</td>
-            <td className="p-2">{member.phoneNumber}</td>
+            <td className="p-2">{member.tel}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">
-                <Link to={'/members/edit/' + member.userId} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('member.list.edit')}</Link>
+                <Link to={'/members/edit/' + member.id} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('member.list.edit')}</Link>
                 <span> </span>
-                <button type="button" onClick={() => confirmDelete(member.userId!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('member.list.delete')}</button>
+                <button type="button" onClick={() => confirmDelete(member.id!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('member.list.delete')}</button>
               </div>
             </td>
           </tr>

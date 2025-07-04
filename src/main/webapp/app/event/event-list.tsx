@@ -23,12 +23,12 @@ export default function EventList() {
     }
   };
 
-  const confirmDelete = async (eventId: number) => {
+  const confirmDelete = async (id: number) => {
     if (!confirm(t('delete.confirm'))) {
       return;
     }
     try {
-      await axios.delete('/api/events/' + eventId);
+      await axios.delete('/api/events/' + id);
       navigate('/events', {
             state: {
               msgInfo: t('event.delete.success')
@@ -67,9 +67,8 @@ export default function EventList() {
       <table className="w-full">
         <thead>
           <tr>
-            <th scope="col" className="text-left p-2">{t('event.eventId.label')}</th>
+            <th scope="col" className="text-left p-2">{t('event.id.label')}</th>
             <th scope="col" className="text-left p-2">{t('event.title.label')}</th>
-            <th scope="col" className="text-left p-2">{t('event.creator.label')}</th>
             <th scope="col" className="text-left p-2">{t('event.meetingType.label')}</th>
             <th scope="col" className="text-left p-2">{t('event.maxMember.label')}</th>
             <th scope="col" className="text-left p-2">{t('event.group.label')}</th>
@@ -78,18 +77,17 @@ export default function EventList() {
         </thead>
         <tbody className="border-t-2 border-black">
           {events.map((event) => (
-          <tr key={event.eventId} className="odd:bg-gray-100">
-            <td className="p-2">{event.eventId}</td>
+          <tr key={event.id} className="odd:bg-gray-100">
+            <td className="p-2">{event.id}</td>
             <td className="p-2">{event.title}</td>
-            <td className="p-2">{event.creator}</td>
             <td className="p-2">{event.meetingType}</td>
             <td className="p-2">{event.maxMember}</td>
             <td className="p-2">{event.group}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">
-                <Link to={'/events/edit/' + event.eventId} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('event.list.edit')}</Link>
+                <Link to={'/events/edit/' + event.id} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('event.list.edit')}</Link>
                 <span> </span>
-                <button type="button" onClick={() => confirmDelete(event.eventId!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('event.list.delete')}</button>
+                <button type="button" onClick={() => confirmDelete(event.id!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('event.list.delete')}</button>
               </div>
             </td>
           </tr>

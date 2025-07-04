@@ -16,7 +16,6 @@ function getSchema() {
   return yup.object({
     title: yup.string().emptyToNull().max(255).required(),
     description: yup.string().emptyToNull(),
-    creator: yup.number().integer().emptyToNull().required(),
     meetingType: yup.string().emptyToNull().max(255).required(),
     maxMember: yup.number().integer().emptyToNull().required(),
     group: yup.number().integer().emptyToNull()
@@ -30,7 +29,7 @@ export default function EventEdit() {
   const navigate = useNavigate();
   const [groupValues, setGroupValues] = useState<Map<number,string>>(new Map());
   const params = useParams();
-  const currentEventId = +params.eventId!;
+  const currentId = +params.id!;
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
@@ -40,7 +39,7 @@ export default function EventEdit() {
     try {
       const groupValuesResponse = await axios.get('/api/events/groupValues');
       setGroupValues(groupValuesResponse.data);
-      const data = (await axios.get('/api/events/' + currentEventId)).data;
+      const data = (await axios.get('/api/events/' + currentId)).data;
       useFormResult.reset(data);
     } catch (error: any) {
       handleServerError(error, navigate);
@@ -54,7 +53,7 @@ export default function EventEdit() {
   const updateEvent = async (data: EventDTO) => {
     window.scrollTo(0, 0);
     try {
-      await axios.put('/api/events/' + currentEventId, data);
+      await axios.put('/api/events/' + currentId, data);
       navigate('/events', {
             state: {
               msgSuccess: t('event.update.success')
@@ -73,10 +72,9 @@ export default function EventEdit() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(updateEvent)} noValidate>
-      <InputRow useFormResult={useFormResult} object="event" field="eventId" disabled={true} type="number" />
+      <InputRow useFormResult={useFormResult} object="event" field="id" disabled={true} type="number" />
       <InputRow useFormResult={useFormResult} object="event" field="title" required={true} />
       <InputRow useFormResult={useFormResult} object="event" field="description" type="textarea" />
-      <InputRow useFormResult={useFormResult} object="event" field="creator" required={true} type="number" />
       <InputRow useFormResult={useFormResult} object="event" field="meetingType" required={true} />
       <InputRow useFormResult={useFormResult} object="event" field="maxMember" required={true} type="number" />
       <InputRow useFormResult={useFormResult} object="event" field="group" type="select" options={groupValues} />

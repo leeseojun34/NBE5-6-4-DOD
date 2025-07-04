@@ -23,12 +23,12 @@ export default function CalendarDetailList() {
     }
   };
 
-  const confirmDelete = async (calendarDetailId: number) => {
+  const confirmDelete = async (id: number) => {
     if (!confirm(t('delete.confirm'))) {
       return;
     }
     try {
-      await axios.delete('/api/calendarDetails/' + calendarDetailId);
+      await axios.delete('/api/calendarDetails/' + id);
       navigate('/calendarDetails', {
             state: {
               msgInfo: t('calendarDetail.delete.success')
@@ -58,29 +58,31 @@ export default function CalendarDetailList() {
       <table className="w-full">
         <thead>
           <tr>
-            <th scope="col" className="text-left p-2">{t('calendarDetail.calendarDetailId.label')}</th>
+            <th scope="col" className="text-left p-2">{t('calendarDetail.id.label')}</th>
             <th scope="col" className="text-left p-2">{t('calendarDetail.title.label')}</th>
             <th scope="col" className="text-left p-2">{t('calendarDetail.startDatetime.label')}</th>
             <th scope="col" className="text-left p-2">{t('calendarDetail.endDatetime.label')}</th>
             <th scope="col" className="text-left p-2">{t('calendarDetail.syncedAt.label')}</th>
+            <th scope="col" className="text-left p-2">{t('calendarDetail.isAllDay.label')}</th>
             <th scope="col" className="text-left p-2">{t('calendarDetail.calendar.label')}</th>
             <th></th>
           </tr>
         </thead>
         <tbody className="border-t-2 border-black">
           {calendarDetails.map((calendarDetail) => (
-          <tr key={calendarDetail.calendarDetailId} className="odd:bg-gray-100">
-            <td className="p-2">{calendarDetail.calendarDetailId}</td>
+          <tr key={calendarDetail.id} className="odd:bg-gray-100">
+            <td className="p-2">{calendarDetail.id}</td>
             <td className="p-2">{calendarDetail.title}</td>
             <td className="p-2">{calendarDetail.startDatetime}</td>
             <td className="p-2">{calendarDetail.endDatetime}</td>
             <td className="p-2">{calendarDetail.syncedAt}</td>
+            <td className="p-2">{calendarDetail.isAllDay?.toString()}</td>
             <td className="p-2">{calendarDetail.calendar}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">
-                <Link to={'/calendarDetails/edit/' + calendarDetail.calendarDetailId} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('calendarDetail.list.edit')}</Link>
+                <Link to={'/calendarDetails/edit/' + calendarDetail.id} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('calendarDetail.list.edit')}</Link>
                 <span> </span>
-                <button type="button" onClick={() => confirmDelete(calendarDetail.calendarDetailId!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('calendarDetail.list.delete')}</button>
+                <button type="button" onClick={() => confirmDelete(calendarDetail.id!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('calendarDetail.list.delete')}</button>
               </div>
             </td>
           </tr>

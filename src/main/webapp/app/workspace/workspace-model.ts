@@ -4,8 +4,8 @@ export class WorkspaceDTO {
     Object.assign(this, data);
   }
 
-  workspaceId?: number|null;
+  id?: number|null;
   url?: string|null;
-  detail?: number|null;
+  schedule?: number|null;
 
 }

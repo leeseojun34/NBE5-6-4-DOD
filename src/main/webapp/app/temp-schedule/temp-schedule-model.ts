@@ -4,9 +4,9 @@ export class TempScheduleDTO {
     Object.assign(this, data);
   }
 
-  tempScheduleId?: number|null;
+  id?: number|null;
   startTime?: string|null;
   endTime?: string|null;
-  eventUser?: number|null;
+  eventMember?: number|null;
 
 }

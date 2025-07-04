@@ -26,24 +26,17 @@ export default function CandidateDateEdit() {
   const navigate = useNavigate();
   const [eventValues, setEventValues] = useState<Map<number,string>>(new Map());
   const params = useParams();
-  const currentCandidateDateId = +params.candidateDateId!;
+  const currentId = +params.id!;
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
   });
 
-  const getMessage = (key: string) => {
-    const messages: Record<string, string> = {
-      CANDIDATE_DATE_DATE_UNIQUE: t('exists.candidateDate.date')
-    };
-    return messages[key];
-  };
-
   const prepareForm = async () => {
     try {
       const eventValuesResponse = await axios.get('/api/candidateDates/eventValues');
       setEventValues(eventValuesResponse.data);
-      const data = (await axios.get('/api/candidateDates/' + currentCandidateDateId)).data;
+      const data = (await axios.get('/api/candidateDates/' + currentId)).data;
       useFormResult.reset(data);
     } catch (error: any) {
       handleServerError(error, navigate);
@@ -57,14 +50,14 @@ export default function CandidateDateEdit() {
   const updateCandidateDate = async (data: CandidateDateDTO) => {
     window.scrollTo(0, 0);
     try {
-      await axios.put('/api/candidateDates/' + currentCandidateDateId, data);
+      await axios.put('/api/candidateDates/' + currentId, data);
       navigate('/candidateDates', {
             state: {
               msgSuccess: t('candidateDate.update.success')
             }
           });
     } catch (error: any) {
-      handleServerError(error, navigate, useFormResult.setError, t, getMessage);
+      handleServerError(error, navigate, useFormResult.setError, t);
     }
   };
 
@@ -76,7 +69,7 @@ export default function CandidateDateEdit() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(updateCandidateDate)} noValidate>
-      <InputRow useFormResult={useFormResult} object="candidateDate" field="candidateDateId" disabled={true} type="number" />
+      <InputRow useFormResult={useFormResult} object="candidateDate" field="id" disabled={true} type="number" />
       <InputRow useFormResult={useFormResult} object="candidateDate" field="date" required={true} type="datetimepicker" />
       <InputRow useFormResult={useFormResult} object="candidateDate" field="event" type="select" options={eventValues} />
       <input type="submit" value={t('candidateDate.edit.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />

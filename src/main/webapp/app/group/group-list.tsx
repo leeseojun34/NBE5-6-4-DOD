@@ -23,12 +23,12 @@ export default function GroupList() {
     }
   };
 
-  const confirmDelete = async (groupId: number) => {
+  const confirmDelete = async (id: number) => {
     if (!confirm(t('delete.confirm'))) {
       return;
     }
     try {
-      await axios.delete('/api/groups/' + groupId);
+      await axios.delete('/api/groups/' + id);
       navigate('/groups', {
             state: {
               msgInfo: t('group.delete.success')
@@ -67,7 +67,7 @@ export default function GroupList() {
       <table className="w-full">
         <thead>
           <tr>
-            <th scope="col" className="text-left p-2">{t('group.groupId.label')}</th>
+            <th scope="col" className="text-left p-2">{t('group.id.label')}</th>
             <th scope="col" className="text-left p-2">{t('group.name.label')}</th>
             <th scope="col" className="text-left p-2">{t('group.description.label')}</th>
             <th scope="col" className="text-left p-2">{t('group.isGrouped.label')}</th>
@@ -76,16 +76,16 @@ export default function GroupList() {
         </thead>
         <tbody className="border-t-2 border-black">
           {groups.map((group) => (
-          <tr key={group.groupId} className="odd:bg-gray-100">
-            <td className="p-2">{group.groupId}</td>
+          <tr key={group.id} className="odd:bg-gray-100">
+            <td className="p-2">{group.id}</td>
             <td className="p-2">{group.name}</td>
             <td className="p-2">{group.description}</td>
             <td className="p-2">{group.isGrouped?.toString()}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">
-                <Link to={'/groups/edit/' + group.groupId} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('group.list.edit')}</Link>
+                <Link to={'/groups/edit/' + group.id} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('group.list.edit')}</Link>
                 <span> </span>
-                <button type="button" onClick={() => confirmDelete(group.groupId!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('group.list.delete')}</button>
+                <button type="button" onClick={() => confirmDelete(group.id!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('group.list.delete')}</button>
               </div>
             </td>
           </tr>

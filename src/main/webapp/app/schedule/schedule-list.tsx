@@ -23,12 +23,12 @@ export default function ScheduleList() {
     }
   };
 
-  const confirmDelete = async (scheduleId: number) => {
+  const confirmDelete = async (id: number) => {
     if (!confirm(t('delete.confirm'))) {
       return;
     }
     try {
-      await axios.delete('/api/schedules/' + scheduleId);
+      await axios.delete('/api/schedules/' + id);
       navigate('/schedules', {
             state: {
               msgInfo: t('schedule.delete.success')
@@ -67,27 +67,33 @@ export default function ScheduleList() {
       <table className="w-full">
         <thead>
           <tr>
-            <th scope="col" className="text-left p-2">{t('schedule.scheduleId.label')}</th>
+            <th scope="col" className="text-left p-2">{t('schedule.id.label')}</th>
             <th scope="col" className="text-left p-2">{t('schedule.startTime.label')}</th>
             <th scope="col" className="text-left p-2">{t('schedule.endTime.label')}</th>
             <th scope="col" className="text-left p-2">{t('schedule.status.label')}</th>
+            <th scope="col" className="text-left p-2">{t('schedule.location.label')}</th>
+            <th scope="col" className="text-left p-2">{t('schedule.meetingPlatform.label')}</th>
+            <th scope="col" className="text-left p-2">{t('schedule.specificLocation.label')}</th>
             <th scope="col" className="text-left p-2">{t('schedule.event.label')}</th>
             <th></th>
           </tr>
         </thead>
         <tbody className="border-t-2 border-black">
           {schedules.map((schedule) => (
-          <tr key={schedule.scheduleId} className="odd:bg-gray-100">
-            <td className="p-2">{schedule.scheduleId}</td>
+          <tr key={schedule.id} className="odd:bg-gray-100">
+            <td className="p-2">{schedule.id}</td>
             <td className="p-2">{schedule.startTime}</td>
             <td className="p-2">{schedule.endTime}</td>
             <td className="p-2">{schedule.status}</td>
+            <td className="p-2">{schedule.location}</td>
+            <td className="p-2">{schedule.meetingPlatform}</td>
+            <td className="p-2">{schedule.specificLocation}</td>
             <td className="p-2">{schedule.event}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">
-                <Link to={'/schedules/edit/' + schedule.scheduleId} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('schedule.list.edit')}</Link>
+                <Link to={'/schedules/edit/' + schedule.id} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('schedule.list.edit')}</Link>
                 <span> </span>
-                <button type="button" onClick={() => confirmDelete(schedule.scheduleId!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('schedule.list.delete')}</button>
+                <button type="button" onClick={() => confirmDelete(schedule.id!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('schedule.list.delete')}</button>
               </div>
             </td>
           </tr>

@@ -16,7 +16,7 @@ function getSchema() {
   return yup.object({
     startTime: yup.string().emptyToNull().required(),
     endTime: yup.string().emptyToNull().required(),
-    eventUser: yup.number().integer().emptyToNull()
+    eventMember: yup.number().integer().emptyToNull()
   });
 }
 
@@ -25,9 +25,9 @@ export default function TempScheduleEdit() {
   useDocumentTitle(t('tempSchedule.edit.headline'));
 
   const navigate = useNavigate();
-  const [eventUserValues, setEventUserValues] = useState<Map<number,string>>(new Map());
+  const [eventMemberValues, setEventMemberValues] = useState<Map<number,string>>(new Map());
   const params = useParams();
-  const currentTempScheduleId = +params.tempScheduleId!;
+  const currentId = +params.id!;
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
@@ -35,9 +35,9 @@ export default function TempScheduleEdit() {
 
   const prepareForm = async () => {
     try {
-      const eventUserValuesResponse = await axios.get('/api/tempSchedules/eventUserValues');
-      setEventUserValues(eventUserValuesResponse.data);
-      const data = (await axios.get('/api/tempSchedules/' + currentTempScheduleId)).data;
+      const eventMemberValuesResponse = await axios.get('/api/tempSchedules/eventMemberValues');
+      setEventMemberValues(eventMemberValuesResponse.data);
+      const data = (await axios.get('/api/tempSchedules/' + currentId)).data;
       useFormResult.reset(data);
     } catch (error: any) {
       handleServerError(error, navigate);
@@ -51,7 +51,7 @@ export default function TempScheduleEdit() {
   const updateTempSchedule = async (data: TempScheduleDTO) => {
     window.scrollTo(0, 0);
     try {
-      await axios.put('/api/tempSchedules/' + currentTempScheduleId, data);
+      await axios.put('/api/tempSchedules/' + currentId, data);
       navigate('/tempSchedules', {
             state: {
               msgSuccess: t('tempSchedule.update.success')
@@ -70,10 +70,10 @@ export default function TempScheduleEdit() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(updateTempSchedule)} noValidate>
-      <InputRow useFormResult={useFormResult} object="tempSchedule" field="tempScheduleId" disabled={true} type="number" />
+      <InputRow useFormResult={useFormResult} object="tempSchedule" field="id" disabled={true} type="number" />
       <InputRow useFormResult={useFormResult} object="tempSchedule" field="startTime" required={true} type="datetimepicker" />
       <InputRow useFormResult={useFormResult} object="tempSchedule" field="endTime" required={true} type="datetimepicker" />
-      <InputRow useFormResult={useFormResult} object="tempSchedule" field="eventUser" type="select" options={eventUserValues} />
+      <InputRow useFormResult={useFormResult} object="tempSchedule" field="eventMember" type="select" options={eventMemberValues} />
       <input type="submit" value={t('tempSchedule.edit.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>
   </>);

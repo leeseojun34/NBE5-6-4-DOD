@@ -4,7 +4,7 @@ export class MiddleRegionDTO {
     Object.assign(this, data);
   }
 
-  middleRegionId?: number|null;
+  id?: number|null;
   latitude?: number|null;
   longitude?: number|null;
 

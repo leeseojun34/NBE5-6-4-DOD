@@ -23,12 +23,12 @@ export default function TempScheduleList() {
     }
   };
 
-  const confirmDelete = async (tempScheduleId: number) => {
+  const confirmDelete = async (id: number) => {
     if (!confirm(t('delete.confirm'))) {
       return;
     }
     try {
-      await axios.delete('/api/tempSchedules/' + tempScheduleId);
+      await axios.delete('/api/tempSchedules/' + id);
       navigate('/tempSchedules', {
             state: {
               msgInfo: t('tempSchedule.delete.success')
@@ -58,25 +58,25 @@ export default function TempScheduleList() {
       <table className="w-full">
         <thead>
           <tr>
-            <th scope="col" className="text-left p-2">{t('tempSchedule.tempScheduleId.label')}</th>
+            <th scope="col" className="text-left p-2">{t('tempSchedule.id.label')}</th>
             <th scope="col" className="text-left p-2">{t('tempSchedule.startTime.label')}</th>
             <th scope="col" className="text-left p-2">{t('tempSchedule.endTime.label')}</th>
-            <th scope="col" className="text-left p-2">{t('tempSchedule.eventUser.label')}</th>
+            <th scope="col" className="text-left p-2">{t('tempSchedule.eventMember.label')}</th>
             <th></th>
           </tr>
         </thead>
         <tbody className="border-t-2 border-black">
           {tempSchedules.map((tempSchedule) => (
-          <tr key={tempSchedule.tempScheduleId} className="odd:bg-gray-100">
-            <td className="p-2">{tempSchedule.tempScheduleId}</td>
+          <tr key={tempSchedule.id} className="odd:bg-gray-100">
+            <td className="p-2">{tempSchedule.id}</td>
             <td className="p-2">{tempSchedule.startTime}</td>
             <td className="p-2">{tempSchedule.endTime}</td>
-            <td className="p-2">{tempSchedule.eventUser}</td>
+            <td className="p-2">{tempSchedule.eventMember}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">
-                <Link to={'/tempSchedules/edit/' + tempSchedule.tempScheduleId} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('tempSchedule.list.edit')}</Link>
+                <Link to={'/tempSchedules/edit/' + tempSchedule.id} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('tempSchedule.list.edit')}</Link>
                 <span> </span>
-                <button type="button" onClick={() => confirmDelete(tempSchedule.tempScheduleId!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('tempSchedule.list.delete')}</button>
+                <button type="button" onClick={() => confirmDelete(tempSchedule.id!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('tempSchedule.list.delete')}</button>
               </div>
             </td>
           </tr>

@@ -22,26 +22,22 @@ export default function Home() {
       <div className="flex flex-col border border-gray-300 rounded">
         <Link to="/members" className="w-full border-gray-300 hover:bg-gray-100 border-b rounded-t px-4 py-2">{t('member.list.headline')}</Link>
         <Link to="/socialAuthTokenss" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('socialAuthTokens.list.headline')}</Link>
-        <Link to="/likeLocations" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('likeLocation.list.headline')}</Link>
-        <Link to="/likeTimetables" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('likeTimetable.list.headline')}</Link>
+        <Link to="/favoriteLocations" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('favoriteLocation.list.headline')}</Link>
+        <Link to="/favoriteTimetables" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('favoriteTimetable.list.headline')}</Link>
         <Link to="/calendars" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('calendar.list.headline')}</Link>
         <Link to="/calendarDetails" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('calendarDetail.list.headline')}</Link>
-        <Link to="/locationCandidates" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('locationCandidate.list.headline')}</Link>
-        <Link to="/meetings" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('meeting.list.headline')}</Link>
-        <Link to="/eventUsers" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('eventUser.list.headline')}</Link>
-        <Link to="/userVotes" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('userVote.list.headline')}</Link>
+        <Link to="/eventMembers" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('eventMember.list.headline')}</Link>
+        <Link to="/memberVotes" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('memberVote.list.headline')}</Link>
         <Link to="/locations" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('location.list.headline')}</Link>
         <Link to="/middleRegions" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('middleRegion.list.headline')}</Link>
-        <Link to="/departRegions" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('departRegion.list.headline')}</Link>
-        <Link to="/candidateDates" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('candidateDate.list.headline')}</Link>
         <Link to="/workspaces" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('workspace.list.headline')}</Link>
-        <Link to="/details" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('detail.list.headline')}</Link>
-        <Link to="/scheduleUsers" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('scheduleUser.list.headline')}</Link>
+        <Link to="/scheduleMembers" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('scheduleMember.list.headline')}</Link>
         <Link to="/events" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('event.list.headline')}</Link>
         <Link to="/groups" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('group.list.headline')}</Link>
         <Link to="/tempSchedules" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('tempSchedule.list.headline')}</Link>
-        <Link to="/groupUsers" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('groupUser.list.headline')}</Link>
-        <Link to="/schedules" className="w-full border-gray-300 hover:bg-gray-100 rounded-b px-4 py-2">{t('schedule.list.headline')}</Link>
+        <Link to="/groupMembers" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('groupMember.list.headline')}</Link>
+        <Link to="/schedules" className="w-full border-gray-300 hover:bg-gray-100 border-b px-4 py-2">{t('schedule.list.headline')}</Link>
+        <Link to="/candidateDates" className="w-full border-gray-300 hover:bg-gray-100 rounded-b px-4 py-2">{t('candidateDate.list.headline')}</Link>
       </div>
     </div>
   </>);

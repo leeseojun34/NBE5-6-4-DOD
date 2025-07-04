@@ -23,12 +23,12 @@ export default function MiddleRegionList() {
     }
   };
 
-  const confirmDelete = async (middleRegionId: number) => {
+  const confirmDelete = async (id: number) => {
     if (!confirm(t('delete.confirm'))) {
       return;
     }
     try {
-      await axios.delete('/api/middleRegions/' + middleRegionId);
+      await axios.delete('/api/middleRegions/' + id);
       navigate('/middleRegions', {
             state: {
               msgInfo: t('middleRegion.delete.success')
@@ -67,7 +67,7 @@ export default function MiddleRegionList() {
       <table className="w-full">
         <thead>
           <tr>
-            <th scope="col" className="text-left p-2">{t('middleRegion.middleRegionId.label')}</th>
+            <th scope="col" className="text-left p-2">{t('middleRegion.id.label')}</th>
             <th scope="col" className="text-left p-2">{t('middleRegion.latitude.label')}</th>
             <th scope="col" className="text-left p-2">{t('middleRegion.longitude.label')}</th>
             <th></th>
@@ -75,15 +75,15 @@ export default function MiddleRegionList() {
         </thead>
         <tbody className="border-t-2 border-black">
           {middleRegions.map((middleRegion) => (
-          <tr key={middleRegion.middleRegionId} className="odd:bg-gray-100">
-            <td className="p-2">{middleRegion.middleRegionId}</td>
+          <tr key={middleRegion.id} className="odd:bg-gray-100">
+            <td className="p-2">{middleRegion.id}</td>
             <td className="p-2">{middleRegion.latitude}</td>
             <td className="p-2">{middleRegion.longitude}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">
-                <Link to={'/middleRegions/edit/' + middleRegion.middleRegionId} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('middleRegion.list.edit')}</Link>
+                <Link to={'/middleRegions/edit/' + middleRegion.id} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('middleRegion.list.edit')}</Link>
                 <span> </span>
-                <button type="button" onClick={() => confirmDelete(middleRegion.middleRegionId!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('middleRegion.list.delete')}</button>
+                <button type="button" onClick={() => confirmDelete(middleRegion.id!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('middleRegion.list.delete')}</button>
               </div>
             </td>
           </tr>

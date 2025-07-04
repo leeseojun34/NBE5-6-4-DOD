@@ -18,6 +18,8 @@ function getSchema() {
     startDatetime: yup.string().emptyToNull().max(255).required(),
     endDatetime: yup.string().emptyToNull().max(255).required(),
     syncedAt: yup.string().emptyToNull().required(),
+    isAllDay: yup.bool(),
+    externalEtag: yup.string().emptyToNull().required(),
     calendar: yup.number().integer().emptyToNull()
   });
 }
@@ -29,7 +31,7 @@ export default function CalendarDetailEdit() {
   const navigate = useNavigate();
   const [calendarValues, setCalendarValues] = useState<Map<number,string>>(new Map());
   const params = useParams();
-  const currentCalendarDetailId = +params.calendarDetailId!;
+  const currentId = +params.id!;
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
@@ -39,7 +41,7 @@ export default function CalendarDetailEdit() {
     try {
       const calendarValuesResponse = await axios.get('/api/calendarDetails/calendarValues');
       setCalendarValues(calendarValuesResponse.data);
-      const data = (await axios.get('/api/calendarDetails/' + currentCalendarDetailId)).data;
+      const data = (await axios.get('/api/calendarDetails/' + currentId)).data;
       useFormResult.reset(data);
     } catch (error: any) {
       handleServerError(error, navigate);
@@ -53,7 +55,7 @@ export default function CalendarDetailEdit() {
   const updateCalendarDetail = async (data: CalendarDetailDTO) => {
     window.scrollTo(0, 0);
     try {
-      await axios.put('/api/calendarDetails/' + currentCalendarDetailId, data);
+      await axios.put('/api/calendarDetails/' + currentId, data);
       navigate('/calendarDetails', {
             state: {
               msgSuccess: t('calendarDetail.update.success')
@@ -72,11 +74,13 @@ export default function CalendarDetailEdit() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(updateCalendarDetail)} noValidate>
-      <InputRow useFormResult={useFormResult} object="calendarDetail" field="calendarDetailId" disabled={true} type="number" />
+      <InputRow useFormResult={useFormResult} object="calendarDetail" field="id" disabled={true} type="number" />
       <InputRow useFormResult={useFormResult} object="calendarDetail" field="title" required={true} />
       <InputRow useFormResult={useFormResult} object="calendarDetail" field="startDatetime" required={true} />
       <InputRow useFormResult={useFormResult} object="calendarDetail" field="endDatetime" required={true} />
       <InputRow useFormResult={useFormResult} object="calendarDetail" field="syncedAt" required={true} type="datetimepicker" />
+      <InputRow useFormResult={useFormResult} object="calendarDetail" field="isAllDay" type="checkbox" />
+      <InputRow useFormResult={useFormResult} object="calendarDetail" field="externalEtag" required={true} type="textarea" />
       <InputRow useFormResult={useFormResult} object="calendarDetail" field="calendar" type="select" options={calendarValues} />
       <input type="submit" value={t('calendarDetail.edit.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>

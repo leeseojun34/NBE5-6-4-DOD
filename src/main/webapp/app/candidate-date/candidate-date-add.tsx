@@ -30,13 +30,6 @@ export default function CandidateDateAdd() {
     resolver: yupResolver(getSchema()),
   });
 
-  const getMessage = (key: string) => {
-    const messages: Record<string, string> = {
-      CANDIDATE_DATE_DATE_UNIQUE: t('exists.candidateDate.date')
-    };
-    return messages[key];
-  };
-
   const prepareRelations = async () => {
     try {
       const eventValuesResponse = await axios.get('/api/candidateDates/eventValues');
@@ -60,7 +53,7 @@ export default function CandidateDateAdd() {
             }
           });
     } catch (error: any) {
-      handleServerError(error, navigate, useFormResult.setError, t, getMessage);
+      handleServerError(error, navigate, useFormResult.setError, t);
     }
   };
 

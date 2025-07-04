@@ -23,12 +23,12 @@ export default function SocialAuthTokensList() {
     }
   };
 
-  const confirmDelete = async (socialAuthTokensId: number) => {
+  const confirmDelete = async (id: number) => {
     if (!confirm(t('delete.confirm'))) {
       return;
     }
     try {
-      await axios.delete('/api/socialAuthTokenss/' + socialAuthTokensId);
+      await axios.delete('/api/socialAuthTokenss/' + id);
       navigate('/socialAuthTokenss', {
             state: {
               msgInfo: t('socialAuthTokens.delete.success')
@@ -58,31 +58,31 @@ export default function SocialAuthTokensList() {
       <table className="w-full">
         <thead>
           <tr>
-            <th scope="col" className="text-left p-2">{t('socialAuthTokens.socialAuthTokensId.label')}</th>
+            <th scope="col" className="text-left p-2">{t('socialAuthTokens.id.label')}</th>
             <th scope="col" className="text-left p-2">{t('socialAuthTokens.accessToken.label')}</th>
             <th scope="col" className="text-left p-2">{t('socialAuthTokens.refreshToken.label')}</th>
             <th scope="col" className="text-left p-2">{t('socialAuthTokens.tokenType.label')}</th>
             <th scope="col" className="text-left p-2">{t('socialAuthTokens.expiresAt.label')}</th>
             <th scope="col" className="text-left p-2">{t('socialAuthTokens.provider.label')}</th>
-            <th scope="col" className="text-left p-2">{t('socialAuthTokens.user.label')}</th>
+            <th scope="col" className="text-left p-2">{t('socialAuthTokens.member.label')}</th>
             <th></th>
           </tr>
         </thead>
         <tbody className="border-t-2 border-black">
           {socialAuthTokenses.map((socialAuthTokens) => (
-          <tr key={socialAuthTokens.socialAuthTokensId} className="odd:bg-gray-100">
-            <td className="p-2">{socialAuthTokens.socialAuthTokensId}</td>
+          <tr key={socialAuthTokens.id} className="odd:bg-gray-100">
+            <td className="p-2">{socialAuthTokens.id}</td>
             <td className="p-2">{socialAuthTokens.accessToken}</td>
             <td className="p-2">{socialAuthTokens.refreshToken}</td>
             <td className="p-2">{socialAuthTokens.tokenType}</td>
             <td className="p-2">{socialAuthTokens.expiresAt}</td>
             <td className="p-2">{socialAuthTokens.provider}</td>
-            <td className="p-2">{socialAuthTokens.user}</td>
+            <td className="p-2">{socialAuthTokens.member}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">
-                <Link to={'/socialAuthTokenss/edit/' + socialAuthTokens.socialAuthTokensId} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('socialAuthTokens.list.edit')}</Link>
+                <Link to={'/socialAuthTokenss/edit/' + socialAuthTokens.id} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('socialAuthTokens.list.edit')}</Link>
                 <span> </span>
-                <button type="button" onClick={() => confirmDelete(socialAuthTokens.socialAuthTokensId!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('socialAuthTokens.list.delete')}</button>
+                <button type="button" onClick={() => confirmDelete(socialAuthTokens.id!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('socialAuthTokens.list.delete')}</button>
               </div>
             </td>
           </tr>

@@ -59,26 +59,22 @@ export default function Header() {
                 <ul className="hidden block absolute right-0 bg-white border border-gray-300 rounded min-w-[10rem] py-2" aria-labelledby="navbarEntitiesLink">
                   <li><Link to="/members" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('member.list.headline')}</Link></li>
                   <li><Link to="/socialAuthTokenss" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('socialAuthTokens.list.headline')}</Link></li>
-                  <li><Link to="/likeLocations" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('likeLocation.list.headline')}</Link></li>
-                  <li><Link to="/likeTimetables" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('likeTimetable.list.headline')}</Link></li>
+                  <li><Link to="/favoriteLocations" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('favoriteLocation.list.headline')}</Link></li>
+                  <li><Link to="/favoriteTimetables" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('favoriteTimetable.list.headline')}</Link></li>
                   <li><Link to="/calendars" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('calendar.list.headline')}</Link></li>
                   <li><Link to="/calendarDetails" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('calendarDetail.list.headline')}</Link></li>
-                  <li><Link to="/locationCandidates" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('locationCandidate.list.headline')}</Link></li>
-                  <li><Link to="/meetings" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('meeting.list.headline')}</Link></li>
-                  <li><Link to="/eventUsers" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('eventUser.list.headline')}</Link></li>
-                  <li><Link to="/userVotes" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('userVote.list.headline')}</Link></li>
+                  <li><Link to="/eventMembers" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('eventMember.list.headline')}</Link></li>
+                  <li><Link to="/memberVotes" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('memberVote.list.headline')}</Link></li>
                   <li><Link to="/locations" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('location.list.headline')}</Link></li>
                   <li><Link to="/middleRegions" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('middleRegion.list.headline')}</Link></li>
-                  <li><Link to="/departRegions" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('departRegion.list.headline')}</Link></li>
-                  <li><Link to="/candidateDates" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('candidateDate.list.headline')}</Link></li>
                   <li><Link to="/workspaces" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('workspace.list.headline')}</Link></li>
-                  <li><Link to="/details" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('detail.list.headline')}</Link></li>
-                  <li><Link to="/scheduleUsers" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('scheduleUser.list.headline')}</Link></li>
+                  <li><Link to="/scheduleMembers" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('scheduleMember.list.headline')}</Link></li>
                   <li><Link to="/events" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('event.list.headline')}</Link></li>
                   <li><Link to="/groups" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('group.list.headline')}</Link></li>
                   <li><Link to="/tempSchedules" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('tempSchedule.list.headline')}</Link></li>
-                  <li><Link to="/groupUsers" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('groupUser.list.headline')}</Link></li>
+                  <li><Link to="/groupMembers" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('groupMember.list.headline')}</Link></li>
                   <li><Link to="/schedules" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('schedule.list.headline')}</Link></li>
+                  <li><Link to="/candidateDates" className="inline-block w-full hover:bg-gray-200 px-4 py-1">{t('candidateDate.list.headline')}</Link></li>
                 </ul>
               </li>
             </ul>

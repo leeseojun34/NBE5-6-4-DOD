@@ -17,6 +17,11 @@ function getSchema() {
     startTime: yup.string().emptyToNull().required(),
     endTime: yup.string().emptyToNull().required(),
     status: yup.string().emptyToNull().max(255).required(),
+    location: yup.string().emptyToNull().max(255),
+    description: yup.string().emptyToNull(),
+    meetingPlatform: yup.string().emptyToNull().max(255),
+    platformUrl: yup.string().emptyToNull(),
+    specificLocation: yup.string().emptyToNull().max(255),
     event: yup.number().integer().emptyToNull()
   });
 }
@@ -28,7 +33,7 @@ export default function ScheduleEdit() {
   const navigate = useNavigate();
   const [eventValues, setEventValues] = useState<Map<number,string>>(new Map());
   const params = useParams();
-  const currentScheduleId = +params.scheduleId!;
+  const currentId = +params.id!;
 
   const useFormResult = useForm({
     resolver: yupResolver(getSchema()),
@@ -38,7 +43,7 @@ export default function ScheduleEdit() {
     try {
       const eventValuesResponse = await axios.get('/api/schedules/eventValues');
       setEventValues(eventValuesResponse.data);
-      const data = (await axios.get('/api/schedules/' + currentScheduleId)).data;
+      const data = (await axios.get('/api/schedules/' + currentId)).data;
       useFormResult.reset(data);
     } catch (error: any) {
       handleServerError(error, navigate);
@@ -52,7 +57,7 @@ export default function ScheduleEdit() {
   const updateSchedule = async (data: ScheduleDTO) => {
     window.scrollTo(0, 0);
     try {
-      await axios.put('/api/schedules/' + currentScheduleId, data);
+      await axios.put('/api/schedules/' + currentId, data);
       navigate('/schedules', {
             state: {
               msgSuccess: t('schedule.update.success')
@@ -71,10 +76,15 @@ export default function ScheduleEdit() {
       </div>
     </div>
     <form onSubmit={useFormResult.handleSubmit(updateSchedule)} noValidate>
-      <InputRow useFormResult={useFormResult} object="schedule" field="scheduleId" disabled={true} type="number" />
+      <InputRow useFormResult={useFormResult} object="schedule" field="id" disabled={true} type="number" />
       <InputRow useFormResult={useFormResult} object="schedule" field="startTime" required={true} type="datetimepicker" />
       <InputRow useFormResult={useFormResult} object="schedule" field="endTime" required={true} type="datetimepicker" />
       <InputRow useFormResult={useFormResult} object="schedule" field="status" required={true} />
+      <InputRow useFormResult={useFormResult} object="schedule" field="location" />
+      <InputRow useFormResult={useFormResult} object="schedule" field="description" type="textarea" />
+      <InputRow useFormResult={useFormResult} object="schedule" field="meetingPlatform" />
+      <InputRow useFormResult={useFormResult} object="schedule" field="platformUrl" type="textarea" />
+      <InputRow useFormResult={useFormResult} object="schedule" field="specificLocation" />
       <InputRow useFormResult={useFormResult} object="schedule" field="event" type="select" options={eventValues} />
       <input type="submit" value={t('schedule.edit.headline')} className="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
     </form>

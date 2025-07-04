@@ -23,12 +23,12 @@ export default function CalendarList() {
     }
   };
 
-  const confirmDelete = async (calendarId: number) => {
+  const confirmDelete = async (id: number) => {
     if (!confirm(t('delete.confirm'))) {
       return;
     }
     try {
-      await axios.delete('/api/calendars/' + calendarId);
+      await axios.delete('/api/calendars/' + id);
       navigate('/calendars', {
             state: {
               msgInfo: t('calendar.delete.success')
@@ -67,27 +67,27 @@ export default function CalendarList() {
       <table className="w-full">
         <thead>
           <tr>
-            <th scope="col" className="text-left p-2">{t('calendar.calendarId.label')}</th>
-            <th scope="col" className="text-left p-2">{t('calendar.calendarName.label')}</th>
+            <th scope="col" className="text-left p-2">{t('calendar.id.label')}</th>
+            <th scope="col" className="text-left p-2">{t('calendar.name.label')}</th>
             <th scope="col" className="text-left p-2">{t('calendar.synced.label')}</th>
             <th scope="col" className="text-left p-2">{t('calendar.syncedAt.label')}</th>
-            <th scope="col" className="text-left p-2">{t('calendar.user.label')}</th>
+            <th scope="col" className="text-left p-2">{t('calendar.member.label')}</th>
             <th></th>
           </tr>
         </thead>
         <tbody className="border-t-2 border-black">
           {calendars.map((calendar) => (
-          <tr key={calendar.calendarId} className="odd:bg-gray-100">
-            <td className="p-2">{calendar.calendarId}</td>
-            <td className="p-2">{calendar.calendarName}</td>
-            <td className="p-2">{calendar.synced}</td>
+          <tr key={calendar.id} className="odd:bg-gray-100">
+            <td className="p-2">{calendar.id}</td>
+            <td className="p-2">{calendar.name}</td>
+            <td className="p-2">{calendar.synced?.toString()}</td>
             <td className="p-2">{calendar.syncedAt}</td>
-            <td className="p-2">{calendar.user}</td>
+            <td className="p-2">{calendar.member}</td>
             <td className="p-2">
               <div className="float-right whitespace-nowrap">
-                <Link to={'/calendars/edit/' + calendar.calendarId} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('calendar.list.edit')}</Link>
+                <Link to={'/calendars/edit/' + calendar.id} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('calendar.list.edit')}</Link>
                 <span> </span>
-                <button type="button" onClick={() => confirmDelete(calendar.calendarId!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('calendar.list.delete')}</button>
+                <button type="button" onClick={() => confirmDelete(calendar.id!)} className="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">{t('calendar.list.delete')}</button>
               </div>
             </td>
           </tr>
