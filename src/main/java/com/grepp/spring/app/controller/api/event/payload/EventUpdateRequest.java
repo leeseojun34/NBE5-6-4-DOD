@@ -16,7 +16,7 @@ public class EventUpdateRequest {
     private String description;
 
     @NotNull
-    private String meetingType; // ONLINE, OFFLINE
+    private String type; // ONLINE, OFFLINE
 
     @NotNull
     private Integer maxMember;

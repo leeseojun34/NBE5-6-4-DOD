@@ -16,6 +16,7 @@ public class EventListResponse {
     @Setter
     public static class EventList {
         private Long eventId;
+        private Long groupId;
         private String title;
         private String description;
         private String meetingType;

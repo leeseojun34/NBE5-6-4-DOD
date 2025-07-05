@@ -6,6 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class JoinEventRequest {
-    private String memberId;
     private Long eventId;
 }
