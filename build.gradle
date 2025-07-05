@@ -79,27 +79,27 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
-node {
-    download.set(true)
-    version.set('22.16.0')
-}
-
-tasks.register('npmRunBuild', NpmTask) {
-    args = ['run', 'build']
-    dependsOn npmInstall
-
-    inputs.files(fileTree('node_modules'))
-    inputs.files(fileTree('src/main/webapp'))
-    inputs.file('.env')
-    inputs.file('package.json')
-    inputs.file('tsconfig.json')
-    inputs.file('webpack.config.js')
-    outputs.dir(layout.buildDirectory.dir('resources/main/static'))
-}
-
-processResources {
-    dependsOn npmRunBuild
-}
+//node {
+//    download.set(true)
+//    version.set('22.16.0')
+//}
+//
+//tasks.register('npmRunBuild', NpmTask) {
+//    args = ['run', 'build']
+//    dependsOn npmInstall
+//
+//    inputs.files(fileTree('node_modules'))
+//    inputs.files(fileTree('src/main/webapp'))
+//    inputs.file('.env')
+//    inputs.file('package.json')
+//    inputs.file('tsconfig.json')
+//    inputs.file('webpack.config.js')
+//    outputs.dir(layout.buildDirectory.dir('resources/main/static'))
+//}
+//
+//processResources {
+//    dependsOn npmRunBuild
+//}
 
 tasks.withType(Test) {
     useJUnitPlatform()
