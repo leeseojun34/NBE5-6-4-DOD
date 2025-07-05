@@ -134,11 +134,11 @@ public class EventResource {
     }
 
     // 참여자 전원의 가능한 시간대 조회
-    @GetMapping("/{eventId}/all-time")
-    public ResponseEntity<ApiResponse<AllTimeScheduleResponse>> getAllTimeSchedules(@PathVariable Long eventId) {
-        // TODO: 구현 로직 고민중
-        return null;
-    }
+//    @GetMapping("/{eventId}/all-time")
+//    public ResponseEntity<ApiResponse<AllTimeScheduleResponse>> getAllTimeSchedules(@PathVariable Long eventId) {
+//        // TODO: 구현 로직 고민중
+//        return null;
+//    }
 
     // 개인의 가능한 시간대 확정
     @PostMapping("/{eventId}/complete")
