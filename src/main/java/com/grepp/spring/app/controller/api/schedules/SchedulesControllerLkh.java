@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/schedules")
-public class SchedulesController {
+public class SchedulesControllerLkh {
 
     // 일정 등록
     @PostMapping
@@ -231,7 +231,7 @@ public class SchedulesController {
     }
 
     // 오프라인 세부 장소 수정
-    @PostMapping("/{scheduleId}/detail-locations")
+    @PatchMapping("/{scheduleId}/detail-locations")
     public ResponseEntity<Map<String, String>> ModifyOfflineDetailLocation() {
 
         try {
@@ -246,9 +246,8 @@ public class SchedulesController {
     }
 
     // 공통 워크스페이스 수정
-    @PostMapping("/{schedueld}/workspaces")
+    @PatchMapping("/{schedueld}/workspaces")
     public ResponseEntity<Map<String, String>> ModifyWorkspace() {
-
         try {
             return ResponseEntity.ok(Map.of("message", "워크스페이스 경로가 정상적으로 수정되었습니다."));
 
