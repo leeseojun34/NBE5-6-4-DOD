@@ -101,11 +101,12 @@ public class SchedulesControllerLkh {
             "locationName", "강남역",
             "latitude", 37.4979,
             "longitude", 127.0276,
-            "suggestedMemberId", "memberA",
+            "suggestedMemberId", 1L,
             "voteCount", 5L,
             "status", "유력"
         );
 
+        // 두 번째 지역 정보
         Map<String, Object> regionData2 = Map.of(
             "locationName", "역삼역",
             "latitude", 37.5008,
@@ -115,7 +116,7 @@ public class SchedulesControllerLkh {
             "status", "default"
         );
 
-        // 두 번째 지역 정보
+        // 세 번째 지역 정보
         Map<String, Object> regionData3 = Map.of(
             "locationName", "홍대입구역",
             "latitude", 37.5572,
