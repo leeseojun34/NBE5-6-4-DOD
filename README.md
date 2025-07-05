@@ -43,7 +43,7 @@ gradlew clean build
 Node.js is automatically downloaded using the `gradle-node-plugin` and the final JS/CSS files are integrated into the jar.
 
 Start your application with the following command - here with the profile `production`:
-
+ 
 ```
 java -Dspring.profiles.active=production -jar ./build/libs/spring-0.0.1-SNAPSHOT.jar
 ```

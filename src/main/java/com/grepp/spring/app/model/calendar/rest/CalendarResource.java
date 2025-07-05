@@ -79,5 +79,4 @@ public class CalendarResource {
                 .stream()
                 .collect(CustomCollectors.toSortedMap(Member::getId, Member::getPassword)));
     }
-
 }
