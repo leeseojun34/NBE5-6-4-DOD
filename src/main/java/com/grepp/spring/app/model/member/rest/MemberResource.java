@@ -57,11 +57,6 @@ public class MemberResource {
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteMember(@PathVariable(name = "id") final String id) {
-        final ReferencedWarning referencedWarning = memberService.getReferencedWarning(id);
-        if (referencedWarning != null) {
-            throw new ReferencedException(referencedWarning);
-        }
-        memberService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -1,5 +1,25 @@
 package com.grepp.spring.app.controller.api.schedules;
 
+import com.grepp.spring.app.controller.api.schedules.payload.CreateDepartLocationRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.CreateOfflineDetailLocationsRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.CreateOnlineMeetingRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.CreateOnlineMeetingResponse;
+import com.grepp.spring.app.controller.api.schedules.payload.CreateSchedulesRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.CreateWorkspaceRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.ModifyOfflineDetailLocationsRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.ModifySchedulesRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.ModifyWorkspaceRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.ShowMiddleLocationResponse;
+import com.grepp.spring.app.controller.api.schedules.payload.ShowSchedulesResponse;
+import com.grepp.spring.app.controller.api.schedules.payload.ShowSuggestedLocationsResponse;
+import com.grepp.spring.app.controller.api.schedules.payload.ShowVoteResultRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.ShowVoteResultResponse;
+import com.grepp.spring.app.controller.api.schedules.payload.VoteMiddleLocationsRequest;
+import com.grepp.spring.app.model.schedule.domain.MEETING_PLATFORM;
+import com.grepp.spring.app.model.schedule.domain.SCHEDULES_STATUS;
+import com.grepp.spring.app.model.schedule.domain.VOTE_STATUS;
+import com.grepp.spring.infra.response.ApiResponse;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import javax.security.sasl.AuthenticationException;
@@ -7,7 +27,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,247 +38,143 @@ import org.springframework.web.bind.annotation.RestController;
 public class SchedulesControllerLkh {
 
     // 일정 등록
-    @PostMapping
-    public ResponseEntity<Map<String, String>> createScedules() {
-        try {
-            return ResponseEntity.ok(Map.of("message", "일정이 정상적으로 저장되었습니다."));
-
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(Map.of("message", "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
-            }
-            return ResponseEntity.status(400).body(Map.of("message", "필수값이 누락되었습니다."));
-        }
+    @PostMapping("/create")
+    public ResponseEntity<ApiResponse> createScedules(@RequestBody CreateSchedulesRequest request) {
+        return ResponseEntity.ok(ApiResponse.noContent());
     }
 
     // 일정 수정
-    @PatchMapping("/{scheduleId}")
-    public ResponseEntity<Map<String, String>> modifyScedules() {
-        try {
-            return ResponseEntity.ok(Map.of("message", "일정이 정상적으로 수정되었습니다."));
-
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(Map.of("message", "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
-            }
-            return ResponseEntity.status(400).body(Map.of("message", "scheduleId 값이 누락되었습니다."));
-        }
+    @PatchMapping("/modify/{scheduleId}")
+    public ResponseEntity<ApiResponse> modifyScedules(@PathVariable Long scheduleId, @RequestBody ModifySchedulesRequest request) {
+        return ResponseEntity.ok(ApiResponse.noContent());
     }
 
     // 일정 확인
-    @GetMapping("/{scheduleId}")
-    public ResponseEntity<Map<String, Object >> showScedules() {
+    @GetMapping("/show/{scheduleId}")
+    public ResponseEntity<ApiResponse<ShowSchedulesResponse>> showScedules(@PathVariable Long scheduleId) {
 
-        Map<String, Object> schedule = Map.of(
-            "eventId", 1,
-            "startTime", "2025-07-05T14:00:00",
-            "endTime", "2025-07-06T16:00:00",
-            "status", "FIXED",
-            "location", "강남역",
-            "specificLocation", "강남역 스타벅스",
-            "description", "DOD의 즐거운 미팅날",
-            "meetingPlatform", "ZOOM",
-            "platformUrl", "https://zoom.us/test-meeting"
-        );
+        ShowSchedulesResponse  response = new ShowSchedulesResponse();
+        response.setEventId(1L);
+        response.setStartTime(LocalDateTime.of(2025, 7, 6, 3, 7));
+        response.setEndTime(LocalDateTime.of(2025, 7, 7, 3, 7));
+        response.setSCHEDULES_STATUS(SCHEDULES_STATUS.FIXED);
+        response.setLocation("강남역");
+        response.setSpecificLocation("강남역 스타벅스");
+        response.setDescription("DOD의 즐거운 미팅 날");
+        response.setMeetingPlatform(MEETING_PLATFORM.ZOOM);
+        response.setPlatformUrl("https://zoom.us/test-meeting");
 
-        return ResponseEntity.ok(Map.of("schedule", schedule));
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 일정 삭제
-    @DeleteMapping("/{scheduleId}")
-    public ResponseEntity<Map<String, String>> deleteScedules() {
-
-        try {
-            return ResponseEntity.ok(Map.of("message", "일정이 정상적으로 삭제되었습니다."));
-
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(Map.of("message", "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
-            }
-            return ResponseEntity.status(400).body(Map.of("message", "scheduleId 값이 누락되었습니다."));
-        }
+    @DeleteMapping("/delete/{scheduleId}")
+    public ResponseEntity<ApiResponse> deleteScedules(@PathVariable Long scheduleId) {
+        return ResponseEntity.ok(ApiResponse.noContent());
     }
 
     // 출발장소 등록
-    @PostMapping("depart-location/{memberId}")
-    public ResponseEntity<Map<String, String>> createDepartLocation() {
-
-        try {
-            return ResponseEntity.ok(Map.of("message", "출발장소가 정상적으로 등록되었습니다."));
-
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(Map.of("message", "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
-            }
-            return ResponseEntity.status(400).body(Map.of("message", "필수값이 누락되었습니다."));
-        }
+    @PostMapping("create-depart-location/{memberId}")
+    public ResponseEntity<ApiResponse> createDepartLocation(@PathVariable Long memberId, @RequestBody CreateDepartLocationRequest request) {
+        return ResponseEntity.ok(ApiResponse.noContent());
     }
 
+
     // 중간장소 후보 조회
-    @GetMapping("/{scheduleId}/suggested-locations")
-    public ResponseEntity<Map<String, Object>> showSuggestedLocations() {
+    @GetMapping("/show-suggested-locations{scheduleId}")
+    public ResponseEntity<ApiResponse<List<ShowSuggestedLocationsResponse>>> showSuggestedLocations(@PathVariable Long scheduleId) {
 
-        // 첫 번째 지역 정보
-        Map<String, Object> regionData1 = Map.of(
-            "locationName", "강남역",
-            "latitude", 37.4979,
-            "longitude", 127.0276,
-            "suggestedMemberId", 1L,
-            "voteCount", 5L,
-            "status", "유력"
-        );
+        ShowSuggestedLocationsResponse response1 = new ShowSuggestedLocationsResponse();
+        response1.setLocationName("강남역");
+        response1.setLatitude(37.4979);
+        response1.setLongitude(127.0276);
+        response1.setSuggestedMemberId(1L);
+        response1.setVoteCount(5L);
+        response1.setSCHEDULES_STATUS(VOTE_STATUS.ALMOST);
 
-        // 두 번째 지역 정보
-        Map<String, Object> regionData2 = Map.of(
-            "locationName", "역삼역",
-            "latitude", 37.5008,
-            "longitude", 127.0365,
-            "suggestedMemberId", "memberB",
-            "voteCount", 2L,
-            "status", "default"
-        );
+        ShowSuggestedLocationsResponse response2 = new ShowSuggestedLocationsResponse();
+        response2.setLocationName("역삼역");
+        response2.setLatitude(37.5008);
+        response2.setLongitude(127.0365);
+        response2.setSuggestedMemberId(2L);
+        response2.setVoteCount(2L);
+        response2.setSCHEDULES_STATUS(VOTE_STATUS.DEFAULT);
 
-        // 세 번째 지역 정보
-        Map<String, Object> regionData3 = Map.of(
-            "locationName", "홍대입구역",
-            "latitude", 37.5572,
-            "longitude", 126.9245,
-            "suggestedMemberId", "memberC",
-            "voteCount", 8L,
-            "status", "당선"
-        );
+        ShowSuggestedLocationsResponse response3 = new ShowSuggestedLocationsResponse();
+        response3.setLocationName("홍대입구역");
+        response3.setLatitude(37.5572);
+        response3.setLongitude(126.9245);
+        response3.setSuggestedMemberId(3L);
+        response3.setVoteCount(8L);
+        response3.setSCHEDULES_STATUS(VOTE_STATUS.WINNER);
 
-        // 지역별 리스트
-        Map<String, List<Map<String, Object>>> middleLegions = Map.of(
-            "middleRegionId_1", List.of(regionData1),
-            "middleRegionId_2", List.of(regionData2),
-            "middleRegionId_3", List.of(regionData3)
-        );
+        List<ShowSuggestedLocationsResponse> list = List.of(response1, response2, response3);
 
-        // 최종 응답
-        Map<String, Object> response = Map.of("middleLegions", middleLegions);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(list));
 
     }
 
     // 출발 장소 지점 투표하기
-    @PostMapping("/{scheduleId}/suggested-locations/vote/{memberId}")
-    public ResponseEntity<Map<String, String>> voteMiddleLocation() {
-
-        try {
-            return ResponseEntity.ok(Map.of("message", "투표가 정상적으로 처리되었습니다."));
-
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(Map.of("message", "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
-            }
-            return ResponseEntity.status(400).body(Map.of("message", "필수값이 누락되었습니다."));
-        }
+    @PostMapping("/suggested-locations/vote/{scheduleId}")
+    public ResponseEntity<ApiResponse> voteMiddleLocation(@PathVariable Long scheduleId, @RequestBody VoteMiddleLocationsRequest request) {
+        return ResponseEntity.ok(ApiResponse.noContent());
     }
 
     // 중간 장소 지점 투표결과 조회
-    @GetMapping("/{scheduleMemberId}/middle-location")
-    public ResponseEntity<Map<String, Object >> showVoteResult() {
+    @GetMapping("/show-vote-result/{scheduleMemberId}")
+    public ResponseEntity<ApiResponse<ShowVoteResultResponse>> showVoteResult(@PathVariable Long scheduleMemberId, @RequestBody ShowVoteResultRequest request) {
+        ShowVoteResultResponse response = new ShowVoteResultResponse();
+        response.setLocationName("홍대입구역");
+        response.setLatitude(37.5572);
+        response.setLongitude(126.9245);
+        response.setVoteCount(8L);
 
-        Map<String, Object> voteResult = Map.of(
-            "locationName", "홍대입구역",
-            "latitude", 37.5572,
-            "longitude", 126.9245,
-            "voteCount", 8L
-        );
-
-        return ResponseEntity.ok(Map.of("voteResult", voteResult));
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 중간 장소(지하철 역) 지점 확인
-    @GetMapping("/{scheduleId}/middle-location")
-    public ResponseEntity<Map<String, Object >> showMiddleLocation() {
+    @GetMapping("/show-middle-location/{scheduleId}")
+    public ResponseEntity<ApiResponse<ShowMiddleLocationResponse>> showMiddleLocation(@PathVariable Long scheduleId) {
 
-        Map<String, Object> middleLocation = Map.of(
-            "locationName", "홍대입구역",
-            "latitude", 37.5572,
-            "longitude", 126.9245,
-            "voteCount", 8L
-        );
+        ShowMiddleLocationResponse response = new ShowMiddleLocationResponse();
+        response.setLocationName("홍대입구역");
+        response.setLatitude(37.5572);
+        response.setLongitude(126.9245);
+        response.setVoteCount(8L);
 
-        return ResponseEntity.ok(Map.of("middleLocation", middleLocation));
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 온라인 회의장 링크 개설(줌, 구글미트)
-    @PostMapping("/online-meeting")
-    public ResponseEntity<Map<String, Object>> CreateOnlineMeeting() {
-        Map<String, Object> onlineMeeting = Map.of(
-            "message", "온라인 회의장이 개설되었습니다.",
-            "platformURL", "https://zoom.us/ko/testRoom"
-        );
-        try {
-            return ResponseEntity.ok(Map.of("onlineMeeting", onlineMeeting));
+    @PostMapping("/create-online-meeting")
+    public ResponseEntity<ApiResponse<CreateOnlineMeetingResponse>> CreateOnlineMeeting(@RequestBody CreateOnlineMeetingRequest request) {
+        CreateOnlineMeetingResponse response = new CreateOnlineMeetingResponse();
+        response.setPlatformURL("https://zoom.us/ko/testRoom");
 
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(Map.of("message", "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
-            }
-            return ResponseEntity.status(400).body(Map.of("message", "필수값이 누락되었습니다."));
-        }
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 오프라인 세부 장소 생성
-    @PostMapping("/{scheduleId}/detail-locations")
-    public ResponseEntity<Map<String, String>> CreateOfflineDetailLocation() {
-
-        try {
-            return ResponseEntity.ok(Map.of("message", "오프라인 세부 장소가 저장되었습니다."));
-
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(Map.of("message", "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
-            }
-            return ResponseEntity.status(400).body(Map.of("message", "scheduleId 값이 누락되었습니다."));
-        }
+    @PostMapping("/create-detail-locations/{scheduleId}")
+    public ResponseEntity<ApiResponse> CreateOfflineDetailLocation(@PathVariable Long scheduleId, @RequestBody CreateOfflineDetailLocationsRequest request) {
+        return ResponseEntity.ok(ApiResponse.noContent());
     }
 
     // 공통 워크스페이스 등록
-    @PostMapping("/{scheduleId}/workspaces")
-    public ResponseEntity<Map<String, String>> CreateWorkspace() {
-
-        try {
-            return ResponseEntity.ok(Map.of("message", "워크스페이스 경로가 저장되었습니다."));
-
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(Map.of("message", "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
-            }
-            return ResponseEntity.status(400).body(Map.of("message", "scheduleId 값이 누락되었습니다."));
-        }
+    @PostMapping("/add-workspaces/{scheduleId}")
+    public ResponseEntity<ApiResponse> CreateWorkspace(@PathVariable Long scheduleId, @RequestBody CreateWorkspaceRequest request) {
+        return ResponseEntity.ok(ApiResponse.noContent());
     }
 
     // 오프라인 세부 장소 수정
-    @PatchMapping("/{scheduleId}/detail-locations")
-    public ResponseEntity<Map<String, String>> ModifyOfflineDetailLocation() {
-
-        try {
-            return ResponseEntity.ok(Map.of("message", "오프라인 미팅장소가 정상적으로 수정되었습니다."));
-
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(Map.of("message", "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
-            }
-            return ResponseEntity.status(400).body(Map.of("message", "scheduleId 값이 누락되었습니다."));
-        }
+    @PatchMapping("/modify-detail-locations/{scheduleId}")
+    public ResponseEntity<ApiResponse> ModifyOfflineDetailLocation(@PathVariable Long scheduleId, @RequestBody ModifyOfflineDetailLocationsRequest request) {
+        return ResponseEntity.ok(ApiResponse.noContent());
     }
 
     // 공통 워크스페이스 수정
-    @PatchMapping("/{schedueld}/workspaces")
-    public ResponseEntity<Map<String, String>> ModifyWorkspace() {
-        try {
-            return ResponseEntity.ok(Map.of("message", "워크스페이스 경로가 정상적으로 수정되었습니다."));
-
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(Map.of("message", "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
-            }
-            return ResponseEntity.status(400).body(Map.of("message", "scheduleId 값이 누락되었습니다."));
-        }
+    @PatchMapping("/modify-workspaces/{schedueld}")
+    public ResponseEntity<ApiResponse> ModifyWorkspace(@PathVariable Long scheduleId, @RequestBody ModifyWorkspaceRequest request) {
+        return ResponseEntity.ok(ApiResponse.noContent());
     }
 }
