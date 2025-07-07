@@ -21,7 +21,7 @@ public class EventCreateRequest {
     @NotNull
     private String type;
     @NotNull
-    private Integer maxMember;
+    private Integer maxMember = 5;
 
     @Getter
     @Setter

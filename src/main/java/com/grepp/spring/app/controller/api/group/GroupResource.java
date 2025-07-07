@@ -51,8 +51,8 @@ public class GroupResource {
             // Mock Data
             ShowGroupResponse response = ShowGroupResponse.builder()
                 .groupIds(new ArrayList<>(List.of(
-                    12340L, 56780L, 98765L,
-                    123456L, 987654L, 999999L
+                    10001L, 10002L, 10003L,
+                    10004L, 10005L, 10006L
                 )))
                 .build();
             return ResponseEntity.ok(ApiResponse.success(response));
@@ -253,9 +253,9 @@ public class GroupResource {
             // userId가 db에 없다면 404_USER_NOT_FOUND
             if(
                 userId!=1234L && userId!=1235L && userId!=2345L && userId!=2346L && userId!=3456L &&
-                userId!=3457L && userId!=4567L && userId!=4568L && userId!=5678L && userId!=5679L &&
-                userId!=6789L && userId!=6790L && userId!=7890L && userId!=7891L &&
-                userId!=8901L && userId!=8902L && userId!=9012L && userId!=9013L
+                    userId!=3457L && userId!=4567L && userId!=4568L && userId!=5678L && userId!=5679L &&
+                    userId!=6789L && userId!=6790L && userId!=7890L && userId!=7891L &&
+                    userId!=8901L && userId!=8902L && userId!=9012L && userId!=9013L
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 유저를 찾을 수 없습니다."));
