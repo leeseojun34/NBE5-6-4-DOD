@@ -66,7 +66,6 @@ public class GroupResource {
         }
     }
 
-
     // 그룹 생성
     @PostMapping("/create")
     public ResponseEntity<ApiResponse<CreateGroupResponse>> createGroup(
