@@ -259,7 +259,7 @@ public class MainPageController {
     internalSchedule2.setStartTime(LocalDateTime.of(2025, 7, 4, 14, 0));
     internalSchedule2.setEndTime(LocalDateTime.of(2025, 7, 4, 15, 30));
     internalSchedule2.setLocation("개발실");
-    internalSchedule1.setMeetingType(MEETING_TYPE.OFFLINE);
+    internalSchedule2.setMeetingType(MEETING_TYPE.OFFLINE);
 
     CalendarScheduleList internalSchedule3 = new CalendarScheduleList();
     internalSchedule3.setScheduleId(30012L);
@@ -270,7 +270,7 @@ public class MainPageController {
     internalSchedule3.setStartTime(LocalDateTime.of(2025, 7, 18, 18, 0));
     internalSchedule3.setEndTime(LocalDateTime.of(2025, 7, 18, 21, 0));
     internalSchedule3.setLocation("홍대");
-    internalSchedule1.setMeetingType(MEETING_TYPE.OFFLINE);
+    internalSchedule3.setMeetingType(MEETING_TYPE.OFFLINE);
 
     CalendarScheduleList internalSchedule4 = new CalendarScheduleList();
     internalSchedule4.setScheduleId(30013L);
@@ -281,7 +281,7 @@ public class MainPageController {
     internalSchedule4.setStartTime(LocalDateTime.of(2025, 7, 25, 16, 0));
     internalSchedule4.setEndTime(LocalDateTime.of(2025, 7, 25, 17, 0));
     internalSchedule4.setLocation("회의실 C");
-    internalSchedule1.setMeetingType(MEETING_TYPE.OFFLINE);
+    internalSchedule4.setMeetingType(MEETING_TYPE.OFFLINE);
 
     internalSchedules.addAll(
         Arrays.asList(internalSchedule1, internalSchedule2, internalSchedule3, internalSchedule4));
