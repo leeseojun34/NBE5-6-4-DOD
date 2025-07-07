@@ -131,6 +131,7 @@ public class MainPageController {
             .collect(Collectors.toList());
       }
 
+
       // === 응답 구성 ===
       ShowCalendarResponse response = new ShowCalendarResponse();
       response.setMessage("일정 목록 조회에 성공했습니다.");
