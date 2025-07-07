@@ -1,5 +1,16 @@
 testtest lkh
 
+--- 
+
+[깃허브 룰]
+- 이슈 활용
+- 이슈, PR 올릴 때 라벨 사용하기
+- CRUD까지는 PR merge 5명 모두 체크
+- CRUD 끝나면 PR merge 시 2명 이상 체크
+
+---
+
+
 # Spring
 
 This app was created with Bootify.io - tips on working with the code [can be found here](https://bootify.io/next-steps/).

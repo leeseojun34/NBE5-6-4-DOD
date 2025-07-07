@@ -5,7 +5,6 @@ import com.grepp.spring.app.model.schedule.domain.SCHEDULES_STATUS;
 import java.time.LocalDateTime;
 
 public class ModifySchedulesRequest {
-    private Long eventId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private SCHEDULES_STATUS SCHEDULES_STATUS;
