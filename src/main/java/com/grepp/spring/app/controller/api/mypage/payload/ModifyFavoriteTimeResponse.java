@@ -3,21 +3,25 @@ package com.grepp.spring.app.controller.api.mypage.payload;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import lombok.AllArgsConstructor;
+import java.util.List;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class ModifyFavoriteTimeResponse {
-  private Long favoriteTimeId;
-  private LocalTime startTime;
-  private LocalTime endTime;
-  private LocalDateTime dateTime;
-  private DayOfWeek weekday;
-  private LocalDateTime updatedAt;
+
+  private List<ModifyFavTimeList> modifyFavTime;
+
+  @Getter @Setter
+  public static class ModifyFavTimeList{
+    private Long favoriteTimeId;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private LocalDateTime dateTime; // 필요없지 않나 흠. // TODO: 요일 어떻게 받을지 더 고민하고 수정하삼
+    private DayOfWeek weekday;
+    private LocalDateTime updatedAt;
+  }
+
 
 }
