@@ -19,6 +19,8 @@ public class MyTimeScheduleRequest {
 
     @NotNull
     private List<DailyTimeSlot> dailyTimeSlots;
+    @NotNull
+    private String timezone;
 
     @Getter
     @Setter
