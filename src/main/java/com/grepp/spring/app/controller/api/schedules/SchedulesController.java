@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/schedules")
-public class SchedulesControllerLkh {
+public class SchedulesController {
 
     // 일정 등록
     @Operation(summary = "일정 등록", description = "일정 등록을 진행합니다.")
