@@ -14,6 +14,7 @@ import com.grepp.spring.app.controller.api.mypage.payload.SetCalendarSyncRequest
 import com.grepp.spring.app.controller.api.mypage.payload.SetCalendarSyncResponse;
 import com.grepp.spring.infra.response.ApiResponse;
 import com.grepp.spring.infra.response.ResponseCode;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -33,6 +34,7 @@ public class MypageController {
 
   // 즐겨찾기 장소 등록
   @PostMapping("/favorite-locations/{memberId}")
+  @Operation(summary = "즐겨찾기 장소 등록", description = "회원 즐겨찾기 장소 등록")
   public ResponseEntity<ApiResponse<CreateFavoritePlaceResponse>> createFavoriteLocation(
       @RequestBody @Valid CreateFavoritePlaceRequest request) {
 
@@ -58,6 +60,7 @@ public class MypageController {
 
   // 즐겨찾기 시간대 등록
   @PostMapping("/favorite-timetable/{memberId}")
+  @Operation(summary = "즐겨찾기 시간대 등록", description = "회원 즐겨찾기 시간대 등록")
   public ResponseEntity<ApiResponse<CreateFavoriteTimeResponse>> createFavoriteTime(
       @RequestBody @Valid CreateFavoriteTimeRequest request) {
 
@@ -87,6 +90,7 @@ public class MypageController {
 
 
   // 즐겨찾기 장소 수정
+  @Operation(summary = "즐겨찾기 장소 수정", description = "회원 즐겨찾기 장소 수정")
   @PatchMapping("/favorite-location/{memberId}/{favoritePlaceId}")
   public ResponseEntity<ApiResponse<ModifyFavoritePlaceResponse>> modifyFavoritePlace(
       @RequestBody @Valid ModifyFavoritePlaceRequest request) {
@@ -120,6 +124,7 @@ public class MypageController {
 
 
   // 즐겨찾기 시간대 수정
+  @Operation(summary = "즐겨찾기 시간대 수정", description = "회원 즐겨찾기 시간대 수정")
   @PatchMapping("/favorite-timetable/{memberId}{favoriteTimeId}")
   public ResponseEntity<ApiResponse<ModifyFavoriteTimeResponse>> modifyFavoriteTime(
       @RequestBody @Valid ModifyFavoriteTimeRequest request) {
@@ -156,6 +161,7 @@ public class MypageController {
 
 
   // 프로필 수정 (사진 + 이름 수정)
+  @Operation(summary = "프로필", description = "회원 프로필 내 이름 및 프로필 캐릭터 수정")
   @PatchMapping("/member-profile/{memberId}")
   public ResponseEntity<ApiResponse<ModifyProfileResponse>> modifyProfile(
       @PathVariable String memberId,
@@ -186,6 +192,7 @@ public class MypageController {
   }
 
   // 캘린더 연동 변경
+  @Operation(summary = "캘린더 연동 설정 변경", description = "회원 프로필 내 캘린더 연동 설정 변경 (ON/OFF)")
   @PatchMapping("/calendar/{memberId}")
   public ResponseEntity<ApiResponse<SetCalendarSyncResponse>> modifyCalendarSync(
       @PathVariable String memberId,
