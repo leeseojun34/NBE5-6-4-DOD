@@ -88,6 +88,7 @@ public class AuthController {
         }
     }
 
+
     @Operation(summary = "로그아웃", description = "로그아웃을 진행합니다.")
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<?>> logout() {
