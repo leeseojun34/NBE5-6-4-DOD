@@ -6,6 +6,7 @@ import com.grepp.spring.app.controller.api.mainpage.payload.ShowScheduleListResp
 import com.grepp.spring.app.model.schedule.domain.SCHEDULES_STATUS;
 import com.grepp.spring.infra.response.ApiResponse;
 import com.grepp.spring.infra.response.ResponseCode;
+import io.swagger.v3.oas.annotations.Operation;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainPageController {
 
   // 일정 조회
+  @Operation(summary = "일정 리스트 조회", description = "회원의 일정 리스트 조회")
   @GetMapping("/schedule-members/{id}")
   public ResponseEntity<ApiResponse<ShowScheduleListResponse>> showSchedules(@PathVariable Long id) {
 
@@ -54,6 +56,7 @@ public class MainPageController {
   }
 
   // 그룹 조회
+  @Operation(summary = "그룹 리스트 조회", description = "회원 그룹 리스트 조회")
   @GetMapping("/groups")
   public ResponseEntity<ApiResponse<ShowGroupResponse>> showGroups() {
 
@@ -62,8 +65,6 @@ public class MainPageController {
       response.setGroupIds(new ArrayList<>(Arrays.asList(
           10000L, 10001L, 10002L, 10003L, 10004L, 10005L
       )));
-
-
 
       return ResponseEntity.ok(ApiResponse.success(response));
 
@@ -77,15 +78,17 @@ public class MainPageController {
   }
 
   // 외부 캘린더 (구글) 조회
-  @GetMapping("/calendar/{calendarId}/schedules")
+  @Operation(summary = "구글 캘린더 조회", description = "내부 일정 + 구글 일정 함께 조회")
+  @GetMapping("/calendar/{memberId}/schedules")
   public ResponseEntity<ApiResponse<ShowCalendarResponse>> showCalendarSchedules(
-      @PathVariable Long calendarId,
+      @PathVariable String memberId,
       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
 
     try {
       // 구글 일정 데이터
       ShowCalendarResponse.CalendarSchedule googleSchedule1 = new ShowCalendarResponse.CalendarSchedule();
       googleSchedule1.setScheduleId(30001L);
+      googleSchedule1.setMemberId("KAKAO_1234");
       googleSchedule1.setCalendarId(300L);
       googleSchedule1.setTitle("백엔드 회의");
       googleSchedule1.setDescription("스프링 프로젝트 논의");
@@ -95,6 +98,7 @@ public class MainPageController {
 
       ShowCalendarResponse.CalendarSchedule googleSchedule2 = new ShowCalendarResponse.CalendarSchedule();
       googleSchedule2.setScheduleId(30002L);
+      googleSchedule2.setMemberId("KAKAO_1234");
       googleSchedule2.setCalendarId(301L);
       googleSchedule2.setTitle("프론트엔드 리뷰");
       googleSchedule2.setDescription("UI/UX 검토");
@@ -109,6 +113,7 @@ public class MainPageController {
       // 내부 일정 데이터
       ShowCalendarResponse.CalendarSchedule internalSchedule1 = new ShowCalendarResponse.CalendarSchedule();
       internalSchedule1.setScheduleId(30003L);
+      internalSchedule1.setMemberId("KAKAO_1234");
       internalSchedule1.setCalendarId(300L);
       internalSchedule1.setTitle("team hmd 정모");
       internalSchedule1.setDescription("팀 정기 모임");
@@ -118,6 +123,7 @@ public class MainPageController {
 
       ShowCalendarResponse.CalendarSchedule internalSchedule2 = new ShowCalendarResponse.CalendarSchedule();
       internalSchedule2.setScheduleId(30005L);
+      internalSchedule2.setMemberId("KAKAO_1234");
       internalSchedule2.setCalendarId(301L);
       internalSchedule2.setTitle("코드 리뷰");
       internalSchedule2.setDescription("주간 코드 리뷰 세션");
@@ -139,13 +145,26 @@ public class MainPageController {
             .collect(Collectors.toList());
       }
 
-
       // === 응답 구성 ===
       ShowCalendarResponse response = new ShowCalendarResponse();
       response.setMessage("일정 목록 조회에 성공했습니다.");
       response.setGoogleSchedules(googleSchedules);
       response.setInternalSchedules(internalSchedules);
 
+      if (!"KAKAO_1234".equals(memberId)) {
+        return ResponseEntity.status(404)
+            .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 멤버를 찾을 수 없습니다."));
+      }
+      if (date == null) {
+        return ResponseEntity.status(400)
+            .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "날짜를 지정해 주세요."));
+      }
+
+      if (
+          !(date.equals(LocalDate.of(2025, 7, 3)) || date.equals(LocalDate.of(2025, 7, 4)))) {
+        return ResponseEntity.status(404)
+            .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 날짜의 일정이 없습니다."));
+      }
 
       return ResponseEntity.ok(ApiResponse.success(response));
 
