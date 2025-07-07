@@ -78,7 +78,7 @@ public class SchedulesController {
     //NOTE
     // 일정 수정
     @Operation(summary = "일정 수정", description = "일정 수정을 진행합니다.")
-    @PatchMapping("/modify/{scheduleId}") // 일정 수정 관련된 것들은 모두 수행. 그럼 pathch가 맞는가?
+    @PatchMapping("/modify/{scheduleId}") // 일정 수정 관련된 것들은 모두 수행. 그럼 patch가 맞는가?
     public ResponseEntity<ApiResponse<ModifySchedulesResponse>> modifyScedules(@PathVariable Long scheduleId, @RequestBody ModifySchedulesRequest request) {
         try {
 
