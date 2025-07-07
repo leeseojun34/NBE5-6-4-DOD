@@ -2,8 +2,6 @@ package com.grepp.spring.app.controller.api.mainpage.payload;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +16,7 @@ public class ShowCalendarResponse {
   @Setter
   public static class CalendarSchedule {
     private Long scheduleId;
+    private String memberId;
     private Long calendarId;
     private String title;
     private String description;
