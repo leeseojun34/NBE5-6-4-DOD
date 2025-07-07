@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ShowGroupRequest {
 
-  private Long memberId;
+  private String memberId;
 
 }

@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShowCalendarRequest {
-  private Long memberId;
+  private String memberId;
   private Long calendarId;
   private String yearMonth; // "year-month" 형태로 나오게끔, 서비스 단에서 변환해서 사용할 예정
 

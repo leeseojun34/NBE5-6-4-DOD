@@ -1,7 +1,6 @@
 package com.grepp.spring.app.controller.api.mypage;
 
 
-import com.grepp.spring.app.controller.api.event.payload.EventCreateRequest;
 import com.grepp.spring.app.controller.api.mypage.payload.CreateFavoritePlaceRequest;
 import com.grepp.spring.app.controller.api.mypage.payload.CreateFavoritePlaceResponse;
 import com.grepp.spring.app.controller.api.mypage.payload.CreateFavoriteTimeRequest;
@@ -16,8 +15,9 @@ import com.grepp.spring.app.controller.api.mypage.payload.SetCalendarSyncRespons
 import com.grepp.spring.infra.response.ApiResponse;
 import com.grepp.spring.infra.response.ResponseCode;
 import jakarta.validation.Valid;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.Map;
+import java.time.LocalTime;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -37,6 +37,13 @@ public class MypageController {
       @RequestBody @Valid CreateFavoritePlaceRequest request) {
 
     try {
+      CreateFavoritePlaceResponse response = new CreateFavoritePlaceResponse();
+      response.setFavoritePlaceId(100L);
+      response.setPlaceName("스타벅스 홍대입구역점");
+      response.setLatitude(37.5561);
+      response.setLongitude(126.9229);
+      response.setCreatedAt(LocalDateTime.now());
+
       return ResponseEntity.ok(ApiResponse.success("즐겨찾기 장소가 정상적으로 등록되었습니다."));
 
     } catch (Exception e) {
@@ -55,6 +62,18 @@ public class MypageController {
       @RequestBody @Valid CreateFavoriteTimeRequest request) {
 
     try {
+      CreateFavoriteTimeResponse response = new CreateFavoriteTimeResponse();
+      response.setFavoriteTimeId(100L);
+      response.setStartTime(LocalTime.of(13, 0));
+      response.setEndTime(LocalTime.of(15, 0));
+
+      LocalDateTime dateTime = LocalDateTime.of(2025, 7, 7, 0, 0); // ✅ 변수로 저장
+      response.setDateTime(dateTime);                              // 날짜 저장
+
+      DayOfWeek weekday = dateTime.getDayOfWeek(); // 요일 추출
+      response.setWeekday(weekday);                // 요일 저장
+
+      response.setCreatedAt(LocalDateTime.now());
       return ResponseEntity.ok(ApiResponse.success("즐겨찾기 시간이 정상적으로 등록되었습니다."));
     } catch (Exception e) {
       if (e instanceof AuthenticationException) {
@@ -68,11 +87,26 @@ public class MypageController {
 
 
   // 즐겨찾기 장소 수정
-  @PatchMapping("/favorite-location/{memberId}")
+  @PatchMapping("/favorite-location/{memberId}/{favoritePlaceId}")
   public ResponseEntity<ApiResponse<ModifyFavoritePlaceResponse>> modifyFavoritePlace(
       @RequestBody @Valid ModifyFavoritePlaceRequest request) {
 
     try {
+      ModifyFavoritePlaceResponse response = new ModifyFavoritePlaceResponse();
+      response.setFavoritePlaceId(200L);
+      response.setPlaceName("투썸플레이스 신촌점");
+      response.setLatitude(37.5571);
+      response.setLongitude(126.9368);
+      response.setUpdatedAt(LocalDateTime.now());
+
+      Long favoritePlaceId = request.getFavoritePlaceId();
+      if(
+          !favoritePlaceId.equals(100L)
+      ){
+        return ResponseEntity.status(404)
+            .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 정보를 찾을 수 없습니다."));
+      }
+
       return ResponseEntity.ok(ApiResponse.success("즐겨찾기 장소가 정상적으로 수정되었습니다."));
     } catch (Exception e) {
       if (e instanceof AuthenticationException) {
@@ -86,11 +120,29 @@ public class MypageController {
 
 
   // 즐겨찾기 시간대 수정
-  @PatchMapping("/favorite-timetable/{memberId}")
+  @PatchMapping("/favorite-timetable/{memberId}{favoriteTimeId}")
   public ResponseEntity<ApiResponse<ModifyFavoriteTimeResponse>> modifyFavoriteTime(
       @RequestBody @Valid ModifyFavoriteTimeRequest request) {
 
     try {
+      ModifyFavoriteTimeResponse response = new ModifyFavoriteTimeResponse();
+      response.setFavoriteTimeId(200L);
+      response.setStartTime(LocalTime.of(14, 0));
+      response.setEndTime(LocalTime.of(15, 0));
+
+      LocalDateTime dateTime = LocalDateTime.of(2025, 7, 10, 0, 0); // 예: 목요일
+      DayOfWeek weekday = dateTime.getDayOfWeek(); // THURSDAY
+      response.setWeekday(weekday);  //
+
+      response.setUpdatedAt(LocalDateTime.now());
+
+      Long favoriteTimeId = request.getFavoriteTimeId();
+      if(
+          !favoriteTimeId.equals(200L)
+      ){
+        return ResponseEntity.status(404)
+            .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 정보를 찾을 수 없습니다."));
+      }
       return ResponseEntity.ok(ApiResponse.success("즐겨찾기 시간이 정상적으로 수정되었습니다."));
     } catch (Exception e) {
       if (e instanceof AuthenticationException) {
@@ -103,13 +155,25 @@ public class MypageController {
   }
 
 
-  // 프로필 수정 (사진만)
+  // 프로필 수정 (사진 + 이름 수정)
   @PatchMapping("/member-profile/{memberId}")
   public ResponseEntity<ApiResponse<ModifyProfileResponse>> modifyProfile(
-      @PathVariable Long memberId,
+      @PathVariable String memberId,
       @RequestBody @Valid ModifyFavoriteTimeRequest request) {
 
     try {
+      ModifyProfileResponse response = new ModifyProfileResponse();
+      response.setMemberId("KAKAO_1234");
+      response.setProfileImageNumber("7");
+      response.setName("ABC");
+
+      if(
+          !"KAKAO_1234".equals(memberId)
+      ){
+        return ResponseEntity.status(404)
+            .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 정보를 찾을 수 없습니다."));
+      }
+
       return ResponseEntity.ok(ApiResponse.success("프로필이 정상적으로 수정되었습니다."));
     } catch (Exception e) {
       if (e instanceof AuthenticationException) {
@@ -124,16 +188,24 @@ public class MypageController {
   // 캘린더 연동 변경
   @PatchMapping("/calendar/{memberId}")
   public ResponseEntity<ApiResponse<SetCalendarSyncResponse>> modifyCalendarSync(
-      @PathVariable Long memberId,
+      @PathVariable String memberId,
       @RequestBody @Valid SetCalendarSyncRequest request) {
 
     try {
-      SetCalendarSyncResponse response = new SetCalendarSyncResponse(
-          request.isEnabled(),
-          LocalDateTime.now(),
-          LocalDateTime.now()
-      );
+      SetCalendarSyncResponse response = new SetCalendarSyncResponse();
+      response.setEnabled(true);
+      response.setLastSyncAt(LocalDateTime.of(2025, 7, 5, 14, 30, 0));
+
+      if(
+          !"KAKAO_1234".equals(memberId)
+      ){
+        return ResponseEntity.status(404)
+            .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 정보를 찾을 수 없습니다."));
+      }
+
       return ResponseEntity.ok(ApiResponse.success("캘린더 연동이 정상적으로 수정되었습니다."));
+
+
 
     } catch (AuthenticationException e) {
       return ResponseEntity.status(401)
