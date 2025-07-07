@@ -1,5 +1,6 @@
 package com.grepp.spring.app.controller.api.mypage.payload;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,8 @@ public class ModifyFavoriteTimeResponse {
   private Long favoriteTimeId;
   private LocalTime startTime;
   private LocalTime endTime;
-  private LocalDateTime weekday;
+  private LocalDateTime dateTime;
+  private DayOfWeek weekday;
   private LocalDateTime updatedAt;
 
 }
