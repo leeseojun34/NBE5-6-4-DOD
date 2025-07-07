@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class ControlGroupRoleRequest {
-    private Long userId;
+    private String userId;
     private GroupRole groupRole;
 
 }

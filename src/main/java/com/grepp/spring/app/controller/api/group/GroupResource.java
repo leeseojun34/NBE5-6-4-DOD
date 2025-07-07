@@ -51,8 +51,8 @@ public class GroupResource {
             // Mock Data
             ShowGroupResponse response = ShowGroupResponse.builder()
                 .groupIds(new ArrayList<>(List.of(
-                    12340L, 56780L, 98765L,
-                    123456L, 987654L, 999999L
+                    10001L, 10002L, 10003L,
+                    10004L, 10005L, 10006L
                 )))
                 .build();
             return ResponseEntity.ok(ApiResponse.success(response));
@@ -97,8 +97,8 @@ public class GroupResource {
             // 예외 발생
             // id가 db에 없다면 404_GROUP_NOT_FOUND
             if(
-                id!=12340L && id!=56780L && id!=98765L &&
-                id!=123456L && id!=987654L && id!=999999L
+                id!=10001L && id!=10002L && id!=10003L &&
+                id!=10004L && id!=10005L && id!=10006L
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."));
@@ -107,8 +107,8 @@ public class GroupResource {
             //Mock Data
             ShowGroupScheduleResponse response = ShowGroupScheduleResponse.builder()
                 .scheduleIds(new ArrayList<>(List.of(
-                    12121L, 34343L, 56565L,
-                    78787L, 90909L
+                    30001L, 30002L, 30003L,
+                    30004L, 30005L
                 )))
                 .build();
             return ResponseEntity.ok(ApiResponse.success(response));
@@ -135,8 +135,8 @@ public class GroupResource {
             // 예외 발생
             // id가 db에 없다면 404_GROUP_NOT_FOUND
             if(
-                id!=12340L && id!=56780L && id!=98765L &&
-                    id!=123456L && id!=987654L && id!=999999L
+                id!=10001L && id!=10002L && id!=10003L &&
+                    id!=10004L && id!=10005L && id!=10006L
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."));
@@ -169,8 +169,8 @@ public class GroupResource {
             // 예외 발생
             // id가 db에 없다면 404_GROUP_NOT_FOUND
             if(
-                id!=12340L && id!=56780L && id!=98765L &&
-                    id!=123456L && id!=987654L && id!=999999L
+                id!=10001L && id!=10002L && id!=10003L &&
+                    id!=10004L && id!=10005L && id!=10006L
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."));
@@ -179,10 +179,8 @@ public class GroupResource {
             // MockData
             ShowGroupMemberResponse response = ShowGroupMemberResponse.builder()
                 .userIds(new ArrayList<>(List.of(
-                    1234L, 1235L, 2345L, 2346L, 3456L,
-                    3457L, 4567L, 4568L, 5678L, 5679L
-                    //6789L, 6790L, 7890L, 7891L,
-                    //8901L, 8902L, 9012L, 9013L
+                    "KAKAO_1001", "KAKAO_1002", "KAKAO_1003", "KAKAO_1004", "KAKAO_1005",
+                    "KAKAO_1006", "KAKAO_1007", "KAKAO_1008", "KAKAO_1009", "KAKAO_1010"
                 )))
                 .build();
             return ResponseEntity.ok(ApiResponse.success(response));
@@ -209,8 +207,8 @@ public class GroupResource {
             // 예외 발생
             // id가 db에 없다면 404_GROUP_NOT_FOUND
             if(
-                id!=12340L && id!=56780L && id!=98765L &&
-                    id!=123456L && id!=987654L && id!=999999L
+                id!=10001L && id!=10002L && id!=10003L &&
+                    id!=10004L && id!=10005L && id!=10006L
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."));
@@ -238,32 +236,32 @@ public class GroupResource {
     @PatchMapping("/{groupId}/members/{userId}")
     public ResponseEntity<ApiResponse<DeportGroupMemberResponse>> deportGroupMember(
         @RequestParam Long groupId,
-        @RequestParam Long userId
+        @RequestParam String userId
     ) {
         try {
             // 예외 발생
             // groupId가 db에 없다면 404_GROUP_NOT_FOUND
             if(
-                groupId!=12340L && groupId!=56780L && groupId!=98765L &&
-                    groupId!=123456L && groupId!=987654L && groupId!=999999L
+                groupId!=10001L && groupId!=10002L && groupId!=10003L &&
+                    groupId!=10004L && groupId!=10005L && groupId!=10006L
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."));
             }
             // userId가 db에 없다면 404_USER_NOT_FOUND
             if(
-                userId!=1234L && userId!=1235L && userId!=2345L && userId!=2346L && userId!=3456L &&
-                    userId!=3457L && userId!=4567L && userId!=4568L && userId!=5678L && userId!=5679L &&
-                    userId!=6789L && userId!=6790L && userId!=7890L && userId!=7891L &&
-                    userId!=8901L && userId!=8902L && userId!=9012L && userId!=9013L
+                    !userId.equals("KAKAO_1001") && !userId.equals("KAKAO_1002") && !userId.equals("KAKAO_1003") && !userId.equals("KAKAO_1004") && !userId.equals("KAKAO_1005") &&
+                    !userId.equals("KAKAO_1006") && !userId.equals("KAKAO_1007") && !userId.equals("KAKAO_1008") && !userId.equals("KAKAO_1009") && !userId.equals("KAKAO_1010") &&
+                    !userId.equals("GOOGLE_1001") && !userId.equals("GOOGLE_1002") && !userId.equals("GOOGLE_1003") && !userId.equals("GOOGLE_1004") &&
+                    !userId.equals("GOOGLE_1005") && !userId.equals("GOOGLE_1006") && !userId.equals("GOOGLE_1007") && !userId.equals("GOOGLE_1008")
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 유저를 찾을 수 없습니다."));
             }
             // userId가 해당 그룹에 없다면 404_USER_NOT_IN_GROUP
             if(
-                    userId!=1234L && userId!=1235L && userId!=2345L && userId!=2346L && userId!=3456L &&
-                    userId!=3457L && userId!=4567L && userId!=4568L && userId!=5678L && userId!=5679L
+                !userId.equals("KAKAO_1001") && !userId.equals("KAKAO_1002") && !userId.equals("KAKAO_1003") && !userId.equals("KAKAO_1004") && !userId.equals("KAKAO_1005") &&
+                    !userId.equals("KAKAO_1006") && !userId.equals("KAKAO_1007") && !userId.equals("KAKAO_1008") && !userId.equals("KAKAO_1009") && !userId.equals("KAKAO_1010")
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 유저를 그룹에서 찾을 수 없습니다."));
@@ -297,27 +295,26 @@ public class GroupResource {
             // 예외 발생
             // groupId가 db에 없다면 404_GROUP_NOT_FOUND
             if(
-                id!=12340L && id!=56780L && id!=98765L &&
-                    id!=123456L && id!=987654L && id!=999999L
+                id!=10001L && id!=10002L && id!=10003L &&
+                    id!=10004L && id!=10005L && id!=10006L
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."));
             }
 
-            for(Long tempUser: request.getUserIds()){
+            for(String tempUser: request.getUserIds()){
                 // request의 userIds중 user들이 해당 그룹에 있다면 409_USER_ALREADY_IN_GROUP
                 if(
-                    tempUser == 1234L || tempUser==1235L || tempUser==2345L || tempUser==2346L || tempUser==3456L ||
-                        tempUser==3457L || tempUser==4567L || tempUser==4568L || tempUser==5678L || tempUser==5679L
+                        tempUser.equals("KAKAO_1001") || tempUser.equals("KAKAO_1002") || tempUser.equals("KAKAO_1003") || tempUser.equals("KAKAO_1004") || tempUser.equals("KAKAO_1005") ||
+                        tempUser.equals("KAKAO_1006") || tempUser.equals("KAKAO_1007") || tempUser.equals("KAKAO_1008") || tempUser.equals("KAKAO_1009") || tempUser.equals("KAKAO_1010")
                 ){
                     return ResponseEntity.status(409)
                         .body(ApiResponse.error(ResponseCode.CONFLICT_REGISTER, "이미 해당 그룹에 존재하는 유저가 존재합니다."));
                 }
                 // request의 userIds중 user들이 db에 없다면 404_USER_NOT_FOUND
                 else if(
-
-                        tempUser!=6789L && tempUser!=6790L && tempUser!=7890L && tempUser!=7891L &&
-                        tempUser!=8901L && tempUser!=8902L && tempUser!=9012L && tempUser!=9013L
+                        !tempUser.equals("GOOGLE_1001") && !tempUser.equals("GOOGLE_1002") && !tempUser.equals("GOOGLE_1003") && !tempUser.equals("GOOGLE_1004") &&
+                        !tempUser.equals("GOOGLE_1005") && !tempUser.equals("GOOGLE_1006") && !tempUser.equals("GOOGLE_1007") && !tempUser.equals("GOOGLE_1008")
                 ){
                     return ResponseEntity.status(404)
                         .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 유저를 찾을 수 없습니다."));
@@ -352,26 +349,26 @@ public class GroupResource {
             // 예외 발생
             // groupId가 db에 없다면 404_GROUP_NOT_FOUND
             if(
-                id!=12340L && id!=56780L && id!=98765L &&
-                    id!=123456L && id!=987654L && id!=999999L
+                id!=10001L && id!=10002L && id!=10003L &&
+                    id!=10004L && id!=10005L && id!=10006L
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."));
             }
             // request의 userIds중 user들이 db에 없다면 404_USER_NOT_FOUND
             if(
-                request.getUserId()!=1234L && request.getUserId()!=1235L && request.getUserId()!=2345L && request.getUserId()!=2346L && request.getUserId()!=3456L &&
-                    request.getUserId()!=3457L && request.getUserId()!=4567L && request.getUserId()!=4568L && request.getUserId()!=5678L && request.getUserId()!=5679L &&
-                    request.getUserId()!=6789L && request.getUserId()!=6790L && request.getUserId()!=7890L && request.getUserId()!=7891L &&
-                    request.getUserId()!=8901L && request.getUserId()!=8902L && request.getUserId()!=9012L && request.getUserId()!=9013L
+                    !request.getUserId().equals("KAKAO_1001") && !request.getUserId().equals("KAKAO_1002") && !request.getUserId().equals("KAKAO_1003") && !request.getUserId().equals("KAKAO_1004") && !request.getUserId().equals("KAKAO_1005") &&
+                    !request.getUserId().equals("KAKAO_1006") && !request.getUserId().equals("KAKAO_1007") && !request.getUserId().equals("KAKAO_1008") && !request.getUserId().equals("KAKAO_1009") && !request.getUserId().equals("KAKAO_1010") &&
+                    !request.getUserId().equals("GOOGLE_1001") && !request.getUserId().equals("GOOGLE_1002") && !request.getUserId().equals("GOOGLE_1003") && !request.getUserId().equals("GOOGLE_1004") &&
+                    !request.getUserId().equals("GOOGLE_1005") && !request.getUserId().equals("GOOGLE_1006") && !request.getUserId().equals("GOOGLE_1007") && !request.getUserId().equals("GOOGLE_1008")
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 유저를 찾을 수 없습니다."));
             }
             // userId가 해당 그룹에 없다면 404_USER_NOT_IN_GROUP
             if(
-                request.getUserId()!=1234L && request.getUserId()!=1235L && request.getUserId()!=2345L && request.getUserId()!=2346L && request.getUserId()!=3456L &&
-                    request.getUserId()!=3457L && request.getUserId()!=4567L && request.getUserId()!=4568L && request.getUserId()!=5678L && request.getUserId()!=5679L
+                !request.getUserId().equals("KAKAO_1001") && !request.getUserId().equals("KAKAO_1002") && !request.getUserId().equals("KAKAO_1003") && !request.getUserId().equals("KAKAO_1004") && !request.getUserId().equals("KAKAO_1005") &&
+                    !request.getUserId().equals("KAKAO_1006") && !request.getUserId().equals("KAKAO_1007") && !request.getUserId().equals("KAKAO_1008") && !request.getUserId().equals("KAKAO_1009") && !request.getUserId().equals("KAKAO_1010")
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 유저를 그룹에서 찾을 수 없습니다."));
@@ -403,8 +400,8 @@ public class GroupResource {
             // 예외 발생
             // groupId가 db에 없다면 404_GROUP_NOT_FOUND
             if(
-                id!=12340L && id!=56780L && id!=98765L &&
-                    id!=123456L && id!=987654L && id!=999999L
+                id!=10001L && id!=10002L && id!=10003L &&
+                    id!=10004L && id!=10005L && id!=10006L
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."));
@@ -413,23 +410,23 @@ public class GroupResource {
             // MockData
             ShowGroupStatisticsResponse response = ShowGroupStatisticsResponse.builder()
                 .groupUsers(new ArrayList<>(List.of(
-                    new GroupUser(1234L, GroupRole.GROUP_LEADER, new ArrayList<>(List.of(12121L, 34343L, 56565L, 78787L, 90909L))),
-                    new GroupUser(1235L, GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(12121L, 34343L, 90909L))),
-                    new GroupUser(2345L, GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(56565L, 78787L, 90909L))),
-                    new GroupUser(2346L, GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(12121L, 56565L, 78787L, 90909L))),
-                    new GroupUser(3456L, GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(12121L, 34343L, 56565L, 78787L, 90909L))),
-                    new GroupUser(3457L, GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(12121L, 90909L))),
-                    new GroupUser(4567L, GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(12121L, 34343L, 56565L))),
-                    new GroupUser(4568L, GroupRole.GROUP_MEMBER, new ArrayList<>(List.of( 34343L, 78787L))),
-                    new GroupUser(5678L, GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(56565L, 78787L))),
-                    new GroupUser(5679L, GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(12121L, 34343L, 78787L, 90909L)))
+                    new GroupUser("KAKAO_1001", GroupRole.GROUP_LEADER, new ArrayList<>(List.of(30000L, 30002L, 30003L, 30004L, 30005L))),
+                    new GroupUser("KAKAO_1002", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30002L))),
+                    new GroupUser("KAKAO_1003", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30003L, 30005L))),
+                    new GroupUser("KAKAO_1004", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30002L, 30004L, 30005L))),
+                    new GroupUser("KAKAO_1005", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30003L, 30004L, 30005L))),
+                    new GroupUser("KAKAO_1006", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30002L, 30003L, 30004L, 30005L))),
+                    new GroupUser("KAKAO_1007", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30002L, 30003L))),
+                    new GroupUser("KAKAO_1008", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L))),
+                    new GroupUser("KAKAO_1009", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30004L, 30005L))),
+                    new GroupUser("KAKAO_1010", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30003L, 30004L, 30005L)))
                 )))
                 .groupSchedules(new ArrayList<>(List.of(
-                    new GroupSchedule(12121L, "성수역", LocalDateTime.now(), LocalDateTime.MAX),
-                    new GroupSchedule(34343L, "용산역", LocalDateTime.now(), LocalDateTime.MAX),
-                    new GroupSchedule(56565L, "합정역", LocalDateTime.now(), LocalDateTime.MAX),
-                    new GroupSchedule(78787L, "역삼역", LocalDateTime.now(), LocalDateTime.MAX),
-                    new GroupSchedule(90909L, "서초역", LocalDateTime.now(), LocalDateTime.MAX)
+                    new GroupSchedule(30001L, "인천역", LocalDateTime.now(), LocalDateTime.MAX),
+                    new GroupSchedule(30002L, "국제금융센터-부산은행역", LocalDateTime.now(), LocalDateTime.MAX),
+                    new GroupSchedule(30003L, "합정역", LocalDateTime.now(), LocalDateTime.MAX),
+                    new GroupSchedule(30004L, "역삼역", LocalDateTime.now(), LocalDateTime.MAX),
+                    new GroupSchedule(30005L, "서초역", LocalDateTime.now(), LocalDateTime.MAX)
                 )))
                 .build();
             return ResponseEntity.ok(ApiResponse.success(response));
@@ -455,17 +452,17 @@ public class GroupResource {
             // 예외 발생
             // request의 scheduleId가 이미 그룹에 있다면 409_SCHEDULE_ALREADY_IN_GROUP
                 if(
-                    request.getScheduleId()==12121L || request.getScheduleId()==34343L || request.getScheduleId()==56565L ||
-                        request.getScheduleId()==78787L || request.getScheduleId()==90909L || request.getScheduleId()==11111L ||
-                        request.getScheduleId()==22222L || request.getScheduleId()==33333L || request.getScheduleId()==44444L
+                        request.getScheduleId()==30001L || request.getScheduleId()==30002L || request.getScheduleId()==30003L ||
+                        request.getScheduleId()==30004L || request.getScheduleId()==30005L ||
+                            request.getScheduleId()==31111L || request.getScheduleId()==32222L || request.getScheduleId()==33333L || request.getScheduleId()==34444L
                 ){
                     return ResponseEntity.status(409)
                         .body(ApiResponse.error(ResponseCode.CONFLICT_REGISTER, "이미 그룹에 존재하는 일정 입니다."));
                 }
                 // request의 scheduleId가 db에 없다면 404_SCHEDULE_NOT_FOUND
                 else if(
-                    request.getScheduleId()!=55555L && request.getScheduleId()!=66666L && request.getScheduleId()!=77777L &&
-                        request.getScheduleId()!=88888L && request.getScheduleId()!=99999L
+                        request.getScheduleId()!=35555L && request.getScheduleId()!=36666L && request.getScheduleId()!=37777L &&
+                        request.getScheduleId()!=38888L && request.getScheduleId()!=39999L
                 ){
                     return ResponseEntity.status(404)
                         .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
@@ -497,8 +494,8 @@ public class GroupResource {
             // 예외 발생
             // groupId가 db에 없다면 404_GROUP_NOT_FOUND
             if(
-                id!=12340L && id!=56780L && id!=98765L &&
-                    id!=123456L && id!=987654L && id!=999999L
+                id!=10001L && id!=10002L && id!=10003L &&
+                    id!=10004L && id!=10005L && id!=10006L
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."));

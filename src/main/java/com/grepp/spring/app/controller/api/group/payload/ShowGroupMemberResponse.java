@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 @Data
 public class ShowGroupMemberResponse {
-    private ArrayList<Long> userIds;
+    private ArrayList<String> userIds;
 }
