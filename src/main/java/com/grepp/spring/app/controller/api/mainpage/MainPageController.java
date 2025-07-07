@@ -96,6 +96,7 @@ public class MainPageController {
     group1.setCurrentMember(3);
     group1.setCreatedAt(LocalDateTime.of(2025, 7, 5, 9, 0));
     group1.setIsGroupEvent(true);
+    group1.setProfileImageNumber(1);
 
     GroupList group2 = new GroupList();
     group2.setGroupId(null);
@@ -107,6 +108,8 @@ public class MainPageController {
     group2.setCurrentMember(7);
     group2.setCreatedAt(LocalDateTime.of(2025, 7, 8, 16, 30));
     group2.setIsGroupEvent(false);
+    group2.setProfileImageNumber(2);
+
 
     GroupList group3 = new GroupList();
     group3.setGroupId(10001L); // 중복된 ID 수정
@@ -118,6 +121,8 @@ public class MainPageController {
     group3.setCurrentMember(5);
     group3.setCreatedAt(LocalDateTime.of(2025, 7, 13, 9, 30));
     group3.setIsGroupEvent(true);
+    group3.setProfileImageNumber(9);
+
 
     groupInfos.add(group1);
     groupInfos.add(group2);

@@ -1,6 +1,7 @@
 package com.grepp.spring.app.controller.api.mainpage.payload;
 
 
+import com.grepp.spring.app.controller.api.group.groupDto.groupRole.GroupRole;
 import com.grepp.spring.app.model.schedule.domain.MEETING_PLATFORM;
 import com.grepp.spring.app.model.schedule.domain.MEETING_TYPE;
 import com.grepp.spring.app.model.schedule.domain.SCHEDULES_STATUS;
@@ -37,6 +38,8 @@ public class ShowMainPageResponse {
     private Integer currentMember;
     private LocalDateTime createdAt;
     private Boolean isGroupEvent;
+    private GroupRole role;
+    private Integer profileImageNumber;
 
   }
 
@@ -57,7 +60,7 @@ public class ShowMainPageResponse {
     private String location;
     private Boolean isGrouped;
     private String groupName;
-    // TODO : role + 그룹 만든 사람 캐릭터 사진
+
   }
 
 
