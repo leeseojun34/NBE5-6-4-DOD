@@ -8,9 +8,7 @@ import lombok.Setter;
 @Setter
 public class CreateDepartLocationRequest {
     private Long scheduleId;
-    private Long middleRegionIdg;
-    private Role role;
     private String departLocationName;
-    private Double latitude;
     private Double longitude;
+    private Double latitude;
 }

@@ -7,7 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateOnlineMeetingRequest {
-    private Long scheduleId;
     private MEETING_PLATFORM meetingPlatform;
-
 }

@@ -11,5 +11,4 @@ public class SetCalendarSyncRequest {
   private String refreshToken;
   private Long calendarId;
 
-
 }
