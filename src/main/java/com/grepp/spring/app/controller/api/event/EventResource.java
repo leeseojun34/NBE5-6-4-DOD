@@ -1,8 +1,10 @@
 package com.grepp.spring.app.controller.api.event;
 
 import com.grepp.spring.app.controller.api.event.payload.*;
+import com.grepp.spring.infra.error.exceptions.AuthApiException;
 import com.grepp.spring.infra.response.ApiResponse;
 import com.grepp.spring.infra.response.ResponseCode;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,49 +24,81 @@ public class EventResource {
 
     // 이벤트 생성
     @PostMapping
+    @Operation(summary = "이벤트 생성")
     public ResponseEntity<ApiResponse<EventCreateResponse>> createEvent(@RequestBody @Valid EventCreateRequest request) {
-
-        return ResponseEntity.status(201)
-            .body(ApiResponse.success("이벤트가 성공적으로 생성되었습니다."));
+        try {
+            return ResponseEntity.status(200)
+                .body(ApiResponse.success("이벤트가 성공적으로 생성되었습니다."));
+        } catch (Exception e) {
+            if (e instanceof AuthApiException) {
+                return ResponseEntity.status(401)
+                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
+            }
+            return ResponseEntity.status(400)
+                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
+        }
     }
 
     // 이벤트 수정
     @PatchMapping("/{eventId}")
+    @Operation(summary = "이벤트 수정")
     public ResponseEntity<ApiResponse<EventUpdateResponse>> updateEvent(
         @PathVariable Long eventId,
         @RequestBody @Valid EventUpdateRequest request) {
 
         try {
+            if (
+                eventId != 20000 && eventId != 20001 && eventId != 20002 &&
+                    eventId != 20003 && eventId != 20004 && eventId != 20005
+            ) {
+                return ResponseEntity.status(404)
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+            }
             return ResponseEntity.ok(ApiResponse.success("이벤트가 성공적으로 수정되었습니다."));
+
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
             }
-            return ResponseEntity.status(400).body(ApiResponse.error(ResponseCode.BAD_REQUEST, "eventId 값이 유효하지 않습니다."));
+            return ResponseEntity.status(400)
+                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
+        // TODO: 예외처리
+        // 현재 유저가 해당 그룹의 이벤트장이 아니라면 403 NOT_EVENT_OWNER
+        // 현재 유저가 해당 그룹의 이벤트원이 아니라면 403 NOT_EVENT_MEMBER
     }
 
     // 이벤트 일정 참여
+    @Operation(summary = "이벤트 참여")
     @PostMapping("/{eventId}")
     public ResponseEntity<ApiResponse<JoinEventResponse>> joinEvent(
         @PathVariable Long eventId) {
 
         try {
+            if (
+                eventId != 20000 && eventId != 20001 && eventId != 20002 &&
+                    eventId != 20003 && eventId != 20004 && eventId != 20005
+            ) {
+                return ResponseEntity.status(404)
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+            }
             JoinEventResponse response = new JoinEventResponse();
             response.setRole("MEMBER");
             response.setJoinedAt(LocalDateTime.now());
-
             return ResponseEntity.ok(ApiResponse.success("이벤트에 성공적으로 참여했습니다."));
+
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
             }
-            return ResponseEntity.status(400).body(ApiResponse.error(ResponseCode.BAD_REQUEST, "eventId 값이 유효하지 않습니다."));
+            return ResponseEntity.status(400)
+                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
 
     }
 
     // 이벤트 목록 조회
+    @Operation(summary = "이벤트 목록 조회")
     @GetMapping
     public ResponseEntity<ApiResponse<EventListResponse>> getEventList() {
 
@@ -74,8 +108,8 @@ public class EventResource {
             List<EventListResponse.EventList> events = new ArrayList<>();
 
             EventListResponse.EventList event1 = new EventListResponse.EventList();
-            event1.setEventId(1L);
-            event1.setGroupId(1L);
+            event1.setEventId(20000L);
+            event1.setGroupId(10000L);
             event1.setTitle("그룹 미팅");
             event1.setDescription("Q3 계획 수립을 위한 팀 미팅 1");
             event1.setMeetingType("ONLINE");
@@ -86,7 +120,7 @@ public class EventResource {
             event1.setGroupName("개발팀");
 
             EventListResponse.EventList event2 = new EventListResponse.EventList();
-            event2.setEventId(2L);
+            event2.setEventId(20001L);
             event2.setGroupId(null);
             event2.setTitle("일회성 미팅");
             event2.setDescription("Q3 계획 수립을 위한 팀 미팅 2");
@@ -106,32 +140,51 @@ public class EventResource {
             if (e instanceof AuthenticationException) {
                 return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
             }
-            return ResponseEntity.status(400).body(ApiResponse.error(ResponseCode.NOT_FOUND, "이벤트 목록을 조회하는데 실패했습니다."));
+            return ResponseEntity.status(400)
+                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
 
     }
 
     // 개인의 가능한 시간대 생성/수정
     @PostMapping("/{eventId}/my-time")
+    @Operation(summary = "개인의 가능한 시간대 생성/수정")
     public ResponseEntity<ApiResponse<MyTimeScheduleResponse>> createOrUpdateMyTime(
         @PathVariable Long eventId,
         @RequestBody @Valid MyTimeScheduleRequest request) {
 
         try {
+            if (
+                eventId != 20000 && eventId != 20001 && eventId != 20002 &&
+                    eventId != 20003 && eventId != 20004 && eventId != 20005
+            ) {
+                return ResponseEntity.status(404)
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+            }
             return ResponseEntity.ok(ApiResponse.success("개인 일정이 성공적으로 생성/수정되었습니다."));
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
             }
-            return ResponseEntity.status(400).body(ApiResponse.error(ResponseCode.BAD_REQUEST, "eventId 값이 유효하지 않습니다."));
+            return ResponseEntity.status(400)
+                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
     }
 
     // 참여자 전원의 가능한 시간대 조회
+    @Operation(summary = "참여자 전원의 가능한 시간대 조회")
     @GetMapping("/{eventId}/all-time")
     public ResponseEntity<ApiResponse<AllTimeScheduleResponse>> getAllTimeSchedules(@PathVariable Long eventId) {
 
         try {
+            if (
+                eventId != 20000 && eventId != 20001 && eventId != 20002 &&
+                    eventId != 20003 && eventId != 20004 && eventId != 20005
+            ) {
+                return ResponseEntity.status(404)
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+            }
+
             AllTimeScheduleResponse response = new AllTimeScheduleResponse();
             response.setEventId(eventId);
             response.setEventTitle("시이바 카츠오모이");
@@ -221,45 +274,73 @@ public class EventResource {
             if (e instanceof AuthenticationException) {
                 return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
             }
-            return ResponseEntity.status(400).body(ApiResponse.error(ResponseCode.BAD_REQUEST, "eventId 값이 유효하지 않습니다."));
+            return ResponseEntity.status(400)
+                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
     }
 
     // 개인의 가능한 시간대 확정
+    @Operation(summary = "개인의 가능한 시간대 확정")
     @PostMapping("/{eventId}/complete")
     public ResponseEntity<ApiResponse<CompleteMyTimeResponse>> completeMyTime(@PathVariable Long eventId) {
 
         try {
+            if (
+                eventId != 20000 && eventId != 20001 && eventId != 20002 &&
+                    eventId != 20003 && eventId != 20004 && eventId != 20005
+            ) {
+                return ResponseEntity.status(404)
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+            }
             return ResponseEntity.ok(ApiResponse.success("개인 일정이 성공적으로 확정되었습니다."));
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
             }
-            return ResponseEntity.status(400).body(ApiResponse.error(ResponseCode.BAD_REQUEST, "eventId 값이 유효하지 않습니다."));
+            return ResponseEntity.status(400)
+                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
     }
 
     // 이벤트 조율 결과 생성
-    @PostMapping("/events/{eventId}/result")
+    @Operation(summary = "이벤트 조율 결과 생성")
+    @PostMapping("/events/{eventId}/all-time")
     public ResponseEntity<ApiResponse<CreateScheduleResultResponse>> createScheduleResult(
         @PathVariable Long eventId,
         @RequestBody @Valid CreateScheduleResultRequest request) {
 
         try {
+            if (
+                eventId != 20000 && eventId != 20001 && eventId != 20002 &&
+                    eventId != 20003 && eventId != 20004 && eventId != 20005
+            ) {
+                return ResponseEntity.status(404)
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+            }
             return ResponseEntity.ok(ApiResponse.success("일정 조율 결과가 성공적으로 생성되었습니다."));
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
             }
-            return ResponseEntity.status(400).body(ApiResponse.error(ResponseCode.BAD_REQUEST, "eventId 값이 유효하지 않습니다."));
+            return ResponseEntity.status(400)
+                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
     }
 
     // 이벤트 조율 결과 조회
-    @GetMapping("/events/{eventId}/result")
+    @Operation(summary = "이벤트 조율 결과 조회")
+    @GetMapping("/{eventId}/all-time/result")
     public ResponseEntity<ApiResponse<ScheduleResultResponse>> getScheduleResult(@PathVariable Long eventId) {
 
         try {
+            if (
+                eventId != 20000 && eventId != 20001 && eventId != 20002 &&
+                    eventId != 20003 && eventId != 20004 && eventId != 20005
+            ) {
+                return ResponseEntity.status(404)
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+            }
+
             ScheduleResultResponse response = new ScheduleResultResponse();
             response.setEventTitle("카츠오모이 가는날");
             response.setTotalParticipants(6);
@@ -319,22 +400,32 @@ public class EventResource {
             if (e instanceof AuthenticationException) {
                 return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
             }
-            return ResponseEntity.status(400).body(ApiResponse.error(ResponseCode.BAD_REQUEST, "eventId 값이 유효하지 않습니다."));
+            return ResponseEntity.status(400)
+                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
 
     }
 
     // 이벤트 삭제
+    @Operation(summary = "이벤트 삭제")
     @DeleteMapping("/{eventId}")
     public ResponseEntity<ApiResponse<EventDeleteResponse>> deleteEvent(@PathVariable Long eventId) {
 
         try {
+            if (
+                eventId != 20000 && eventId != 20001 && eventId != 20002 &&
+                    eventId != 20003 && eventId != 20004 && eventId != 20005
+            ) {
+                return ResponseEntity.status(404)
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+            }
             return ResponseEntity.ok(ApiResponse.success("이벤트가 성공적으로 삭제되었습니다."));
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
             }
-            return ResponseEntity.status(400).body(ApiResponse.error(ResponseCode.BAD_REQUEST, "eventId 값이 유효하지 않습니다."));
+            return ResponseEntity.status(400)
+                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
     }
 }
