@@ -42,4 +42,8 @@ public record ApiResponse<T>(
     public static <T> ApiResponse<T> conflictRegister(T data) {
         return new ApiResponse<>(ResponseCode.CONFLICT_REGISTER.code(), ResponseCode.CONFLICT_REGISTER.message(), data);
     }
+
+    public static <T> ApiResponse<T> activateSuccess(T data) {
+        return new ApiResponse<>(ResponseCode.ACTIVATED.code(), ResponseCode.ACTIVATED.message(), data);
+    }
 }
