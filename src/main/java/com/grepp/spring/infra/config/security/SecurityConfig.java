@@ -41,9 +41,11 @@ public class SecurityConfig {
             .logout(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(
                 (requests) -> requests
+                                  .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                   .requestMatchers("/favicon.ico", "/img/**", "/js/**","/css/**").permitAll()
-                                  .requestMatchers("/", "/error", "/auth/login", "/auth/signup").permitAll()
-                                  .requestMatchers("/api/**").permitAll()
+                                  .requestMatchers("/", "/error").permitAll()
+                                  .requestMatchers("/api/v1/auth/update-tokens", "/api/v1/auth/login").permitAll()
+                                  .requestMatchers("/api/**").authenticated()
                                   .anyRequest().permitAll()
             )
             // jwtAuthenticationEntryPoint 는 oauth 인증을 사용할 경우 제거
