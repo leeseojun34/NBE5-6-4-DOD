@@ -41,6 +41,7 @@ public class MainPageController {
       response.setLocation("회의실 A");
       response.setCategory("업무");
 
+
       return ResponseEntity.ok(ApiResponse.success(response));
 
     } catch (AuthenticationException e) {
@@ -61,6 +62,9 @@ public class MainPageController {
       response.setGroupIds(new ArrayList<>(Arrays.asList(
           10000L, 10001L, 10002L, 10003L, 10004L, 10005L
       )));
+
+
+
       return ResponseEntity.ok(ApiResponse.success(response));
 
     } catch (AuthenticationException e) {
@@ -82,6 +86,7 @@ public class MainPageController {
       // 구글 일정 데이터
       ShowCalendarResponse.CalendarSchedule googleSchedule1 = new ShowCalendarResponse.CalendarSchedule();
       googleSchedule1.setScheduleId(30001L);
+      googleSchedule1.setCalendarId(300L);
       googleSchedule1.setTitle("백엔드 회의");
       googleSchedule1.setDescription("스프링 프로젝트 논의");
       googleSchedule1.setStartTime(LocalDateTime.of(2025, 7, 2, 15, 0));
@@ -90,6 +95,7 @@ public class MainPageController {
 
       ShowCalendarResponse.CalendarSchedule googleSchedule2 = new ShowCalendarResponse.CalendarSchedule();
       googleSchedule2.setScheduleId(30002L);
+      googleSchedule2.setCalendarId(301L);
       googleSchedule2.setTitle("프론트엔드 리뷰");
       googleSchedule2.setDescription("UI/UX 검토");
       googleSchedule2.setStartTime(LocalDateTime.of(2025, 7, 3, 10, 0));
@@ -103,6 +109,7 @@ public class MainPageController {
       // 내부 일정 데이터
       ShowCalendarResponse.CalendarSchedule internalSchedule1 = new ShowCalendarResponse.CalendarSchedule();
       internalSchedule1.setScheduleId(30003L);
+      internalSchedule1.setCalendarId(300L);
       internalSchedule1.setTitle("team hmd 정모");
       internalSchedule1.setDescription("팀 정기 모임");
       internalSchedule1.setStartTime(LocalDateTime.of(2025, 7, 3, 10, 0));
@@ -111,6 +118,7 @@ public class MainPageController {
 
       ShowCalendarResponse.CalendarSchedule internalSchedule2 = new ShowCalendarResponse.CalendarSchedule();
       internalSchedule2.setScheduleId(30005L);
+      internalSchedule2.setCalendarId(301L);
       internalSchedule2.setTitle("코드 리뷰");
       internalSchedule2.setDescription("주간 코드 리뷰 세션");
       internalSchedule2.setStartTime(LocalDateTime.of(2025, 7, 4, 14, 0));
@@ -137,6 +145,7 @@ public class MainPageController {
       response.setMessage("일정 목록 조회에 성공했습니다.");
       response.setGoogleSchedules(googleSchedules);
       response.setInternalSchedules(internalSchedules);
+
 
       return ResponseEntity.ok(ApiResponse.success(response));
 

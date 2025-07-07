@@ -18,6 +18,7 @@ public class ShowCalendarResponse {
   @Setter
   public static class CalendarSchedule {
     private Long scheduleId;
+    private Long calendarId;
     private String title;
     private String description;
     private LocalDateTime startTime;
