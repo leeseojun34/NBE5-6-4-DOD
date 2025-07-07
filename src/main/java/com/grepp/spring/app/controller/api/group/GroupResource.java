@@ -66,7 +66,6 @@ public class GroupResource {
         }
     }
 
-
     // 그룹 생성
     @PostMapping("/create")
     public ResponseEntity<ApiResponse<CreateGroupResponse>> createGroup(
@@ -250,6 +249,7 @@ public class GroupResource {
             }
             // userId가 db에 없다면 404_USER_NOT_FOUND
             if(
+
                     !userId.equals("KAKAO_1001") && !userId.equals("KAKAO_1002") && !userId.equals("KAKAO_1003") && !userId.equals("KAKAO_1004") && !userId.equals("KAKAO_1005") &&
                     !userId.equals("KAKAO_1006") && !userId.equals("KAKAO_1007") && !userId.equals("KAKAO_1008") && !userId.equals("KAKAO_1009") && !userId.equals("KAKAO_1010") &&
                     !userId.equals("GOOGLE_1001") && !userId.equals("GOOGLE_1002") && !userId.equals("GOOGLE_1003") && !userId.equals("GOOGLE_1004") &&
