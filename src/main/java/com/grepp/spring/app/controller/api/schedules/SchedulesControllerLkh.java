@@ -19,6 +19,7 @@ import com.grepp.spring.app.model.schedule.domain.VOTE_STATUS;
 import com.grepp.spring.infra.error.exceptions.AuthApiException;
 import com.grepp.spring.infra.response.ApiResponse;
 import com.grepp.spring.infra.response.ResponseCode;
+import io.swagger.v3.oas.annotations.Operation;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SchedulesControllerLkh {
 
     // 일정 등록
+    @Operation(summary = "일정 등록", description = "일정 등록을 진행합니다.")
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> createScedules(@RequestBody CreateSchedulesRequest request) {
 
@@ -64,13 +66,14 @@ public class SchedulesControllerLkh {
     }
 
     // 일정 수정
+    @Operation(summary = "일정 수정", description = "일정 수정을 진행합니다.")
     @PatchMapping("/modify/{scheduleId}")
     public ResponseEntity<ApiResponse> modifyScedules(@PathVariable Long scheduleId, @RequestBody ModifySchedulesRequest request) {
         try {
 
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 스케줄을 찾을 수 없습니다."));
             }
             return ResponseEntity.ok(ApiResponse.noContent());
         }
@@ -86,6 +89,7 @@ public class SchedulesControllerLkh {
     }
 
     // 일정 확인
+    @Operation(summary = "일정 확인", description = "일정을 조회합니다.")
     @GetMapping("/show/{scheduleId}")
     public ResponseEntity<ApiResponse<ShowSchedulesResponse>> showScedules(@PathVariable Long scheduleId) {
 
@@ -93,7 +97,7 @@ public class SchedulesControllerLkh {
 
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
             }
 
             ShowSchedulesResponse  response = new ShowSchedulesResponse();
@@ -121,13 +125,14 @@ public class SchedulesControllerLkh {
     }
 
     // 일정 삭제
+    @Operation(summary = "일정 삭제", description = "일정을 삭제합니다.")
     @DeleteMapping("/delete/{scheduleId}")
     public ResponseEntity<ApiResponse> deleteScedules(@PathVariable Long scheduleId) {
 
         try {
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
             }
             return ResponseEntity.ok(ApiResponse.noContent());
         }
@@ -142,6 +147,7 @@ public class SchedulesControllerLkh {
     }
 
     // 출발장소 등록
+    @Operation(summary = "출발장소 등록", description = "출발장소 등록을 진행합니다.")
     @PostMapping("create-depart-location/{memberId}")
     public ResponseEntity<ApiResponse> createDepartLocation(@PathVariable String memberId, @RequestBody CreateDepartLocationRequest request) {
 
@@ -150,14 +156,14 @@ public class SchedulesControllerLkh {
                 !memberId.equals("KAKAO_1234") && !memberId.equals("KAKAO_5678") && !memberId.equals("GOOGLE_1234") && !memberId.equals("GOOGLE_5678")
             ){
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 memberId를 찾을 수 없습니다."));
             }
             if(
                 request.getScheduleId()!= 30000L && request.getScheduleId()!=30001L && request.getScheduleId()!=30002L &&
                     request.getScheduleId()!=30003L && request.getScheduleId()!=30005L && request.getScheduleId()!=30303L && request.getScheduleId()!=33333L
             ){
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
             }
 
             return ResponseEntity.ok(ApiResponse.noContent());
@@ -175,13 +181,14 @@ public class SchedulesControllerLkh {
 
 
     // 중간장소 후보 조회
+    @Operation(summary = "중간장소 후보 조회", description = "중간장소 후보를 조회합니다.")
     @GetMapping("/show-suggested-locations{scheduleId}")
     public ResponseEntity<ApiResponse<List<ShowSuggestedLocationsResponse>>> showSuggestedLocations(@PathVariable Long scheduleId) {
 
         try {
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
             }
 
             ShowSuggestedLocationsResponse response1 = new ShowSuggestedLocationsResponse();
@@ -225,6 +232,7 @@ public class SchedulesControllerLkh {
     }
 
     // 출발 장소 지점 투표하기
+    @Operation(summary = "출발 장소 지점 투표하기", description = "출발 장소를 투표합니다.")
     @PostMapping("/suggested-locations/vote/{scheduleId}")
     public ResponseEntity<ApiResponse> voteMiddleLocation(@PathVariable Long scheduleId, @RequestBody VoteMiddleLocationsRequest request) {
 
@@ -232,12 +240,12 @@ public class SchedulesControllerLkh {
 
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
             }
 
             if (request.getLocationId() !=40000 && request.getLocationId() !=40001 && request.getLocationId() !=40004 && request.getLocationId() !=40404 && request.getLocationId() !=44444 ) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 투표리스트(장소)를 찾을 수 없습니다."));
             }
 
             return ResponseEntity.ok(ApiResponse.noContent());
@@ -279,6 +287,7 @@ public class SchedulesControllerLkh {
 //    }
 
     // 중간 장소(지하철 역) 지점 확인 && 중간 장소 지점 투표결과 조회
+    @Operation(summary = "중간 장소(지하철 역) 지점 확인 || 중간 장소 지점 투표결과 조회", description = "중간 장소(지하철 역) 지점 확인 || 중간 장소 지점 투표결과 조회를 진행합니다.")
     @GetMapping("/show-middle-location/{scheduleId}")
     public ResponseEntity<ApiResponse<ShowMiddleLocationResponse>> showMiddleLocation(@PathVariable Long scheduleId) {
 
@@ -286,7 +295,7 @@ public class SchedulesControllerLkh {
 
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
             }
 
             ShowMiddleLocationResponse response = new ShowMiddleLocationResponse();
@@ -309,6 +318,7 @@ public class SchedulesControllerLkh {
     }
 
     // 온라인 회의장 링크 개설(줌, 구글미트)
+    @Operation(summary = "온라인 회의장 링크 개설(줌, 구글미트)", description = "온라인 회의장을 개설합니다.")
     @PostMapping("/create-online-meeting")
     public ResponseEntity<ApiResponse<CreateOnlineMeetingResponse>> CreateOnlineMeeting(@RequestBody CreateOnlineMeetingRequest request) {
 
@@ -319,7 +329,7 @@ public class SchedulesControllerLkh {
                     request.getScheduleId()!=30003L && request.getScheduleId()!=30005L && request.getScheduleId()!=30303L && request.getScheduleId()!=33333L
             ){
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
             }
 
             CreateOnlineMeetingResponse response = new CreateOnlineMeetingResponse();
@@ -339,14 +349,14 @@ public class SchedulesControllerLkh {
     }
 
     // 오프라인 세부 장소 생성
+    @Operation(summary = "오프라인 세부 장소 생성", description = "오프라인 세부 장소 생성을 진행합니다.")
     @PostMapping("/create-detail-locations/{scheduleId}")
     public ResponseEntity<ApiResponse> CreateOfflineDetailLocation(@PathVariable Long scheduleId, @RequestBody CreateOfflineDetailLocationsRequest request) {
 
         try {
-
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
             }
 
             return ResponseEntity.ok(ApiResponse.noContent());
@@ -363,13 +373,14 @@ public class SchedulesControllerLkh {
     }
 
     // 공통 워크스페이스 등록
+    @Operation(summary = "공통 워크스페이스 등록", description = "공통 워크스페이스 등록을 진행합니다.")
     @PostMapping("/add-workspaces/{scheduleId}")
     public ResponseEntity<ApiResponse> CreateWorkspace(@PathVariable Long scheduleId, @RequestBody CreateWorkspaceRequest request) {
 
         try {
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
             }
 
             return ResponseEntity.ok(ApiResponse.noContent());
@@ -385,6 +396,7 @@ public class SchedulesControllerLkh {
     }
 
     // 오프라인 세부 장소 수정
+    @Operation(summary = "오프라인 세부 장소 수정", description = "오프라인 세부 장소 수정을 진행합니다.")
     @PatchMapping("/modify-detail-locations/{scheduleId}")
     public ResponseEntity<ApiResponse> ModifyOfflineDetailLocation(@PathVariable Long scheduleId, @RequestBody ModifyOfflineDetailLocationsRequest request) {
 
@@ -392,7 +404,7 @@ public class SchedulesControllerLkh {
 
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
             }
 
             return ResponseEntity.ok(ApiResponse.noContent());
@@ -409,13 +421,14 @@ public class SchedulesControllerLkh {
     }
 
     // 공통 워크스페이스 수정
+    @Operation(summary = "공통 워크스페이스 수정", description = "공통 워크스페이스 수정을 진행합니다.")
     @PatchMapping("/modify-workspaces/{schedueld}")
     public ResponseEntity<ApiResponse> ModifyWorkspace(@PathVariable Long scheduleId, @RequestBody ModifyWorkspaceRequest request) {
 
         try {
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
             }
 
             return ResponseEntity.ok(ApiResponse.noContent());
