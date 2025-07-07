@@ -25,6 +25,7 @@ import com.grepp.spring.app.controller.api.group.payload.WithdrawGroupResponse;
 import com.grepp.spring.infra.error.exceptions.AuthApiException;
 import com.grepp.spring.infra.response.ApiResponse;
 import com.grepp.spring.infra.response.ResponseCode;
+import io.swagger.v3.oas.annotations.Operation;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +42,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/v1/groups", produces = MediaType.APPLICATION_JSON_VALUE)
-public class GroupResource {
+public class GroupController {
 
     // 현재 유저가 속한 그룹 조회
     @GetMapping
+    @Operation(summary = "그룹 조회")
     public ResponseEntity<ApiResponse<ShowGroupResponse>> getGroup(
     ) {
         try {
@@ -68,6 +70,7 @@ public class GroupResource {
 
 
     // 그룹 생성
+    @Operation(summary = "그룹 생성")
     @PostMapping("/create")
     public ResponseEntity<ApiResponse<CreateGroupResponse>> createGroup(
         @RequestBody CreateGroupRequest request
@@ -89,6 +92,7 @@ public class GroupResource {
 
 
     // 그룹 내 일정 조회
+    @Operation(summary = "그룹 내 일정 조회")
     @GetMapping("/schedule-groups/{id}")
     public ResponseEntity<ApiResponse<ShowGroupScheduleResponse>> getGroupSchedules(
         @RequestParam Long id
@@ -126,6 +130,7 @@ public class GroupResource {
 
 
     // 그룹 삭제
+    @Operation(summary = "그룹 삭제")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<DeleteGroupResponse>> deleteGroup(
         @RequestParam Long id,
@@ -161,6 +166,7 @@ public class GroupResource {
 
 
     // 그룹 멤버 조회
+    @Operation(summary = "그룹 멤버 조회")
     @GetMapping("/{id}/member")
     public ResponseEntity<ApiResponse<ShowGroupMemberResponse>> getGroupMembers(
         @RequestParam Long id
@@ -198,6 +204,7 @@ public class GroupResource {
 
 
     // 그룹 정보 수정
+    @Operation(summary = "그룹 정보 수정")
     @PatchMapping("/{id}")
     public ResponseEntity<ApiResponse<ModifyGroupInfoResponse>> updateGroupInfo(
         @RequestParam Long id,
@@ -233,6 +240,7 @@ public class GroupResource {
 
 
     // 그룹 멤버 내보내기
+    @Operation(summary = "그룹 멤버 내보내기")
     @PatchMapping("/{groupId}/members/{userId}")
     public ResponseEntity<ApiResponse<DeportGroupMemberResponse>> deportGroupMember(
         @RequestParam Long groupId,
@@ -286,6 +294,7 @@ public class GroupResource {
 
 
     // 그룹 멤버 초대
+    @Operation(summary = "멤버 그룹으로 초대")
     @PostMapping("/{id}/members")
     public ResponseEntity<ApiResponse<InviteGroupMemberResponse>> inviteGroupMember(
         @RequestParam Long id,
@@ -340,6 +349,7 @@ public class GroupResource {
 
 
     // 그룹 멤버 권한 관리
+    @Operation(summary = "그룹 멤버 권한 관리")
     @PatchMapping("/{id}/members")
     public ResponseEntity<ApiResponse<ControlGroupRoleResponse>> controlGroupRoles(
         @RequestParam Long id,
@@ -392,6 +402,7 @@ public class GroupResource {
     }
 
     // 그룹 통계 조회
+    @Operation(summary = "그룹 통계 조회")
     @GetMapping("/{id}/statistics")
     public ResponseEntity<ApiResponse<ShowGroupStatisticsResponse>> getGroupStatistics(
         @RequestParam Long id
@@ -444,6 +455,7 @@ public class GroupResource {
 
 
     // 일정 -> 그룹 일정으로 이동
+    @Operation(summary = "일회성 일정을 그룹 일정으로 변경")
     @PatchMapping("/move-schedule")
     public ResponseEntity<ApiResponse<ScheduleToGroupResponse>> moveScheduleToGroup(
         @RequestBody ScheduleToGroupRequest request
@@ -486,6 +498,7 @@ public class GroupResource {
     }
 
     // 그룹 탈퇴
+    @Operation(summary = "그룹 탈퇴")
     @PatchMapping("/{id}/leave")
     public ResponseEntity<ApiResponse<WithdrawGroupResponse>> withdrawGroup(
         @RequestParam Long id
