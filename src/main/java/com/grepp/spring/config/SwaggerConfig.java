@@ -21,8 +21,8 @@ public class SwaggerConfig {
     public OpenAPI openApiSpec() {
         return new OpenAPI()
             .info(new Info()
-                .title("API 문서")
-                .description("API 명세입니다. 에러 코드는 [링크]를 참조해 주세요.")
+                .title("이때어때 API 문서")
+                .description("이때어때 API 명세입니다. 에러 코드는 [Error Code 문서](https://www.notion.so/Error-Code-22915a0120548059a805d7c6027820d9?source=copy_link)를 참조해 주세요.")
                 .version("v1.0.0"))
             .components(
                 new Components()
