@@ -2,19 +2,20 @@ package com.grepp.spring.app.controller.api.mainpage.payload;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
 public class ShowCalendarResponse {
-  private List<CalendarSchedule> scheduleId;
+  private String message;
+  private List<CalendarSchedule> googleSchedules;
+  private List<CalendarSchedule> internalSchedules;
 
   @Getter
-  @NoArgsConstructor
-  @AllArgsConstructor
+  @Setter
   public static class CalendarSchedule {
     private Long scheduleId;
     private String title;
@@ -22,12 +23,9 @@ public class ShowCalendarResponse {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String location;
-    private String category;
-    private boolean isAllDay;
-    private Long groupId;
-    private String groupName;
+//    private String category;
+//    private boolean isAllDay;
   }
-
 
 
 }
