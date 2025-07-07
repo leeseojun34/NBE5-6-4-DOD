@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventCreateRequest {
+public class CreateEventRequest {
 
     @NotNull
     private String title;
