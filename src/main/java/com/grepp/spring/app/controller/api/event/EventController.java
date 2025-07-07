@@ -14,13 +14,12 @@ import javax.security.sasl.AuthenticationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
 @RestController
 @RequestMapping(value = "/api/v1/events", produces = MediaType.APPLICATION_JSON_VALUE)
-public class EventResource {
+public class EventController {
 
     // 이벤트 생성
     @PostMapping
