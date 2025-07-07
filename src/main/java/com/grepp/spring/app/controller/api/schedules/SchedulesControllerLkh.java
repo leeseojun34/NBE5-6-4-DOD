@@ -287,7 +287,7 @@ public class SchedulesControllerLkh {
 //    }
 
     // 중간 장소(지하철 역) 지점 확인 && 중간 장소 지점 투표결과 조회
-    @Operation(summary = "중간 장소(지하철 역) 지점 확인 || 중간 장소 지점 투표결과 조회", description = "중간 장소(지하철 역) 지점 확인 || 중간 장소 지점 투표결과 조회를 진행합니다.")
+    @Operation(summary = "중간 장소(지하철 역) 지점 확인 or 중간 장소 지점 투표결과 조회", description = "중간 장소(지하철 역) 지점 확인 or 중간 장소 지점 투표결과 조회를 진행합니다.")
     @GetMapping("/show-middle-location/{scheduleId}")
     public ResponseEntity<ApiResponse<ShowMiddleLocationResponse>> showMiddleLocation(@PathVariable Long scheduleId) {
 
