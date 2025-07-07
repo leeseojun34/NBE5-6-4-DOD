@@ -14,4 +14,6 @@ public class TokenDto {
     private String grantType;
     private Long expiresIn;
     private Long refreshExpiresIn;
+    private String userId;
+    private String userName;
 }
