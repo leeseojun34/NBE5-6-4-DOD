@@ -218,7 +218,7 @@ public class SchedulesController {
             response1.setSCHEDULES_STATUS(VOTE_STATUS.ALMOST);
             response1.setMetroLines(Arrays.asList("2", "4", "5"));
             response1.setStationColors(Arrays.asList("G222","B342","P234"));
-            response1.setTravelTime(47);
+
 
             ShowSuggestedLocationsResponse response2 = new ShowSuggestedLocationsResponse();
             response2.setLocationName("역삼역");
@@ -229,7 +229,7 @@ public class SchedulesController {
             response2.setSCHEDULES_STATUS(VOTE_STATUS.WINNER);
             response2.setMetroLines(Arrays.asList("2","8"));
             response2.setStationColors(Arrays.asList("G222","R342"));
-            response2.setTravelTime(47);
+
 
             ShowSuggestedLocationsResponse response3 = new ShowSuggestedLocationsResponse();
             response3.setLocationName("홍대입구역");
@@ -240,7 +240,7 @@ public class SchedulesController {
             response3.setSCHEDULES_STATUS(VOTE_STATUS.DEFAULT);
             response3.setMetroLines(Arrays.asList("2","5","경의중앙","수인분당"));
             response3.setStationColors(Arrays.asList("G222","P234","b12314","y097234"));
-            response3.setTravelTime(47);
+
 
             List<ShowSuggestedLocationsResponse> list = Arrays.asList(response1, response2, response3);
 
@@ -309,8 +309,6 @@ public class SchedulesController {
             response.setVoteCount(8L);
             response.setMetroLines(List.of("2","8"));
             response.setStationColors(List.of("G222","R342"));
-            response.setTravelTime(47);
-
             return ResponseEntity.ok(ApiResponse.success(response));
         }
 

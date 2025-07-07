@@ -18,7 +18,6 @@ public class ShowSuggestedLocationsResponse {
 
     private List<String> metroLines; // 추가
     private List<String> stationColors; // 추가
-    private int travelTime; // 추가. 이동시간 <- 아까 놓쳤다...
     private int noVoteCount; // 추가. 투표하지 않은 사람 수
 
 }
