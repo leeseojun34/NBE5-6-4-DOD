@@ -8,7 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class GroupUser {
-    private Long userId;
+    private String userId;
     private GroupRole groupRole;
     private ArrayList<Long> scheduleIds;
 

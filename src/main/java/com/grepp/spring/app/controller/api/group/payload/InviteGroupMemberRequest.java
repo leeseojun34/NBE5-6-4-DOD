@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Getter
 public class InviteGroupMemberRequest {
-    private ArrayList<Long> userIds;
+    private ArrayList<String> userIds;
 
 }
