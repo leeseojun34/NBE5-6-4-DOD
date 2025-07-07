@@ -38,35 +38,6 @@ public class EventController {
         }
     }
 
-    // 이벤트 수정
-    @PatchMapping("/{eventId}")
-    @Operation(summary = "이벤트 수정")
-    public ResponseEntity<ApiResponse<EventUpdateResponse>> updateEvent(
-        @PathVariable Long eventId,
-        @RequestBody @Valid EventUpdateRequest request) {
-
-        try {
-            if (
-                eventId != 20000 && eventId != 20001 && eventId != 20002 &&
-                    eventId != 20003 && eventId != 20004 && eventId != 20005
-            ) {
-                return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
-            }
-            return ResponseEntity.ok(ApiResponse.success("이벤트가 성공적으로 수정되었습니다."));
-
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
-            }
-            return ResponseEntity.status(400)
-                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
-        }
-        // TODO: 예외처리
-        // 현재 유저가 해당 그룹의 이벤트장이 아니라면 403 NOT_EVENT_OWNER
-        // 현재 유저가 해당 그룹의 이벤트원이 아니라면 403 NOT_EVENT_MEMBER
-    }
-
     // 이벤트 일정 참여
     @Operation(summary = "이벤트 참여")
     @PostMapping("/{eventId}")
@@ -86,55 +57,6 @@ public class EventController {
             response.setJoinedAt(LocalDateTime.now());
             return ResponseEntity.ok(ApiResponse.success("이벤트에 성공적으로 참여했습니다."));
 
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
-            }
-            return ResponseEntity.status(400)
-                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
-        }
-
-    }
-
-    // 이벤트 목록 조회
-    @Operation(summary = "이벤트 목록 조회")
-    @GetMapping
-    public ResponseEntity<ApiResponse<EventListResponse>> getEventList() {
-
-        try {
-            EventListResponse response = new EventListResponse();
-            response.setTotalCount(2);
-            List<EventListResponse.EventList> events = new ArrayList<>();
-
-            EventListResponse.EventList event1 = new EventListResponse.EventList();
-            event1.setEventId(20000L);
-            event1.setGroupId(10000L);
-            event1.setTitle("그룹 미팅");
-            event1.setDescription("Q3 계획 수립을 위한 팀 미팅 1");
-            event1.setMeetingType("ONLINE");
-            event1.setMaxMember(5);
-            event1.setCurrentMember(3);
-            event1.setCreatedAt(LocalDateTime.of(2025, 7, 5, 9, 0));
-            event1.setIsGroupEvent(true);
-            event1.setGroupName("개발팀");
-
-            EventListResponse.EventList event2 = new EventListResponse.EventList();
-            event2.setEventId(20001L);
-            event2.setGroupId(null);
-            event2.setTitle("일회성 미팅");
-            event2.setDescription("Q3 계획 수립을 위한 팀 미팅 2");
-            event2.setMeetingType("OFFLINE");
-            event2.setMaxMember(10);
-            event2.setCurrentMember(7);
-            event2.setCreatedAt(LocalDateTime.of(2025, 7, 8, 16, 30));
-            event2.setIsGroupEvent(false);
-            event2.setGroupName(null);
-            events.add(event1);
-            events.add(event2);
-
-            response.setEvents(events);
-
-            return ResponseEntity.ok(ApiResponse.success(response));
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
@@ -360,6 +282,7 @@ public class EventController {
             String[] names = {"박은서", "한예주", "박은규", "박상욱", "황수지", "배수지"};
             for (String name : names) {
                 ScheduleResultResponse.Participant participant = new ScheduleResultResponse.Participant();
+                participant.setMemberId("google_" + name.hashCode());
                 participant.setMemberName(name);
                 participants1.add(participant);
             }
@@ -387,7 +310,6 @@ public class EventController {
             timeSlotDetails.add(slot2);
             timeSlotDetails.add(slot3);
 
-            // 추천 요약 정보
             ScheduleResultResponse.Recommendation recommendationSummary = new ScheduleResultResponse.Recommendation();
             recommendationSummary.setLongestMeetingTime(slot1);
             recommendationSummary.setEarliestMeetingTime(slot1);

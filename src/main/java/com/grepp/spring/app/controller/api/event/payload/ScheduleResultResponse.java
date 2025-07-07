@@ -26,6 +26,7 @@ public class ScheduleResultResponse {
     @Getter
     @Setter
     public static class Participant {
+        private String memberId;
         private String memberName;
     }
 
