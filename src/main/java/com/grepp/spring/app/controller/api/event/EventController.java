@@ -24,7 +24,7 @@ public class EventController {
     // 이벤트 생성
     @PostMapping
     @Operation(summary = "이벤트 생성")
-    public ResponseEntity<ApiResponse<EventCreateResponse>> createEvent(@RequestBody @Valid EventCreateRequest request) {
+    public ResponseEntity<ApiResponse<CreateEventResponse>> createEvent(@RequestBody @Valid CreateEventRequest request) {
         try {
             return ResponseEntity.status(200)
                 .body(ApiResponse.success("이벤트가 성공적으로 생성되었습니다."));
@@ -330,7 +330,7 @@ public class EventController {
     // 이벤트 삭제
     @Operation(summary = "이벤트 삭제")
     @DeleteMapping("/{eventId}")
-    public ResponseEntity<ApiResponse<EventDeleteResponse>> deleteEvent(@PathVariable Long eventId) {
+    public ResponseEntity<ApiResponse<DeleteEventResponse>> deleteEvent(@PathVariable Long eventId) {
 
         try {
             if (
