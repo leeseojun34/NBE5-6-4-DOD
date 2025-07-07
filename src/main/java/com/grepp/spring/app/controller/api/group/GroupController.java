@@ -1,9 +1,11 @@
 package com.grepp.spring.app.controller.api.group;
 
 
+import com.grepp.spring.app.controller.api.group.groupDto.groupDetail.GroupDetail;
 import com.grepp.spring.app.controller.api.group.groupDto.groupRole.GroupRole;
 import com.grepp.spring.app.controller.api.group.groupDto.groupSchedule.GroupSchedule;
 import com.grepp.spring.app.controller.api.group.groupDto.groupUser.GroupUser;
+import com.grepp.spring.app.controller.api.group.groupDto.groupUser.GroupUserDetail;
 import com.grepp.spring.app.controller.api.group.payload.ControlGroupRoleRequest;
 import com.grepp.spring.app.controller.api.group.payload.ControlGroupRoleResponse;
 import com.grepp.spring.app.controller.api.group.payload.CreateGroupRequest;
@@ -11,8 +13,6 @@ import com.grepp.spring.app.controller.api.group.payload.CreateGroupResponse;
 import com.grepp.spring.app.controller.api.group.payload.DeleteGroupRequest;
 import com.grepp.spring.app.controller.api.group.payload.DeleteGroupResponse;
 import com.grepp.spring.app.controller.api.group.payload.DeportGroupMemberResponse;
-import com.grepp.spring.app.controller.api.group.payload.InviteGroupMemberRequest;
-import com.grepp.spring.app.controller.api.group.payload.InviteGroupMemberResponse;
 import com.grepp.spring.app.controller.api.group.payload.ModifyGroupInfoRequest;
 import com.grepp.spring.app.controller.api.group.payload.ModifyGroupInfoResponse;
 import com.grepp.spring.app.controller.api.group.payload.ScheduleToGroupRequest;
@@ -52,9 +52,13 @@ public class GroupController {
         try {
             // Mock Data
             ShowGroupResponse response = ShowGroupResponse.builder()
-                .groupIds(new ArrayList<>(List.of(
-                    10001L, 10002L, 10003L,
-                    10004L, 10005L, 10006L
+                .groupDetails(new ArrayList<>(List.of(
+                    new GroupDetail(10001L, "한가한 그룹", "매우 졸림, 너무 졸림", 3),
+                    new GroupDetail(10002L, "심심한 그룹", "피곤함 너무 피곤함", 5),
+                    new GroupDetail(10003L, "피곤한 그룹", "이따가 복습해야 함", 6),
+                    new GroupDetail(10004L, "신나는 그룹", "알고리즘 문제 풀어야 하는데", 2),
+                    new GroupDetail(10005L, "즐거운 그룹", "자기소개서 쓰기 귀찮다.", 5),
+                    new GroupDetail(10006L, "빛나는 그룹", "멋쟁이 토마토", 10)
                 )))
                 .build();
             return ResponseEntity.ok(ApiResponse.success(response));
@@ -183,9 +187,17 @@ public class GroupController {
 
             // MockData
             ShowGroupMemberResponse response = ShowGroupMemberResponse.builder()
-                .userIds(new ArrayList<>(List.of(
-                    "KAKAO_1001", "KAKAO_1002", "KAKAO_1003", "KAKAO_1004", "KAKAO_1005",
-                    "KAKAO_1006", "KAKAO_1007", "KAKAO_1008", "KAKAO_1009", "KAKAO_1010"
+                .groupUser(new ArrayList<>(List.of(
+                    new GroupUser("KAKAO_1001", "김우주", GroupRole.GROUP_LEADER),
+                    new GroupUser("KAKAO_1002", "백연우", GroupRole.GROUP_MEMBER),
+                    new GroupUser("KAKAO_1003", "하예나", GroupRole.GROUP_MEMBER),
+                    new GroupUser("KAKAO_1004", "박민지", GroupRole.GROUP_MEMBER),
+                    new GroupUser("KAKAO_1005", "성서아", GroupRole.GROUP_MEMBER),
+                    new GroupUser("KAKAO_1006", "허서영", GroupRole.GROUP_MEMBER),
+                    new GroupUser("KAKAO_1007", "최승현", GroupRole.GROUP_MEMBER),
+                    new GroupUser("KAKAO_1008", "박이안", GroupRole.GROUP_MEMBER),
+                    new GroupUser("KAKAO_1009", "전태오", GroupRole.GROUP_MEMBER),
+                    new GroupUser("KAKAO_1010", "신지우", GroupRole.GROUP_MEMBER)
                 )))
                 .build();
             return ResponseEntity.ok(ApiResponse.success(response));
@@ -293,6 +305,7 @@ public class GroupController {
     }
 
 
+    /* api 명세 1차 수정
     // 그룹 멤버 초대
     @Operation(summary = "멤버 그룹으로 초대")
     @PostMapping("/{id}/members")
@@ -346,6 +359,7 @@ public class GroupController {
         // 현재 유저가 해당 그룹의 그룹원이 아니면 403_NOT_GROUP_MEMBER
         // 현재 유저가 해당 그룹의 그룹장이 아니면 403_NOT_GROUP_OWNER
     }
+    */
 
 
     // 그룹 멤버 권한 관리
@@ -420,17 +434,17 @@ public class GroupController {
 
             // MockData
             ShowGroupStatisticsResponse response = ShowGroupStatisticsResponse.builder()
-                .groupUsers(new ArrayList<>(List.of(
-                    new GroupUser("KAKAO_1001", GroupRole.GROUP_LEADER, new ArrayList<>(List.of(30000L, 30002L, 30003L, 30004L, 30005L))),
-                    new GroupUser("KAKAO_1002", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30002L))),
-                    new GroupUser("KAKAO_1003", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30003L, 30005L))),
-                    new GroupUser("KAKAO_1004", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30002L, 30004L, 30005L))),
-                    new GroupUser("KAKAO_1005", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30003L, 30004L, 30005L))),
-                    new GroupUser("KAKAO_1006", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30002L, 30003L, 30004L, 30005L))),
-                    new GroupUser("KAKAO_1007", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30002L, 30003L))),
-                    new GroupUser("KAKAO_1008", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L))),
-                    new GroupUser("KAKAO_1009", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30004L, 30005L))),
-                    new GroupUser("KAKAO_1010", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30003L, 30004L, 30005L)))
+                .groupUserDetails(new ArrayList<>(List.of(
+                    new GroupUserDetail("KAKAO_1001", "김우주", GroupRole.GROUP_LEADER, new ArrayList<>(List.of(30000L, 30002L, 30003L, 30004L, 30005L))),
+                    new GroupUserDetail("KAKAO_1002", "백연우", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30002L))),
+                    new GroupUserDetail("KAKAO_1003", "하예나", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30003L, 30005L))),
+                    new GroupUserDetail("KAKAO_1004", "박민지", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30002L, 30004L, 30005L))),
+                    new GroupUserDetail("KAKAO_1005", "성서아", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30003L, 30004L, 30005L))),
+                    new GroupUserDetail("KAKAO_1006", "허서영", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30002L, 30003L, 30004L, 30005L))),
+                    new GroupUserDetail("KAKAO_1007", "최승현", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30002L, 30003L))),
+                    new GroupUserDetail("KAKAO_1008", "박이안", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L))),
+                    new GroupUserDetail("KAKAO_1009", "전태오", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30000L, 30004L, 30005L))),
+                    new GroupUserDetail("KAKAO_1010", "신지우", GroupRole.GROUP_MEMBER, new ArrayList<>(List.of(30003L, 30004L, 30005L)))
                 )))
                 .groupSchedules(new ArrayList<>(List.of(
                     new GroupSchedule(30001L, "인천역", LocalDateTime.now(), LocalDateTime.MAX),
@@ -462,6 +476,15 @@ public class GroupController {
     ) {
         try {
             // 예외 발생
+            // id가 db에 없다면 404_GROUP_NOT_FOUND
+            if(
+                request.getGroupId()!=10001L && request.getGroupId()!=10002L && request.getGroupId()!=10003L &&
+                    request.getGroupId()!=10004L && request.getGroupId()!=10005L &&
+                    request.getGroupId()!=10006L
+            ){
+                return ResponseEntity.status(404)
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 그룹을 찾을 수 없습니다."));
+            }
             // request의 scheduleId가 이미 그룹에 있다면 409_SCHEDULE_ALREADY_IN_GROUP
                 if(
                         request.getScheduleId()==30001L || request.getScheduleId()==30002L || request.getScheduleId()==30003L ||
