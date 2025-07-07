@@ -11,7 +11,4 @@ public class CreateDepartLocationRequest {
     private String departLocationName;
     private Double longitude;
     private Double latitude;
-
-    //    private Role role;
-    //    private Long middleRegionIdg;
 }

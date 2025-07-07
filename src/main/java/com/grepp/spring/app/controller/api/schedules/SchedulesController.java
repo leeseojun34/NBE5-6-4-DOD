@@ -3,20 +3,22 @@ package com.grepp.spring.app.controller.api.schedules;
 import com.grepp.spring.app.controller.api.schedules.payload.CreateDepartLocationRequest;
 import com.grepp.spring.app.controller.api.schedules.payload.CreateDepartLocationResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.CreateOfflineDetailLocationsRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.CreateOfflineDetailLocationsResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.CreateOnlineMeetingRequest;
 import com.grepp.spring.app.controller.api.schedules.payload.CreateOnlineMeetingResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.CreateSchedulesRequest;
 import com.grepp.spring.app.controller.api.schedules.payload.CreateSchedulesResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.CreateWorkspaceRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.CreateWorkspaceResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.DeleteSchedulesResponse;
-import com.grepp.spring.app.controller.api.schedules.payload.ModifyOfflineDetailLocationsRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.DeleteWorkSpaceResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.ModifySchedulesRequest;
 import com.grepp.spring.app.controller.api.schedules.payload.ModifySchedulesResponse;
-import com.grepp.spring.app.controller.api.schedules.payload.ModifyWorkspaceRequest;
 import com.grepp.spring.app.controller.api.schedules.payload.ShowMiddleLocationResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.ShowSchedulesResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.ShowSuggestedLocationsResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.VoteMiddleLocationsRequest;
+import com.grepp.spring.app.controller.api.schedules.payload.VoteMiddleLocationsResponse;
 import com.grepp.spring.app.model.schedule.domain.MEETING_PLATFORM;
 import com.grepp.spring.app.model.schedule.domain.SCHEDULES_STATUS;
 import com.grepp.spring.app.model.schedule.domain.VOTE_STATUS;
@@ -26,7 +28,9 @@ import com.grepp.spring.infra.response.ResponseCode;
 import io.swagger.v3.oas.annotations.Operation;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -93,7 +97,7 @@ public class SchedulesController {
          catch (Exception e) {
             if (e instanceof AuthApiException) {
                 return ResponseEntity.status(401)
-                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
             }
             return ResponseEntity.status(400)
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
@@ -137,7 +141,7 @@ public class SchedulesController {
          catch (Exception e) {
             if (e instanceof AuthApiException) {
                 return ResponseEntity.status(401)
-                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
             }
             return ResponseEntity.status(400)
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
@@ -159,7 +163,7 @@ public class SchedulesController {
            catch (Exception e) {
             if (e instanceof AuthApiException) {
                 return ResponseEntity.status(401)
-                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
             }
             return ResponseEntity.status(400)
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
@@ -187,17 +191,17 @@ public class SchedulesController {
            catch (Exception e) {
             if (e instanceof AuthApiException) {
                 return ResponseEntity.status(401)
-                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
             }
             return ResponseEntity.status(400)
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
     }
 
-    // 중간장소 후보 조회 // NOTE : 리스트 정보 계속 null로 저장
+    // 중간장소 후보 조회
     @Operation(summary = "중간장소 후보 조회", description = "중간장소 후보를 조회합니다.")
     @GetMapping("/show-suggested-locations{scheduleId}")
-    public ResponseEntity<ApiResponse<List<ShowSuggestedLocationsResponse>>> showSuggestedLocations(@PathVariable Long scheduleId) {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> showSuggestedLocations(@PathVariable Long scheduleId) {
 
         try {
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
@@ -240,77 +244,54 @@ public class SchedulesController {
 
             List<ShowSuggestedLocationsResponse> list = Arrays.asList(response1, response2, response3);
 
-            return ResponseEntity.ok(ApiResponse.success(list));
+            Map<String, Object> result = new HashMap<>();
+            result.put("noVoteCount", 2);
+            result.put("data", list);
+            return ResponseEntity.ok(ApiResponse.success(result));
         }
 
            catch (Exception e) {
             if (e instanceof AuthApiException) {
                 return ResponseEntity.status(401)
-                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
             }
             return ResponseEntity.status(400)
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
-
     }
 
     // 출발 장소 지점 투표하기
     @Operation(summary = "출발 장소 지점 투표하기", description = "출발 장소를 투표합니다.")
     @PostMapping("/suggested-locations/vote/{scheduleId}")
-    public ResponseEntity<ApiResponse> voteMiddleLocation(@PathVariable Long scheduleId, @RequestBody VoteMiddleLocationsRequest request) {
+    public ResponseEntity<ApiResponse<VoteMiddleLocationsResponse>> voteMiddleLocation(@PathVariable Long scheduleId, @RequestBody VoteMiddleLocationsRequest request) {
 
         try {
 
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다. scheduleId는 30000 ~ 30003 입니다."));
             }
 
-            if (request.getLocationId() !=40000 && request.getLocationId() !=40001 && request.getLocationId() !=40004 && request.getLocationId() !=40404 && request.getLocationId() !=44444 ) {
+            if (request.getLocationId() !=40000 && request.getLocationId() !=40001 && request.getLocationId() !=40002 && request.getLocationId() !=40003 && request.getLocationId() !=40004 && request.getLocationId() !=40404 && request.getLocationId() !=44444 ) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 투표리스트(장소)를 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 투표리스트(장소)를 찾을 수 없습니다. locationId는 40000 ~ 40004 입니다."));
             }
 
-            return ResponseEntity.ok(ApiResponse.noContent());
-
+            return ResponseEntity.ok(ApiResponse.success("성공적으로 투표를 진행했습니다."));
         }
 
            catch (Exception e) {
             if (e instanceof AuthApiException) {
                 return ResponseEntity.status(401)
-                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
             }
             return ResponseEntity.status(400)
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
     }
 
-//    // 중간 장소 지점 투표결과 조회
-//    @GetMapping("/show-vote-result/{scheduleMemberId}")
-//    public ResponseEntity<ApiResponse<ShowVoteResultResponse>> showVoteResult(@PathVariable Long scheduleMemberId, @RequestBody ShowVoteResultRequest request) {
-//
-//        try {
-//            ShowVoteResultResponse response = new ShowVoteResultResponse();
-//            response.setLocationName("홍대입구역");
-//            response.setLatitude(37.5572);
-//            response.setLongitude(126.9245);
-//            response.setVoteCount(8L);
-//
-//            return ResponseEntity.ok(ApiResponse.success(response));
-//        }
-//
-//           catch (Exception e) {
-//            if (e instanceof AuthApiException) {
-//                return ResponseEntity.status(401)
-//                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
-//            }
-//            return ResponseEntity.status(400)
-//                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
-//        }
-//    }
-
     // 중간 장소(지하철 역) 지점 확인 && 중간 장소 지점 투표결과 조회
-    @Operation(summary = "중간 장소(지하철 역) 지점 확인 or 중간 장소 지점 투표결과 조회", description = "중간 장소(지하철 역) 지점 확인 or 중간 장소 지점 투표결과 조회를 진행합니다.")
+    @Operation(summary = "중간 장소(지하철 역) 지점 확인 && 중간 장소 지점 투표결과 조회", description = "중간 장소(지하철 역) 지점 확인 && 중간 장소 지점 투표결과 조회")
     @GetMapping("/show-middle-location/{scheduleId}")
     public ResponseEntity<ApiResponse<ShowMiddleLocationResponse>> showMiddleLocation(@PathVariable Long scheduleId) {
 
@@ -318,14 +299,17 @@ public class SchedulesController {
 
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다. scheduleId는 30000 ~ 30003 입니다."));
             }
 
             ShowMiddleLocationResponse response = new ShowMiddleLocationResponse();
-            response.setLocationName("홍대입구역");
+            response.setLocationName("잠실역");
             response.setLatitude(37.5572);
             response.setLongitude(126.9245);
             response.setVoteCount(8L);
+            response.setMetroLines(List.of("2","8"));
+            response.setStationColors(List.of("G222","R342"));
+            response.setTravelTime(47);
 
             return ResponseEntity.ok(ApiResponse.success(response));
         }
@@ -333,7 +317,7 @@ public class SchedulesController {
            catch (Exception e) {
             if (e instanceof AuthApiException) {
                 return ResponseEntity.status(401)
-                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
             }
             return ResponseEntity.status(400)
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
@@ -342,21 +326,20 @@ public class SchedulesController {
 
     // 온라인 회의장 링크 개설(줌, 구글미트)
     @Operation(summary = "온라인 회의장 링크 개설(줌, 구글미트)", description = "온라인 회의장을 개설합니다.")
-    @PostMapping("/create-online-meeting")
-    public ResponseEntity<ApiResponse<CreateOnlineMeetingResponse>> CreateOnlineMeeting(@RequestBody CreateOnlineMeetingRequest request) {
+    @PostMapping("/create-online-meeting/{scheduleId}")
+    public ResponseEntity<ApiResponse<CreateOnlineMeetingResponse>> CreateOnlineMeeting(@PathVariable Long scheduleId, @RequestBody CreateOnlineMeetingRequest request) {
 
         try {
 
             if(
-                request.getScheduleId()!= 30000L && request.getScheduleId()!=30001L && request.getScheduleId()!=30002L &&
-                    request.getScheduleId()!=30003L && request.getScheduleId()!=30005L && request.getScheduleId()!=30303L && request.getScheduleId()!=33333L
+                scheduleId != 30000L && scheduleId !=30001L && scheduleId !=30002L && scheduleId != 30003L
             ){
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "scheduleId는 30000 ~ 30003 입니다."));
             }
 
             CreateOnlineMeetingResponse response = new CreateOnlineMeetingResponse();
-            response.setPlatformURL("https://zoom.us/ko/testRoom");
+                response.setMeetingPlatformCreate(MEETING_PLATFORM.GOOGLE_MEET);
 
             return ResponseEntity.ok(ApiResponse.success(response));
         }
@@ -364,7 +347,7 @@ public class SchedulesController {
            catch (Exception e) {
             if (e instanceof AuthApiException) {
                 return ResponseEntity.status(401)
-                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
             }
             return ResponseEntity.status(400)
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
@@ -374,15 +357,15 @@ public class SchedulesController {
     // 오프라인 세부 장소 생성
     @Operation(summary = "오프라인 세부 장소 생성", description = "오프라인 세부 장소 생성을 진행합니다.")
     @PostMapping("/create-detail-locations/{scheduleId}")
-    public ResponseEntity<ApiResponse> CreateOfflineDetailLocation(@PathVariable Long scheduleId, @RequestBody CreateOfflineDetailLocationsRequest request) {
+    public ResponseEntity<ApiResponse<CreateOfflineDetailLocationsResponse>> CreateOfflineDetailLocation(@PathVariable Long scheduleId, @RequestBody CreateOfflineDetailLocationsRequest request) {
 
         try {
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다. scheduleId는 30000 ~ 30003 입니다."));
             }
 
-            return ResponseEntity.ok(ApiResponse.noContent());
+            return ResponseEntity.ok(ApiResponse.success("오프라인 세부 장소를 등록했습니다."));
         }
 
            catch (Exception e) {
@@ -396,74 +379,48 @@ public class SchedulesController {
     }
 
     // 공통 워크스페이스 등록
-    @Operation(summary = "공통 워크스페이스 등록", description = "공통 워크스페이스 등록을 진행합니다.")
-    @PostMapping("/add-workspaces/{scheduleId}")
-    public ResponseEntity<ApiResponse> CreateWorkspace(@PathVariable Long scheduleId, @RequestBody CreateWorkspaceRequest request) {
+    @Operation(summary = "워크스페이스 등록", description = "워크스페이스 등록을 진행합니다.")
+    @PostMapping("/add-workspace/{scheduleId}")
+    public ResponseEntity<ApiResponse<CreateWorkspaceResponse>> CreateWorkspace(@PathVariable Long scheduleId, @RequestBody CreateWorkspaceRequest request) {
 
         try {
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다. scheduleId는 30000 ~ 30003 입니다."));
             }
 
-            return ResponseEntity.ok(ApiResponse.noContent());
+            return ResponseEntity.ok(ApiResponse.success("워크스페이스를 등록했습니다."));
         }
            catch (Exception e) {
             if (e instanceof AuthApiException) {
                 return ResponseEntity.status(401)
-                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
             }
             return ResponseEntity.status(400)
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
     }
 
-    // 오프라인 세부 장소 수정
-    @Operation(summary = "오프라인 세부 장소 수정", description = "오프라인 세부 장소 수정을 진행합니다.")
-    @PatchMapping("/modify-detail-locations/{scheduleId}")
-    public ResponseEntity<ApiResponse> ModifyOfflineDetailLocation(@PathVariable Long scheduleId, @RequestBody ModifyOfflineDetailLocationsRequest request) {
-
+    // 공통 워크스페이스 삭제
+    @Operation(summary = "워크스페이스 삭제", description = "워크스페이스 삭제를 진행합니다.")
+    @PostMapping("/delete-workspace/{scheduleId}")
+    public ResponseEntity<ApiResponse<DeleteWorkSpaceResponse>> CreateWorkspace(@PathVariable Long scheduleId) {
         try {
-
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다. scheduleId는 30000 ~ 30003 입니다."));
             }
 
-            return ResponseEntity.ok(ApiResponse.noContent());
+            return ResponseEntity.ok(ApiResponse.success("워크스페이스를 삭제했습니다."));
         }
-
-           catch (Exception e) {
+        catch (Exception e) {
             if (e instanceof AuthApiException) {
                 return ResponseEntity.status(401)
-                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
+                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "인증(로그인)이 되어있지 않습니다. 헤더에 Bearer {AccressToken}을 넘겼는지 확인해주세요."));
             }
             return ResponseEntity.status(400)
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
     }
 
-    // 공통 워크스페이스 수정
-    @Operation(summary = "공통 워크스페이스 수정", description = "공통 워크스페이스 수정을 진행합니다.")
-    @PatchMapping("/modify-workspaces/{schedueld}")
-    public ResponseEntity<ApiResponse> ModifyWorkspace(@PathVariable Long scheduleId, @RequestBody ModifyWorkspaceRequest request) {
-
-        try {
-            if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
-                return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다."));
-            }
-
-            return ResponseEntity.ok(ApiResponse.noContent());
-        }
-
-           catch (Exception e) {
-            if (e instanceof AuthApiException) {
-                return ResponseEntity.status(401)
-                    .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
-            }
-            return ResponseEntity.status(400)
-                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
-        }
     }
-}
