@@ -344,6 +344,7 @@ public class MainPageController {
       // 다음 주로 이동
       currentWeekStart = currentWeekStart.plusWeeks(1);
       weekNumber++;
+
     }
 
     return weeklySchedulesList;
