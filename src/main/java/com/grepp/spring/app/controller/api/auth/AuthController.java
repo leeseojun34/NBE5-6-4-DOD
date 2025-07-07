@@ -58,9 +58,13 @@ public class AuthController {
             response.addHeader("Set-Cookie", refreshTokenCookie.toString());
 
             return ResponseEntity.ok(ApiResponse.success(TokenResponse.builder()
-                .accessToken(tokenDto.getAccessToken())
+                .userId(tokenDto.getUserId())
+                .userName(tokenDto.getUserName())
                 .grantType(tokenDto.getGrantType())
+                .accessToken(tokenDto.getAccessToken())
                 .expiresIn(tokenDto.getExpiresIn())
+                .refreshToken(tokenDto.getRefreshToken())
+                .refreshExpiresIn(tokenDto.getRefreshExpiresIn())
                 .build()));
 
         } catch (BadCredentialsException e) {

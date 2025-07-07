@@ -4,6 +4,8 @@ import com.grepp.spring.app.controller.api.auth.payload.LoginRequest;
 import com.grepp.spring.app.model.auth.dto.TokenDto;
 import com.grepp.spring.app.model.auth.token.RefreshTokenService;
 import com.grepp.spring.app.model.auth.token.entity.RefreshToken;
+import com.grepp.spring.app.model.member.domain.Member;
+import com.grepp.spring.app.model.member.repos.MemberRepository;
 import com.grepp.spring.infra.auth.jwt.JwtTokenProvider;
 import com.grepp.spring.infra.auth.jwt.dto.AccessTokenDto;
 import java.util.UUID;
@@ -27,6 +29,7 @@ public class AuthService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenService refreshTokenService;
+    private final MemberRepository memberRepository;
 
     public TokenDto signin(LoginRequest loginRequest) {
         UsernamePasswordAuthenticationToken authenticationToken =
@@ -44,19 +47,24 @@ public class AuthService {
     }
 
 
-    public TokenDto processTokenSignin(String email, String roles) {
+    public TokenDto processTokenSignin(String userId, String roles) {
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        AccessTokenDto accessToken = jwtTokenProvider.generateAccessToken(email, roles);
+        AccessTokenDto accessToken = jwtTokenProvider.generateAccessToken(userId, roles);
         RefreshToken refreshToken = refreshTokenService.saveWithAtId(accessToken.getJti());
+
+        Member member = memberRepository.findById(userId)
+            .orElseThrow(() -> new BadCredentialsException("인증된 사용자를 찾을 수 없습니다."));
 
         return TokenDto.builder()
             .accessToken(accessToken.getToken())
             .atId(accessToken.getJti())
-            .refreshToken(refreshToken.getToken())
             .grantType("Bearer")
+            .refreshToken(refreshToken.getToken())
             .refreshExpiresIn(jwtTokenProvider.getRefreshTokenExpiration())
             .expiresIn(jwtTokenProvider.getAccessTokenExpiration())
+            .userId(userId)
+            .userName(member.getName())
             .build();
     }
 
