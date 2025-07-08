@@ -1,5 +1,7 @@
 package com.grepp.spring.config;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -9,12 +11,11 @@ import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
-import io.swagger.v3.oas.models.servers.Server;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
+@OpenAPIDefinition(servers = {@Server(url = "https://ittaeok.cedartodo.uk", description = "qwer")})
 @Configuration
 public class SwaggerConfig {
 
@@ -39,7 +40,7 @@ public class SwaggerConfig {
                             .description(
                                 "JWT 토큰을 입력하세요. Bearer 는 생략하세요")
                     )) 
-            .addServersItem(new Server().url("/"))
+            //.addServersItem(new Server().url("/"))
 
             .addSecurityItem(new SecurityRequirement().addList("bearerAuth"));
 
