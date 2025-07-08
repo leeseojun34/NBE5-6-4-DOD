@@ -9,4 +9,5 @@ import lombok.Setter;
 public class DeleteEventResponse {
     private Long eventId;
     private LocalDateTime deletedAt;
+    dsfaafsd
 }
