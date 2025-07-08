@@ -112,12 +112,26 @@ public class EventController {
             response.setTotalMembers(3);
             response.setConfirmedMembers(2);
 
+            AllTimeScheduleResponse.TimeTable timeTable = new AllTimeScheduleResponse.TimeTable();
+            List<String> dates = new ArrayList<>();
+            dates.add("2025-07-13");
+            dates.add("2025-07-14");
+            dates.add("2025-07-15");
+            dates.add("2025-07-16");
+            dates.add("2025-07-17");
+            dates.add("2025-07-18");
+            dates.add("2025-07-19");
+            timeTable.setDates(dates);
+            timeTable.setStartTime("09:30");
+            timeTable.setEndTime("12:30");
+            response.setTimeTable(timeTable);
+
             // 멤버별 스케줄 정보
             List<AllTimeScheduleResponse.MemberSchedule> memberSchedules = new ArrayList<>();
 
             // 첫 번째 멤버 (나의 가능한 시간)
             AllTimeScheduleResponse.MemberSchedule member1 = new AllTimeScheduleResponse.MemberSchedule();
-            member1.setEventMemberId(1001L);
+            member1.setEventMemberId("google_1234");
             member1.setMemberName("나의 가능한 시간");
             member1.setRole("HOST");
             member1.setIsConfirmed(true);
@@ -131,14 +145,14 @@ public class EventController {
                 slot.setDisplayDate(String.format("07/%02d", i));
 
                 // Mock 데이터: 10-12시 시간대에 가능 (비트 20~23: 10:00, 10:30, 11:00, 11:30)
-                slot.setTimeBit(0b111100000000000000000000L); // 20~23번째 비트
+                slot.setTimeBit("0000"); // 20~23번째 비트
                 member1Slots.add(slot);
             }
             member1.setDailyTimeSlots(member1Slots);
 
             // 두 번째 멤버 (모두 가능한 시간)
             AllTimeScheduleResponse.MemberSchedule member2 = new AllTimeScheduleResponse.MemberSchedule();
-            member2.setEventMemberId(1002L);
+            member2.setEventMemberId("google_4567");
             member2.setMemberName("모두 가능한 시간");
             member2.setRole("MEMBER");
             member2.setIsConfirmed(true);
@@ -153,13 +167,13 @@ public class EventController {
 
                 // Mock 데이터: 다양한 시간대에 가능
                 if (i == 13) { // 월요일: 10-11시
-                    slot.setTimeBit(0b110000000000000000000000L);
+                    slot.setTimeBit("0000_0001_1111_0000");
                 } else if (i == 15) { // 수요일: 10-12시
-                    slot.setTimeBit(0b111100000000000000000000L);
+                    slot.setTimeBit("0000_0001_1111_0000");
                 } else if (i == 17) { // 금요일: 11-12시
-                    slot.setTimeBit(0b001100000000000000000000L);
+                    slot.setTimeBit("0000_0001_1111_0000");
                 } else {
-                    slot.setTimeBit(0L); // 불가능
+                    slot.setTimeBit("0000_0001_1111_0000"); // 불가능
                 }
                 member2Slots.add(slot);
             }
@@ -167,7 +181,7 @@ public class EventController {
 
             // 세 번째 멤버 (아직 확정 안함)
             AllTimeScheduleResponse.MemberSchedule member3 = new AllTimeScheduleResponse.MemberSchedule();
-            member3.setEventMemberId(1003L);
+            member3.setEventMemberId("google_5678");
             member3.setMemberName("박민수");
             member3.setRole("MEMBER");
             member3.setIsConfirmed(false);
@@ -179,7 +193,7 @@ public class EventController {
                 slot.setDate(date);
                 slot.setDayOfWeek(date.getDayOfWeek().toString().substring(0, 3).toUpperCase());
                 slot.setDisplayDate(String.format("07/%02d", i));
-                slot.setTimeBit(0L); // 아직 시간 입력 안함
+                slot.setTimeBit("0000_0000_0000_0000"); // 아직 시간 입력 안함
                 member3Slots.add(slot);
             }
             member3.setDailyTimeSlots(member3Slots);
