@@ -17,13 +17,16 @@ import com.grepp.spring.infra.auth.jwt.TokenCookieFactory;
 import com.grepp.spring.infra.response.ApiResponse;
 import com.grepp.spring.infra.response.ResponseCode;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,7 +94,21 @@ public class AuthController {
 
     @Operation(summary = "로그아웃", description = "로그아웃을 진행합니다.")
     @PostMapping("/logout")
-    public ResponseEntity<ApiResponse<?>> logout() {
+    public ResponseEntity<ApiResponse<?>> logout(HttpServletRequest request, HttpServletResponse response) {
+
+        ResponseCookie deleteAccessTokenCookie = TokenCookieFactory.createExpiredToken(AuthToken.ACCESS_TOKEN.name());
+        response.addHeader(HttpHeaders.SET_COOKIE, deleteAccessTokenCookie.toString());
+
+        ResponseCookie deleteRefreshTokenCookie = TokenCookieFactory.createExpiredToken(AuthToken.REFRESH_TOKEN.name());
+        response.addHeader(HttpHeaders.SET_COOKIE, deleteRefreshTokenCookie.toString());
+
+        ResponseCookie deleteSessionIdCookie = TokenCookieFactory.createExpiredToken(AuthToken.AUTH_SERVER_SESSION_ID.name());
+        response.addHeader(HttpHeaders.SET_COOKIE, deleteSessionIdCookie.toString());
+
+        // Spring Security Context도 비워줍니다. (현재 요청에 대한 인증 정보만 제거)
+        // 이는 필터 체인에 의해 자동으로 이루어질 수도 있지만, 명시적으로 비워주는 것이 좋습니다.
+        SecurityContextHolder.clearContext();
+
         return ResponseEntity.ok(ApiResponse.noContent());
     }
 
@@ -121,8 +138,8 @@ public class AuthController {
     @PostMapping("/update-tokens")
     public ResponseEntity<ApiResponse<?>> updateAccessToken() {
         return ResponseEntity.ok(ApiResponse.success(
-            new UpdateAccessTokenResponse("eyJhbGciOiJIUzI1NiIsInR5cCI6Ik",
-                "hioKcQ921Nsjns6h2LLAschbnauwd")
+            new UpdateAccessTokenResponse("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJHT09HTEVfMTIzNCIsImp0aSI6ImFmZjU2MDFlLTIzNWMtNDc1ZC05Mzk5LTQ2MzgxM2M3MzRjMCIsInJvbGVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNzUxOTQwMzc3fQ.TJNZspocnfdk9gJHMi0ZzvSrKa0leS-cJVYY__4LZySCPGo4Ea40UPd4tgAgMGXpgltm9jf3rvD1W1iixRhxPw",
+                "2f0914f1-3faa-4fc5-b4e2-42f831122e35")
         ));
     }
-    }
+}
