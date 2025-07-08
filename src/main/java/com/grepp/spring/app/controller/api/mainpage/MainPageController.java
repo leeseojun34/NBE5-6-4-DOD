@@ -276,6 +276,7 @@ public class MainPageController {
     internalSchedule3.setEndTime(LocalDateTime.of(2025, 7, 18, 21, 0));
     internalSchedule3.setLocation("홍대");
     internalSchedule3.setMeetingType(MEETING_TYPE.OFFLINE);
+    
 
     CalendarScheduleList internalSchedule4 = new CalendarScheduleList();
     internalSchedule4.setScheduleId(30013L);
