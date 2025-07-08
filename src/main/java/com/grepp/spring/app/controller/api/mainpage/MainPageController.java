@@ -218,6 +218,8 @@ public class MainPageController {
     googleSchedule5.setStartTime(LocalDateTime.of(2025, 8, 1, 9, 0));
     googleSchedule5.setEndTime(LocalDateTime.of(2025, 8, 1, 10, 0));
     googleSchedule5.setMeetingType(MEETING_TYPE.ONLINE);
+    googleSchedule5.setIsGrouped(true);
+    googleSchedule5.setGroupName("BBBB비비비");
 
     googleSchedules.addAll(Arrays.asList(
         googleSchedule1, googleSchedule2, googleSchedule4, googleSchedule5
