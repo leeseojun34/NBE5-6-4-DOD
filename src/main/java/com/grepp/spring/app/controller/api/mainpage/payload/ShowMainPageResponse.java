@@ -38,7 +38,6 @@ public class ShowMainPageResponse {
     private Integer currentMember;
     private LocalDateTime createdAt;
     private Boolean isGroupEvent;
-    private GroupRole role;
     private Integer profileImageNumber;
 
   }
