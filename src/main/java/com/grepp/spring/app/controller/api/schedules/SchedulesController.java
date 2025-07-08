@@ -52,7 +52,6 @@ public class SchedulesController {
     public ResponseEntity<ApiResponse<CreateSchedulesResponse>> createSchedules(@RequestBody CreateSchedulesRequest request) {
 
         try {
-
             if(
                 request.getEventId()!= 20000L && request.getEventId()!=20001L && request.getEventId()!=20002L &&
                     request.getEventId()!=20003L && request.getEventId()!=20004L && request.getEventId()!=22222L
