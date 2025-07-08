@@ -14,18 +14,17 @@ import javax.security.sasl.AuthenticationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
 @RestController
 @RequestMapping(value = "/api/v1/events", produces = MediaType.APPLICATION_JSON_VALUE)
-public class EventResource {
+public class EventController {
 
     // 이벤트 생성
     @PostMapping
     @Operation(summary = "이벤트 생성")
-    public ResponseEntity<ApiResponse<EventCreateResponse>> createEvent(@RequestBody @Valid EventCreateRequest request) {
+    public ResponseEntity<ApiResponse<CreateEventResponse>> createEvent(@RequestBody @Valid CreateEventRequest request) {
         try {
             return ResponseEntity.status(200)
                 .body(ApiResponse.success("이벤트가 성공적으로 생성되었습니다."));
@@ -37,35 +36,6 @@ public class EventResource {
             return ResponseEntity.status(400)
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
-    }
-
-    // 이벤트 수정
-    @PatchMapping("/{eventId}")
-    @Operation(summary = "이벤트 수정")
-    public ResponseEntity<ApiResponse<EventUpdateResponse>> updateEvent(
-        @PathVariable Long eventId,
-        @RequestBody @Valid EventUpdateRequest request) {
-
-        try {
-            if (
-                eventId != 20000 && eventId != 20001 && eventId != 20002 &&
-                    eventId != 20003 && eventId != 20004 && eventId != 20005
-            ) {
-                return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다."));
-            }
-            return ResponseEntity.ok(ApiResponse.success("이벤트가 성공적으로 수정되었습니다."));
-
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
-            }
-            return ResponseEntity.status(400)
-                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
-        }
-        // TODO: 예외처리
-        // 현재 유저가 해당 그룹의 이벤트장이 아니라면 403 NOT_EVENT_OWNER
-        // 현재 유저가 해당 그룹의 이벤트원이 아니라면 403 NOT_EVENT_MEMBER
     }
 
     // 이벤트 일정 참여
@@ -87,55 +57,6 @@ public class EventResource {
             response.setJoinedAt(LocalDateTime.now());
             return ResponseEntity.ok(ApiResponse.success("이벤트에 성공적으로 참여했습니다."));
 
-        } catch (Exception e) {
-            if (e instanceof AuthenticationException) {
-                return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
-            }
-            return ResponseEntity.status(400)
-                .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
-        }
-
-    }
-
-    // 이벤트 목록 조회
-    @Operation(summary = "이벤트 목록 조회")
-    @GetMapping
-    public ResponseEntity<ApiResponse<EventListResponse>> getEventList() {
-
-        try {
-            EventListResponse response = new EventListResponse();
-            response.setTotalCount(2);
-            List<EventListResponse.EventList> events = new ArrayList<>();
-
-            EventListResponse.EventList event1 = new EventListResponse.EventList();
-            event1.setEventId(20000L);
-            event1.setGroupId(10000L);
-            event1.setTitle("그룹 미팅");
-            event1.setDescription("Q3 계획 수립을 위한 팀 미팅 1");
-            event1.setMeetingType("ONLINE");
-            event1.setMaxMember(5);
-            event1.setCurrentMember(3);
-            event1.setCreatedAt(LocalDateTime.of(2025, 7, 5, 9, 0));
-            event1.setIsGroupEvent(true);
-            event1.setGroupName("개발팀");
-
-            EventListResponse.EventList event2 = new EventListResponse.EventList();
-            event2.setEventId(20001L);
-            event2.setGroupId(null);
-            event2.setTitle("일회성 미팅");
-            event2.setDescription("Q3 계획 수립을 위한 팀 미팅 2");
-            event2.setMeetingType("OFFLINE");
-            event2.setMaxMember(10);
-            event2.setCurrentMember(7);
-            event2.setCreatedAt(LocalDateTime.of(2025, 7, 8, 16, 30));
-            event2.setIsGroupEvent(false);
-            event2.setGroupName(null);
-            events.add(event1);
-            events.add(event2);
-
-            response.setEvents(events);
-
-            return ResponseEntity.ok(ApiResponse.success(response));
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 return ResponseEntity.status(401).body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "권한이 없습니다."));
@@ -191,12 +112,26 @@ public class EventResource {
             response.setTotalMembers(3);
             response.setConfirmedMembers(2);
 
+            AllTimeScheduleResponse.TimeTable timeTable = new AllTimeScheduleResponse.TimeTable();
+            List<String> dates = new ArrayList<>();
+            dates.add("2025-07-13");
+            dates.add("2025-07-14");
+            dates.add("2025-07-15");
+            dates.add("2025-07-16");
+            dates.add("2025-07-17");
+            dates.add("2025-07-18");
+            dates.add("2025-07-19");
+            timeTable.setDates(dates);
+            timeTable.setStartTime("09:30");
+            timeTable.setEndTime("12:30");
+            response.setTimeTable(timeTable);
+
             // 멤버별 스케줄 정보
             List<AllTimeScheduleResponse.MemberSchedule> memberSchedules = new ArrayList<>();
 
             // 첫 번째 멤버 (나의 가능한 시간)
             AllTimeScheduleResponse.MemberSchedule member1 = new AllTimeScheduleResponse.MemberSchedule();
-            member1.setEventMemberId(1001L);
+            member1.setEventMemberId("google_1234");
             member1.setMemberName("나의 가능한 시간");
             member1.setRole("HOST");
             member1.setIsConfirmed(true);
@@ -210,14 +145,14 @@ public class EventResource {
                 slot.setDisplayDate(String.format("07/%02d", i));
 
                 // Mock 데이터: 10-12시 시간대에 가능 (비트 20~23: 10:00, 10:30, 11:00, 11:30)
-                slot.setTimeBit(0b111100000000000000000000L); // 20~23번째 비트
+                slot.setTimeBit("0000"); // 20~23번째 비트
                 member1Slots.add(slot);
             }
             member1.setDailyTimeSlots(member1Slots);
 
             // 두 번째 멤버 (모두 가능한 시간)
             AllTimeScheduleResponse.MemberSchedule member2 = new AllTimeScheduleResponse.MemberSchedule();
-            member2.setEventMemberId(1002L);
+            member2.setEventMemberId("google_4567");
             member2.setMemberName("모두 가능한 시간");
             member2.setRole("MEMBER");
             member2.setIsConfirmed(true);
@@ -232,13 +167,13 @@ public class EventResource {
 
                 // Mock 데이터: 다양한 시간대에 가능
                 if (i == 13) { // 월요일: 10-11시
-                    slot.setTimeBit(0b110000000000000000000000L);
+                    slot.setTimeBit("0000_0001_1111_0000");
                 } else if (i == 15) { // 수요일: 10-12시
-                    slot.setTimeBit(0b111100000000000000000000L);
+                    slot.setTimeBit("0000_0001_1111_0000");
                 } else if (i == 17) { // 금요일: 11-12시
-                    slot.setTimeBit(0b001100000000000000000000L);
+                    slot.setTimeBit("0000_0001_1111_0000");
                 } else {
-                    slot.setTimeBit(0L); // 불가능
+                    slot.setTimeBit("0000_0001_1111_0000"); // 불가능
                 }
                 member2Slots.add(slot);
             }
@@ -246,7 +181,7 @@ public class EventResource {
 
             // 세 번째 멤버 (아직 확정 안함)
             AllTimeScheduleResponse.MemberSchedule member3 = new AllTimeScheduleResponse.MemberSchedule();
-            member3.setEventMemberId(1003L);
+            member3.setEventMemberId("google_5678");
             member3.setMemberName("박민수");
             member3.setRole("MEMBER");
             member3.setIsConfirmed(false);
@@ -258,7 +193,7 @@ public class EventResource {
                 slot.setDate(date);
                 slot.setDayOfWeek(date.getDayOfWeek().toString().substring(0, 3).toUpperCase());
                 slot.setDisplayDate(String.format("07/%02d", i));
-                slot.setTimeBit(0L); // 아직 시간 입력 안함
+                slot.setTimeBit("0000_0000_0000_0000"); // 아직 시간 입력 안함
                 member3Slots.add(slot);
             }
             member3.setDailyTimeSlots(member3Slots);
@@ -361,6 +296,7 @@ public class EventResource {
             String[] names = {"박은서", "한예주", "박은규", "박상욱", "황수지", "배수지"};
             for (String name : names) {
                 ScheduleResultResponse.Participant participant = new ScheduleResultResponse.Participant();
+                participant.setMemberId("google_" + name.hashCode());
                 participant.setMemberName(name);
                 participants1.add(participant);
             }
@@ -388,7 +324,6 @@ public class EventResource {
             timeSlotDetails.add(slot2);
             timeSlotDetails.add(slot3);
 
-            // 추천 요약 정보
             ScheduleResultResponse.Recommendation recommendationSummary = new ScheduleResultResponse.Recommendation();
             recommendationSummary.setLongestMeetingTime(slot1);
             recommendationSummary.setEarliestMeetingTime(slot1);
@@ -409,7 +344,7 @@ public class EventResource {
     // 이벤트 삭제
     @Operation(summary = "이벤트 삭제")
     @DeleteMapping("/{eventId}")
-    public ResponseEntity<ApiResponse<EventDeleteResponse>> deleteEvent(@PathVariable Long eventId) {
+    public ResponseEntity<ApiResponse<DeleteEventResponse>> deleteEvent(@PathVariable Long eventId) {
 
         try {
             if (

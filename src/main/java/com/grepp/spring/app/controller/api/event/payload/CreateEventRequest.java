@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventCreateRequest {
+public class CreateEventRequest {
 
     @NotNull
     private String title;
@@ -21,7 +21,7 @@ public class EventCreateRequest {
     @NotNull
     private String type;
     @NotNull
-    private Integer maxMember = 5;
+    private Integer maxMember;
 
     @Getter
     @Setter

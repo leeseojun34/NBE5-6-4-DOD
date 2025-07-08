@@ -38,8 +38,9 @@ public class SwaggerConfig {
                                 "JWT")
                             .description(
                                 "JWT 토큰을 입력하세요. Bearer 는 생략하세요")
-                    ))
+                    )) 
             .addServersItem(new Server().url("/"))
+
             .addSecurityItem(new SecurityRequirement().addList("bearerAuth"));
 
     }

@@ -6,6 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VoteMiddleLocationsRequest {
-    private Long middleRegionId;
-    private Long voter;
+    private Long locationId;
 }

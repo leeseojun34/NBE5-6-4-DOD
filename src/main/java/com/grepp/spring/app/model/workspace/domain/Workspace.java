@@ -42,4 +42,6 @@ public class Workspace {
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
+    @Column(nullable = false)
+    private String name;
 }

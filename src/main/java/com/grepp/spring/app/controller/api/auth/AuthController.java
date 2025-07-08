@@ -4,53 +4,75 @@ import com.grepp.spring.app.controller.api.auth.payload.AccountDeactivateRequest
 import com.grepp.spring.app.controller.api.auth.payload.AccountDeactivateResponse;
 import com.grepp.spring.app.controller.api.auth.payload.GroupAdminResponse;
 import com.grepp.spring.app.controller.api.auth.payload.LoginRequest;
-import com.grepp.spring.app.controller.api.auth.payload.LoginResponse;
-import com.grepp.spring.app.controller.api.auth.payload.RegisterRequest;
-import com.grepp.spring.app.controller.api.auth.payload.RegisterResponse;
 import com.grepp.spring.app.controller.api.auth.payload.SocialAccountConnectionRequest;
 import com.grepp.spring.app.controller.api.auth.payload.SocialAccountConnectionResponse;
 import com.grepp.spring.app.controller.api.auth.payload.SocialAccountResponse;
+import com.grepp.spring.app.controller.api.auth.payload.TokenResponse;
 import com.grepp.spring.app.controller.api.auth.payload.UpdateAccessTokenResponse;
 import com.grepp.spring.app.controller.api.group.groupDto.groupRole.GroupRole;
-import com.grepp.spring.app.model.auth.code.Role;
+import com.grepp.spring.app.model.auth.AuthService;
+import com.grepp.spring.app.model.auth.code.AuthToken;
+import com.grepp.spring.app.model.auth.dto.TokenDto;
+import com.grepp.spring.infra.auth.jwt.TokenCookieFactory;
 import com.grepp.spring.infra.response.ApiResponse;
 import com.grepp.spring.infra.response.ResponseCode;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.BadCredentialsException;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-    @Operation(summary = "회원 가입", description = "소셜 계정으로 회원가입 하는 사용자들에 대한 검증을 진행합니다.")
-    @PostMapping("/register")
-    public ResponseEntity<ApiResponse<RegisterResponse>> register(@Valid @RequestBody RegisterRequest request) {
-        return ResponseEntity.status(201)
-            .body(ApiResponse.successCreated(
-                new RegisterResponse("GOOGLE_1234", "ROLE_USER", "하명도")));
-    }
+    private final AuthService authService;
 
-    @Operation(summary = "로그인", description = "소셜 계정으로 로그인을 진행합니다.")
+    @Operation(summary = "로그인", description = "토큰을 발급합니다.")
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<LoginResponse>> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<ApiResponse<TokenResponse>> login(
+        @Valid @RequestBody LoginRequest loginRequest,
+        HttpServletResponse response
+    ) {
 
-        if (request.getActivated()){
-            return ResponseEntity.ok(ApiResponse.success(
-                new LoginResponse("GOOGLE_1234", Role.ROLE_USER.name(), "하명도", "eyJhbGciOiJIUzI1NiIsInR5cCI6Ik", "hioKcQ921Nsjns6h2LLAschbnauwd")
-            ));
-        } else {
-            return ResponseEntity.ok(ApiResponse.activateSuccess(
-                new LoginResponse("KAKAO_5678", Role.ROLE_USER.name(), "최동준", "eyJhbGciOiJIUzI1NiIsInR5cCI6Ik", "hioKcQ921Nsjns6h2LLAschbnauwd")
-            ));
+        try {
+            TokenDto tokenDto = authService.signin(loginRequest); // Mock AuthService 호출
+
+            ResponseCookie accessTokenCookie = TokenCookieFactory.create(
+                AuthToken.ACCESS_TOKEN.name(), tokenDto.getAccessToken(), tokenDto.getExpiresIn());
+            response.addHeader("Set-Cookie", accessTokenCookie.toString());
+
+            ResponseCookie refreshTokenCookie = TokenCookieFactory.create(
+                AuthToken.REFRESH_TOKEN.name(), tokenDto.getRefreshToken(), tokenDto.getRefreshExpiresIn());
+            response.addHeader("Set-Cookie", refreshTokenCookie.toString());
+
+            return ResponseEntity.ok(ApiResponse.success(TokenResponse.builder()
+                .userId(tokenDto.getUserId())
+                .userName(tokenDto.getUserName())
+                .grantType(tokenDto.getGrantType())
+                .accessToken(tokenDto.getAccessToken())
+                .expiresIn(tokenDto.getExpiresIn())
+                .refreshToken(tokenDto.getRefreshToken())
+                .refreshExpiresIn(tokenDto.getRefreshExpiresIn())
+                .build()));
+
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(401)
+                .body(ApiResponse.error(ResponseCode.INVALID_TOKEN, e.getMessage()));
         }
     }
 
@@ -69,9 +91,24 @@ public class AuthController {
         }
     }
 
+
     @Operation(summary = "로그아웃", description = "로그아웃을 진행합니다.")
     @PostMapping("/logout")
-    public ResponseEntity<ApiResponse<?>> logout() {
+    public ResponseEntity<ApiResponse<?>> logout(HttpServletRequest request, HttpServletResponse response) {
+
+        ResponseCookie deleteAccessTokenCookie = TokenCookieFactory.createExpiredToken(AuthToken.ACCESS_TOKEN.name());
+        response.addHeader(HttpHeaders.SET_COOKIE, deleteAccessTokenCookie.toString());
+
+        ResponseCookie deleteRefreshTokenCookie = TokenCookieFactory.createExpiredToken(AuthToken.REFRESH_TOKEN.name());
+        response.addHeader(HttpHeaders.SET_COOKIE, deleteRefreshTokenCookie.toString());
+
+        ResponseCookie deleteSessionIdCookie = TokenCookieFactory.createExpiredToken(AuthToken.AUTH_SERVER_SESSION_ID.name());
+        response.addHeader(HttpHeaders.SET_COOKIE, deleteSessionIdCookie.toString());
+
+        // Spring Security Context도 비워줍니다. (현재 요청에 대한 인증 정보만 제거)
+        // 이는 필터 체인에 의해 자동으로 이루어질 수도 있지만, 명시적으로 비워주는 것이 좋습니다.
+        SecurityContextHolder.clearContext();
+
         return ResponseEntity.ok(ApiResponse.noContent());
     }
 
@@ -101,10 +138,8 @@ public class AuthController {
     @PostMapping("/update-tokens")
     public ResponseEntity<ApiResponse<?>> updateAccessToken() {
         return ResponseEntity.ok(ApiResponse.success(
-            new UpdateAccessTokenResponse("eyJhbGciOiJIUzI1NiIsInR5cCI6Ik",
-                "hioKcQ921Nsjns6h2LLAschbnauwd")
+            new UpdateAccessTokenResponse("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJHT09HTEVfMTIzNCIsImp0aSI6ImFmZjU2MDFlLTIzNWMtNDc1ZC05Mzk5LTQ2MzgxM2M3MzRjMCIsInJvbGVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNzUxOTQwMzc3fQ.TJNZspocnfdk9gJHMi0ZzvSrKa0leS-cJVYY__4LZySCPGo4Ea40UPd4tgAgMGXpgltm9jf3rvD1W1iixRhxPw",
+                "2f0914f1-3faa-4fc5-b4e2-42f831122e35")
         ));
     }
-
-
 }
