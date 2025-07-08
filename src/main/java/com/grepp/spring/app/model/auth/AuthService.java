@@ -5,9 +5,12 @@ import com.grepp.spring.app.model.auth.dto.TokenDto;
 import com.grepp.spring.app.model.auth.token.RefreshTokenService;
 import com.grepp.spring.app.model.auth.token.entity.RefreshToken;
 import com.grepp.spring.app.model.member.domain.Member;
+import com.grepp.spring.app.model.member.domain.Role;
 import com.grepp.spring.app.model.member.repos.MemberRepository;
 import com.grepp.spring.infra.auth.jwt.JwtTokenProvider;
 import com.grepp.spring.infra.auth.jwt.dto.AccessTokenDto;
+import com.grepp.spring.infra.auth.oauth2.user.OAuth2UserInfo;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -30,41 +33,76 @@ public class AuthService {
     private final RefreshTokenService refreshTokenService;
     private final MemberRepository memberRepository;
 
-    public TokenDto signin(LoginRequest loginRequest) {
-        UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(loginRequest.getId(),
-                loginRequest.getPassword());
+//    public TokenDto signin(LoginRequest loginRequest) {
+//        UsernamePasswordAuthenticationToken authenticationToken =
+//            new UsernamePasswordAuthenticationToken(loginRequest.getId(),
+//                loginRequest.getPassword());
+//
+//        // loadUserByUsername + password 검증 후 인증 객체 반환
+//        // 인증 실패 시: AuthenticationException 발생
+//        Authentication authentication = authenticationManagerBuilder.getObject()
+//            .authenticate(authenticationToken);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        String roles =  String.join(",", authentication.getAuthorities().stream().map(
+//            GrantedAuthority::getAuthority).toList());
+//        return processTokenSignin(authentication.getName());
+//    }
 
-        // loadUserByUsername + password 검증 후 인증 객체 반환
-        // 인증 실패 시: AuthenticationException 발생
-        Authentication authentication = authenticationManagerBuilder.getObject()
-            .authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String roles =  String.join(",", authentication.getAuthorities().stream().map(
-            GrantedAuthority::getAuthority).toList());
-        return processTokenSignin(authentication.getName(), roles);
-    }
 
+    @Transactional
+    public TokenDto processTokenSignin(OAuth2UserInfo userInfo) {
 
-    public TokenDto processTokenSignin(String userId, String roles) {
+        // id는 provider 와 providerId 를 합쳐서 생성
+        String userId = userInfo.getProvider() + "_" + userInfo.getProviderId();
 
-        // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        AccessTokenDto accessToken = jwtTokenProvider.generateAccessToken(userId, roles);
+        Optional<Member> existMember = memberRepository.findById(userId);
+        Member member;
+
+        // 유저가 기가입 회원인지 체크
+        if (existMember.isPresent()) {
+            member = existMember.get();
+        } else {
+            member = new Member();
+            member.setId(userId);
+            member.setProvider(userInfo.getProvider());
+            member.setName(userInfo.getName());
+            member.setEmail(userInfo.getEmail());
+            member.setRole(Role.ROLE_USER);
+            member.setProfileImageNumber(20000307L);
+            // 일단 전화번호는 나중에 받고
+            // 카카오는 이메일 안되는디 어떡하지 일단 구글만 해보고
+            // 프로필 사진은 모르겠다 일단 아무 숫자나 넣자
+            memberRepository.save(member);
+            log.info("새로운 유저 DB에 저장 완료: {}", userId);
+        }
+
+        AccessTokenDto accessToken = jwtTokenProvider.generateAccessToken(userId, Role.ROLE_USER.name());
         RefreshToken refreshToken = refreshTokenService.saveWithAtId(accessToken.getJti());
-
-        Member member = memberRepository.findById(userId)
-            .orElseThrow(() -> new BadCredentialsException("인증된 사용자를 찾을 수 없습니다."));
 
         return TokenDto.builder()
             .accessToken(accessToken.getToken())
-            .atId(accessToken.getJti())
-            .grantType("Bearer")
+            .expiresIn(accessToken.getExpires()) // 만료기간 엑세스 토큰만 해도 되는지 ?
             .refreshToken(refreshToken.getToken())
-            .refreshExpiresIn(jwtTokenProvider.getRefreshTokenExpiration())
-            .expiresIn(jwtTokenProvider.getAccessTokenExpiration())
             .userId(userId)
-            .userName(member.getName())
+            .userName(userInfo.getName())
             .build();
+        // 3. 인증 정보를 기반으로 JWT 토큰 생성
+//        AccessTokenDto accessToken = jwtTokenProvider.generateAccessToken(userId, roles);
+//        RefreshToken refreshToken = refreshTokenService.saveWithAtId(accessToken.getJti());
+//
+//        Member member = memberRepository.findById(userId)
+//            .orElseThrow(() -> new BadCredentialsException("인증된 사용자를 찾을 수 없습니다."));
+//
+//        return TokenDto.builder()
+//            .accessToken(accessToken.getToken())
+//            .atId(accessToken.getJti())
+//            .grantType("Bearer")
+//            .refreshToken(refreshToken.getToken())
+//            .refreshExpiresIn(jwtTokenProvider.getRefreshTokenExpiration())
+//            .expiresIn(jwtTokenProvider.getAccessTokenExpiration())
+//            .userId(userId)
+//            .userName(member.getName())
+//            .build();
     }
 
 }

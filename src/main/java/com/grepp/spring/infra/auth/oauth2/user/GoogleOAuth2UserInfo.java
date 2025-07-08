@@ -12,21 +12,21 @@ public class GoogleOAuth2UserInfo implements OAuth2UserInfo{
     
     @Override
     public String getProviderId() {
-        return attributes.get("id").toString();
+        return attributes.get("sub").toString();
     }
     
     @Override
     public String getProvider() {
-        return "google";
+        return "GOOGLE";
     }
     
     @Override
     public String getName() {
-        return attributes.get("login").toString();
+        return attributes.get("name").toString();
     }
-    
+
     @Override
-    public String getPicture() {
-        return attributes.get("avatar_url") == null ? "" : attributes.get("avatar_url").toString();
+    public String getEmail() {
+        return attributes.get("email").toString();
     }
 }
