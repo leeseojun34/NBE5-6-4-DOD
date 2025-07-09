@@ -3,16 +3,13 @@ package com.grepp.spring.app.controller.api.auth;
 import com.grepp.spring.app.controller.api.auth.payload.AccountDeactivateRequest;
 import com.grepp.spring.app.controller.api.auth.payload.AccountDeactivateResponse;
 import com.grepp.spring.app.controller.api.auth.payload.GroupAdminResponse;
-import com.grepp.spring.app.controller.api.auth.payload.LoginRequest;
 import com.grepp.spring.app.controller.api.auth.payload.SocialAccountConnectionRequest;
 import com.grepp.spring.app.controller.api.auth.payload.SocialAccountConnectionResponse;
 import com.grepp.spring.app.controller.api.auth.payload.SocialAccountResponse;
-import com.grepp.spring.app.controller.api.auth.payload.TokenResponse;
 import com.grepp.spring.app.controller.api.auth.payload.UpdateAccessTokenResponse;
 import com.grepp.spring.app.controller.api.group.groupDto.groupRole.GroupRole;
 import com.grepp.spring.app.model.auth.AuthService;
 import com.grepp.spring.app.model.auth.code.AuthToken;
-import com.grepp.spring.app.model.auth.dto.TokenDto;
 import com.grepp.spring.infra.auth.jwt.TokenCookieFactory;
 import com.grepp.spring.infra.response.ApiResponse;
 import com.grepp.spring.infra.response.ResponseCode;
@@ -33,7 +30,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.authentication.BadCredentialsException;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -42,39 +38,39 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @Operation(summary = "로그인", description = "토큰을 발급합니다.")
-    @PostMapping("/login")
-    public ResponseEntity<ApiResponse<TokenResponse>> login(
-        @Valid @RequestBody LoginRequest loginRequest,
-        HttpServletResponse response
-    ) {
-
-        try {
-            TokenDto tokenDto = authService.signin(loginRequest); // Mock AuthService 호출
-
-            ResponseCookie accessTokenCookie = TokenCookieFactory.create(
-                AuthToken.ACCESS_TOKEN.name(), tokenDto.getAccessToken(), tokenDto.getExpiresIn());
-            response.addHeader("Set-Cookie", accessTokenCookie.toString());
-
-            ResponseCookie refreshTokenCookie = TokenCookieFactory.create(
-                AuthToken.REFRESH_TOKEN.name(), tokenDto.getRefreshToken(), tokenDto.getRefreshExpiresIn());
-            response.addHeader("Set-Cookie", refreshTokenCookie.toString());
-
-            return ResponseEntity.ok(ApiResponse.success(TokenResponse.builder()
-                .userId(tokenDto.getUserId())
-                .userName(tokenDto.getUserName())
-                .grantType(tokenDto.getGrantType())
-                .accessToken(tokenDto.getAccessToken())
-                .expiresIn(tokenDto.getExpiresIn())
-                .refreshToken(tokenDto.getRefreshToken())
-                .refreshExpiresIn(tokenDto.getRefreshExpiresIn())
-                .build()));
-
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.status(401)
-                .body(ApiResponse.error(ResponseCode.INVALID_TOKEN, e.getMessage()));
-        }
-    }
+//    @Operation(summary = "로그인", description = "토큰을 발급합니다.")
+//    @PostMapping("/login")
+//    public ResponseEntity<ApiResponse<TokenResponse>> login(
+//        @Valid @RequestBody LoginRequest loginRequest,
+//        HttpServletResponse response
+//    ) {
+//
+//        try {
+//            TokenDto tokenDto = authService.signin(loginRequest); // Mock AuthService 호출
+//
+//            ResponseCookie accessTokenCookie = TokenCookieFactory.create(
+//                AuthToken.ACCESS_TOKEN.name(), tokenDto.getAccessToken(), tokenDto.getExpiresIn());
+//            ResponseCookie refreshTokenCookie = TokenCookieFactory.create(
+//                AuthToken.REFRESH_TOKEN.name(), tokenDto.getRefreshToken(), tokenDto.getRefreshExpiresIn());
+//
+//            response.addHeader("Set-Cookie", accessTokenCookie.toString());
+//            response.addHeader("Set-Cookie", refreshTokenCookie.toString());
+//
+//            return ResponseEntity.ok(ApiResponse.success(TokenResponse.builder()
+//                .userId(tokenDto.getUserId())
+//                .userName(tokenDto.getUserName())
+//                .grantType(tokenDto.getGrantType())
+//                .accessToken(tokenDto.getAccessToken())
+//                .expiresIn(tokenDto.getExpiresIn())
+//                .refreshToken(tokenDto.getRefreshToken())
+//                .refreshExpiresIn(tokenDto.getRefreshExpiresIn())
+//                .build()));
+//
+//        } catch (BadCredentialsException e) {
+//            return ResponseEntity.status(401)
+//                .body(ApiResponse.error(ResponseCode.INVALID_TOKEN, e.getMessage()));
+//        }
+//    }
 
     @Operation(summary = "회원 탈퇴", description = "서비스 탈퇴를 진행합니다.")
     @PatchMapping("/deactivate")
@@ -91,6 +87,42 @@ public class AuthController {
         }
     }
 
+//    @Operation(summary = "로그아웃", description = "로그아웃을 진행합니다.")
+//    @PostMapping("/logout")
+//    public ResponseEntity<ApiResponse<?>> logout(
+//        HttpServletRequest request,
+//        HttpServletResponse response,
+//        @AuthenticationPrincipal String userId) {
+//
+//        try{
+//            String accessToken = jwtTokenProvider.resolveToken(request, AuthToken.ACCESS_TOKEN);
+//            String jti = null;
+//            if (accessToken != null) {
+//                jti = jwtTokenProvider.getClaims(accessToken).getId();
+//            }
+//
+//            if (userId != null && jti != null) {
+//                authService.logout(userId, jti);
+//            } else {
+//                log.warn("JWT 없이 로그아웃 하는 경우 쿠키만 삭제");
+//            }
+//
+//            ResponseCookie deleteAccessTokenCookie = TokenCookieFactory.createExpiredToken(AuthToken.ACCESS_TOKEN.name());
+//            response.addHeader(HttpHeaders.SET_COOKIE, deleteAccessTokenCookie.toString());
+//
+//            ResponseCookie deleteRefreshTokenCookie = TokenCookieFactory.createExpiredToken(AuthToken.REFRESH_TOKEN.name());
+//            response.addHeader(HttpHeaders.SET_COOKIE, deleteRefreshTokenCookie.toString());
+//
+//            ResponseCookie deleteSessionIdCookie = TokenCookieFactory.createExpiredToken(AuthToken.AUTH_SERVER_SESSION_ID.name());
+//            response.addHeader(HttpHeaders.SET_COOKIE, deleteSessionIdCookie.toString());
+//
+//            SecurityContextHolder.clearContext();
+//
+//            return ResponseEntity.ok(ApiResponse.noContent());
+//        } catch (Exception e) {
+//            log.error("로그아웃 실패: {}", userId, e);
+//        }
+
 
     @Operation(summary = "로그아웃", description = "로그아웃을 진행합니다.")
     @PostMapping("/logout")
@@ -106,7 +138,6 @@ public class AuthController {
         response.addHeader(HttpHeaders.SET_COOKIE, deleteSessionIdCookie.toString());
 
         // Spring Security Context도 비워줍니다. (현재 요청에 대한 인증 정보만 제거)
-        // 이는 필터 체인에 의해 자동으로 이루어질 수도 있지만, 명시적으로 비워주는 것이 좋습니다.
         SecurityContextHolder.clearContext();
 
         return ResponseEntity.ok(ApiResponse.noContent());

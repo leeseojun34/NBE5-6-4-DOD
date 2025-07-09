@@ -20,7 +20,7 @@ public class Member {
     @Column(nullable = false, updatable = false)
     private String id;
 
-    @Column(nullable = false)
+    @Column(nullable = true) // 잠시만
     private String password;
 
     @Column(nullable = false)
@@ -39,7 +39,7 @@ public class Member {
     @Column(nullable = false)
     private Long profileImageNumber;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true) // 잠시만
     private String tel;
 
 }
