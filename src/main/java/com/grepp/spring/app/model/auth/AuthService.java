@@ -11,6 +11,7 @@ import com.grepp.spring.infra.auth.jwt.JwtTokenProvider;
 import com.grepp.spring.infra.auth.jwt.dto.AccessTokenDto;
 import com.grepp.spring.infra.auth.oauth2.user.OAuth2UserInfo;
 import java.util.Optional;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -68,7 +69,8 @@ public class AuthService {
             member.setName(userInfo.getName());
             member.setEmail(userInfo.getEmail());
             member.setRole(Role.ROLE_USER);
-            member.setProfileImageNumber(20000307L);
+            member.setProfileImageNumber((long) new Random().nextInt(10));
+            member.setPassword("123qwe!@#");
             // 일단 전화번호는 나중에 받고
             // 카카오는 이메일 안되는디 어떡하지 일단 구글만 해보고
             // 프로필 사진은 모르겠다 일단 아무 숫자나 넣자
@@ -104,5 +106,21 @@ public class AuthService {
 //            .userName(member.getName())
 //            .build();
     }
+
+//    @Transactional
+//    public void logout(String userId, String accessTokenJti){
+//        log.info("로그아웃 요청: user ID: {}, access Token JTI: {}", userId, accessTokenJti);
+//
+//        // 세션에 있는 쿠키 날리기
+//        refreshTokenService.deleteByAccessTokenId(accessTokenJti);
+//        log.info("refresh Token 삭제 완료");
+//
+//        // 소셜 제공자의 토큰 무효화 요청
+//        Member member = memberRepository.findById(userId)
+//            .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+//
+//        socialLogoutService.revokeSocialToken(member.getProvider(), member.getSocial)
+//
+//    }
 
 }

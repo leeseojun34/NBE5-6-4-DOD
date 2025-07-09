@@ -13,8 +13,8 @@ public interface OAuth2UserInfo {
         if(path.equals("/login/oauth2/code/google"))
             return new GoogleOAuth2UserInfo(user.getAttributes());
 
-//        if(path.equals("/login/oauth2/code/kakao"))
-//            return new KakaoOAuth2UserInfo(user.getAttributes());
+        if(path.equals("/login/oauth2/code/kakao"))
+            return new KakaoOAuth2UserInfo(user.getAttributes());
     
         throw new IllegalArgumentException("지원하지 않는 소셜 서비스입니다: " + path);
     }
