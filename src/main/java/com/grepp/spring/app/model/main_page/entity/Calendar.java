@@ -1,4 +1,4 @@
-package com.grepp.spring.app.model.favorite_timetable.domain;
+package com.grepp.spring.app.model.main_page.entity;
 
 import com.grepp.spring.app.model.member.domain.Member;
 import jakarta.persistence.Column;
@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
@@ -17,10 +17,10 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "FavoriteTimetables")
+@Table(name = "Calendars")
 @Getter
 @Setter
-public class FavoriteTimetable {
+public class Calendar {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -37,16 +37,16 @@ public class FavoriteTimetable {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime startTime;
+    private String name;
 
     @Column(nullable = false)
-    private LocalDateTime endTime;
+    private Boolean synced;
 
     @Column(nullable = false)
-    private String weekday;
+    private LocalDateTime syncedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", unique = true)
     private Member member;
 
 }

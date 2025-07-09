@@ -1,7 +1,6 @@
 package com.grepp.spring.app.controller.api.mainpage.payload;
 
 
-import com.grepp.spring.app.controller.api.group.groupDto.groupRole.GroupRole;
 import com.grepp.spring.app.model.schedule.domain.MEETING_PLATFORM;
 import com.grepp.spring.app.model.schedule.domain.MEETING_TYPE;
 import com.grepp.spring.app.model.schedule.domain.SCHEDULES_STATUS;
@@ -31,13 +30,13 @@ public class ShowMainPageResponse {
   @Setter
   public static class GroupList {
     private Long groupId;
+    private Boolean isGrouped;
     private String groupName; // 그룹 이름
     private String description;
     private MEETING_TYPE meetingType; // on,off
     private Integer maxMember;
     private Integer currentMember;
     private LocalDateTime createdAt;
-    private Boolean isGroupEvent;
     private Integer profileImageNumber;
 
   }
@@ -49,6 +48,8 @@ public class ShowMainPageResponse {
   public static class ScheduleList {
     private Long scheduleId;
     private Long groupId;
+    private Boolean isGrouped;
+    private String groupName;
     private String name; // 일정 이름
     private MEETING_TYPE meetingType; // on,off
     private MEETING_PLATFORM meetingPlatform;
@@ -57,8 +58,6 @@ public class ShowMainPageResponse {
     private SCHEDULES_STATUS schedulesStatus; // recommend, fixed, complete
     private String description; // 일정에 대한 상세 설명, 내용
     private String location;
-    private Boolean isGrouped;
-    private String groupName;
 
   }
 
@@ -67,17 +66,20 @@ public class ShowMainPageResponse {
   @Getter
   @Setter
   public static class CalendarScheduleList {
-    private Long scheduleId;
-    private String memberId;
+    private String calendarName; // 구글 캘린더 이름 (추후 사용 결정)
     private Long calendarId;
-    private String name;
-    private String description;
+    private Long scheduleId;
+    private Long groupId;
+    private Boolean isGrouped;
+    private String groupName;
+    private String name; // 일정 이름
+    private MEETING_TYPE meetingType; // on,off
+    private MEETING_PLATFORM meetingPlatform;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private SCHEDULES_STATUS schedulesStatus; // recommend, fixed, complete
+    private String description; // 일정에 대한 상세 설명, 내용
     private String location;
-    private Boolean isGrouped;
-    private String GroupName;
-    private MEETING_TYPE meetingType;
 
   }
 

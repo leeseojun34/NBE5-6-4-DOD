@@ -7,7 +7,6 @@ import com.grepp.spring.app.controller.api.mypage.payload.CreateFavoriteTimeRequ
 import com.grepp.spring.app.controller.api.mypage.payload.CreateFavoriteTimeResponse;
 import com.grepp.spring.app.controller.api.mypage.payload.ModifyFavoritePlaceRequest;
 import com.grepp.spring.app.controller.api.mypage.payload.ModifyFavoritePlaceResponse;
-import com.grepp.spring.app.controller.api.mypage.payload.ModifyFavoritePlaceResponse.ModifyFavLocationList;
 import com.grepp.spring.app.controller.api.mypage.payload.ModifyFavoriteTimeRequest;
 import com.grepp.spring.app.controller.api.mypage.payload.ModifyFavoriteTimeResponse;
 import com.grepp.spring.app.controller.api.mypage.payload.ModifyProfileResponse;
@@ -37,7 +36,7 @@ public class MypageController {
 
   // 즐겨찾기 장소 등록
   @PostMapping("/favorite-locations/{memberId}")
-  @Operation(summary = "즐겨찾기 장소 등록", description = "회원 즐겨찾기 장소 등록")
+  @Operation(summary = "즐겨찾기 장소 등록", description = "회원 즐겨찾기 장소 등록, memberID는 KAKAO_1234 입력")
   public ResponseEntity<ApiResponse<CreateFavoritePlaceResponse>> createFavoriteLocation(
       @PathVariable String memberId,
       @RequestBody @Valid CreateFavoritePlaceRequest request) {
@@ -77,7 +76,7 @@ public class MypageController {
 
   // 즐겨찾기 시간대 등록
   @PostMapping("/favorite-timetable/{memberId}")
-  @Operation(summary = "즐겨찾기 시간대 등록", description = "회원 즐겨찾기 시간대 등록")
+  @Operation(summary = "즐겨찾기 시간대 등록", description = "회원 즐겨찾기 시간대 등록, memberID는 KAKAO_1234 입력")
   public ResponseEntity<ApiResponse<CreateFavoriteTimeResponse>> createFavoriteTime(
       @PathVariable String memberId,
       @RequestBody @Valid CreateFavoriteTimeRequest request) {
@@ -91,11 +90,7 @@ public class MypageController {
       time1.setStartTime(LocalTime.of(13, 0));
       time1.setEndTime(LocalTime.of(15, 0));
 
-      LocalDateTime dateTime = LocalDateTime.of(2025, 7, 7, 0, 0);
-      time1.setDateTime(dateTime);                              // 날짜 저장
-
-      DayOfWeek weekday = dateTime.getDayOfWeek(); // 요일 추출
-      time1.setWeekday(weekday);                // 요일 저장
+      time1.setWeekday(DayOfWeek.valueOf("MONDAY"));                // 요일 저장
 
       time1.setCreatedAt(LocalDateTime.now());
 
@@ -122,7 +117,7 @@ public class MypageController {
 
 
   // 즐겨찾기 장소 수정
-  @Operation(summary = "즐겨찾기 장소 수정", description = "회원 즐겨찾기 장소 수정")
+  @Operation(summary = "즐겨찾기 장소 수정", description = "회원 즐겨찾기 장소 수정, memberID는 KAKAO_1234 입력")
   @PatchMapping("/favorite-location/{memberId}")
   public ResponseEntity<ApiResponse<ModifyFavoritePlaceResponse>> modifyFavoritePlace(
       @PathVariable String memberId,
@@ -164,7 +159,7 @@ public class MypageController {
 
 
   // 즐겨찾기 시간대 수정
-  @Operation(summary = "즐겨찾기 시간대 수정", description = "회원 즐겨찾기 시간대 수정")
+  @Operation(summary = "즐겨찾기 시간대 수정", description = "회원 즐겨찾기 시간대 수정, memberID는 KAKAO_1234 입력")
   @PatchMapping("/favorite-timetable/{memberId}")
   public ResponseEntity<ApiResponse<ModifyFavoriteTimeResponse>> modifyFavoriteTime(
       @PathVariable String memberId,
@@ -179,21 +174,14 @@ public class MypageController {
       time1.setStartTime(LocalTime.of(14, 0));
       time1.setEndTime(LocalTime.of(15, 0));
 
-      LocalDateTime dateTime = LocalDateTime.of(2025, 7, 10, 0, 0); // 예: 목요일
-      DayOfWeek weekday = dateTime.getDayOfWeek(); // THURSDAY
-      time1.setWeekday(weekday);  //
+      time1.setWeekday(DayOfWeek.valueOf("TUESDAY"));
 
       ModifyFavoriteTimeResponse.ModifyFavTimeList time2 = new ModifyFavoriteTimeResponse.ModifyFavTimeList();
       time2.setFavoriteTimeId(201L);
       time2.setStartTime(LocalTime.of(17, 0));
       time2.setEndTime(LocalTime.of(21, 0));
 
-
-      LocalDateTime dateTime2 = LocalDateTime.of(2025, 7, 6, 0, 0); // 예: 목요일
-      DayOfWeek weekday2 = dateTime2.getDayOfWeek(); // SUNDAY
-      time2.setWeekday(weekday2);  //
-
-      // TODO : weekDay 한국어 변환
+      time2.setWeekday(DayOfWeek.valueOf("THURSDAY"));
 
       time1.setUpdatedAt(LocalDateTime.now());
       time2.setUpdatedAt(LocalDateTime.now());
@@ -224,7 +212,7 @@ public class MypageController {
 
 
   // 프로필 수정 (사진 + 이름 수정)
-  @Operation(summary = "프로필", description = "회원 프로필 내 이름 및 프로필 캐릭터 수정")
+  @Operation(summary = "프로필", description = "회원 프로필 내 이름 및 프로필 캐릭터 수정, memberID는 KAKAO_1234 입력")
   @PatchMapping("/member-profile/{memberId}")
   public ResponseEntity<ApiResponse<ModifyProfileResponse>> modifyProfile(
       @PathVariable String memberId,
@@ -256,7 +244,7 @@ public class MypageController {
   }
 
   // 캘린더 연동 변경
-  @Operation(summary = "캘린더 연동 설정 변경", description = "회원 프로필 내 캘린더 연동 설정 변경 (ON/OFF)")
+  @Operation(summary = "캘린더 연동 설정 변경", description = "회원 프로필 내 캘린더 연동 설정 변경 (ON/OFF), memberID는 KAKAO_1234 입력")
   @PatchMapping("/calendar/{memberId}")
   public ResponseEntity<ApiResponse<SetCalendarSyncResponse>> modifyCalendarSync(
       @PathVariable String memberId,

@@ -1,4 +1,4 @@
-package com.grepp.spring.app.model.favorite_location.domain;
+package com.grepp.spring.app.model.mypage.entity;
 
 import com.grepp.spring.app.model.member.domain.Member;
 import jakarta.persistence.Column;
