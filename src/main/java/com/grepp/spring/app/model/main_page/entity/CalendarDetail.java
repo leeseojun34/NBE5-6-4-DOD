@@ -1,6 +1,5 @@
-package com.grepp.spring.app.model.calendar.domain;
+package com.grepp.spring.app.model.main_page.entity;
 
-import com.grepp.spring.app.model.member.domain.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,7 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
@@ -17,10 +16,10 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "Calendars")
+@Table(name = "CalendarDetails")
 @Getter
 @Setter
-public class Calendar {
+public class CalendarDetail {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -37,16 +36,25 @@ public class Calendar {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String title;
 
     @Column(nullable = false)
-    private Boolean synced;
+    private String startDatetime;
+
+    @Column(nullable = false)
+    private String endDatetime;
 
     @Column(nullable = false)
     private LocalDateTime syncedAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", unique = true)
-    private Member member;
+    @Column(nullable = false)
+    private Boolean isAllDay;
+
+    @Column(nullable = false, columnDefinition = "text")
+    private String externalEtag;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "calendar_id")
+    private Calendar calendar;
 
 }

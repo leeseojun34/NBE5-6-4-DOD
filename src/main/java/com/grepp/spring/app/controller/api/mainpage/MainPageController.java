@@ -32,7 +32,8 @@ public class MainPageController {
 
 
   // 통합된 하나의 API
-  @Operation(summary = "메인페이지", description = "회원의 그룹리스트, 일정 및 캘린더 조회")
+  @Operation(summary = "메인페이지", description = "회원의 그룹리스트, 일정 및 캘린더 조회"
+      + "memberID는 KAKAO_1234 입력 & 날짜는 2025-07-03 입력하면 7월 한달 + 7월 마지막 주에 해당하는 8월 초 일정까지 출력")
   @GetMapping("/main-page/{memberId}")
   public ResponseEntity<ApiResponse<ShowMainPageResponse>> showMainPage(
       @PathVariable String memberId,
@@ -89,38 +90,35 @@ public class MainPageController {
     GroupList group1 = new GroupList();
     group1.setGroupId(10000L);
     group1.setGroupName("HMD");
-    group1.setGroupId(10000L);
     group1.setDescription("Q3 계획 수립을 위한 팀 미팅 1");
     group1.setMeetingType(MEETING_TYPE.OFFLINE);
     group1.setMaxMember(5);
     group1.setCurrentMember(3);
     group1.setCreatedAt(LocalDateTime.of(2025, 7, 5, 9, 0));
-    group1.setIsGroupEvent(true);
+    group1.setIsGrouped(true);
     group1.setProfileImageNumber(1);
 
     GroupList group2 = new GroupList();
     group2.setGroupId(null);
     group2.setGroupName("LKH");
-    group2.setGroupId(10000L);
     group2.setDescription("Q3 계획 수립을 위한 팀 미팅 1");
     group2.setMeetingType(MEETING_TYPE.ONLINE);
     group2.setMaxMember(10);
     group2.setCurrentMember(7);
     group2.setCreatedAt(LocalDateTime.of(2025, 7, 8, 16, 30));
-    group2.setIsGroupEvent(false);
+    group2.setIsGrouped(false);
     group2.setProfileImageNumber(2);
 
 
     GroupList group3 = new GroupList();
     group3.setGroupId(10001L); // 중복된 ID 수정
     group3.setGroupName("백엔드 DOD");
-    group3.setGroupId(10000L);
     group3.setDescription("이때어때를 위한 팀 회의");
     group3.setMeetingType(MEETING_TYPE.OFFLINE);
     group3.setMaxMember(10);
     group3.setCurrentMember(5);
     group3.setCreatedAt(LocalDateTime.of(2025, 7, 13, 9, 30));
-    group3.setIsGroupEvent(true);
+    group3.setIsGrouped(true);
     group3.setProfileImageNumber(9);
 
 
@@ -136,38 +134,71 @@ public class MainPageController {
     List<ScheduleList> schedules = new ArrayList<>();
 
     ScheduleList schedule1 = new ScheduleList();
-    schedule1.setScheduleId(30000L);
+    schedule1.setScheduleId(30003L);
     schedule1.setGroupId(10000L);
-    schedule1.setName("팀 회의");
-    schedule1.setMeetingType(MEETING_TYPE.OFFLINE);
-    schedule1.setStartTime(LocalDateTime.of(2025, 7, 8, 14, 0));
-    schedule1.setEndTime(LocalDateTime.of(2025, 7, 8, 16, 0));
-    schedule1.setSchedulesStatus(SCHEDULES_STATUS.FIXED);
-    schedule1.setDescription("주간 팀 회의 및 프로젝트 진행 상황 점검");
-    schedule1.setLocation("회의실 A");
     schedule1.setIsGrouped(true);
-    schedule1.setGroupName("HMD");
+    schedule1.setGroupName("TEAM_HMD");
+    schedule1.setName("team hmd 정모");
+    schedule1.setDescription("팀 정기 모임");
+    schedule1.setStartTime(LocalDateTime.of(2025, 7, 3, 10, 0));
+    schedule1.setEndTime(LocalDateTime.of(2025, 7, 3, 12, 0));
+    schedule1.setLocation("강남역");
+    schedule1.setMeetingType(MEETING_TYPE.OFFLINE);
+    schedule1.setMeetingPlatform(null);
+    schedule1.setSchedulesStatus(SCHEDULES_STATUS.COMPLETE);
 
     ScheduleList schedule2 = new ScheduleList();
-    schedule2.setScheduleId(30001L);
-    schedule2.setGroupId(10001L);
-    schedule2.setName("DOD 회의");
-    schedule2.setMeetingType(MEETING_TYPE.ONLINE);
-    schedule2.setMeetingPlatform(MEETING_PLATFORM.ZOOM);
-    schedule2.setStartTime(LocalDateTime.of(2025, 7, 13, 9, 0));
-    schedule2.setEndTime(LocalDateTime.of(2025, 7, 13, 13, 0));
-    schedule2.setSchedulesStatus(SCHEDULES_STATUS.FIXED);
-    schedule2.setDescription("주말 백엔드 회의");
+    schedule2.setScheduleId(30005L);
+    schedule2.setGroupId(10000L);
     schedule2.setIsGrouped(true);
-    schedule2.setGroupName("BE_DOD");
+    schedule2.setGroupName("DOD_BE");
+    schedule2.setName("코드 리뷰");
+    schedule2.setDescription("주간 코드 리뷰 세션");
+    schedule2.setStartTime(LocalDateTime.of(2025, 7, 4, 14, 0));
+    schedule2.setEndTime(LocalDateTime.of(2025, 7, 4, 15, 30));
+    schedule2.setLocation("개발실");
+    schedule2.setMeetingType(MEETING_TYPE.OFFLINE);
+    schedule2.setMeetingPlatform(null);
+    schedule2.setSchedulesStatus(SCHEDULES_STATUS.FIXED);
+
+    ScheduleList schedule3 = new ScheduleList();
+    schedule3.setScheduleId(30012L);
+    schedule3.setGroupId(null);
+    schedule3.setIsGrouped(false);
+    schedule3.setGroupName(null);
+    schedule3.setName("팀 빌딩");
+    schedule3.setDescription("월간 팀 빌딩 활동");
+    schedule3.setStartTime(LocalDateTime.of(2025, 7, 18, 18, 0));
+    schedule3.setEndTime(LocalDateTime.of(2025, 7, 18, 21, 0));
+    schedule3.setLocation("홍대");
+    schedule3.setMeetingType(MEETING_TYPE.ONLINE);
+    schedule3.setMeetingPlatform(MEETING_PLATFORM.ZOOM);
+    schedule3.setSchedulesStatus(SCHEDULES_STATUS.RECOMMEND);
+
+
+    ScheduleList schedule4 = new ScheduleList();
+    schedule4.setScheduleId(30012L);
+    schedule4.setGroupId(10000L);
+    schedule4.setIsGrouped(true);
+    schedule4.setGroupName("TEAM_HMD");
+    schedule4.setName("스프린트 회고");
+    schedule4.setMeetingType(MEETING_TYPE.OFFLINE);
+    schedule4.setMeetingPlatform(null);
+    schedule4.setStartTime(LocalDateTime.of(2025, 7, 25, 16, 0));
+    schedule4.setEndTime(LocalDateTime.of(2025, 7, 25, 17, 0));
+    schedule4.setSchedulesStatus(SCHEDULES_STATUS.FIXED);
+    schedule4.setDescription("7월 스프린트 회고");
+    schedule4.setLocation("회의실 C");
 
     schedules.add(schedule1);
     schedules.add(schedule2);
+    schedules.add(schedule3);
+    schedules.add(schedule4);
 
     return schedules;
   }
 
-  List<ShowMainPageResponse.ScheduleList> schedules = new ArrayList<>();
+//  List<ShowMainPageResponse.ScheduleList> schedules = new ArrayList<>();
 
   // 캘린더 mock data
 
@@ -177,52 +208,49 @@ public class MainPageController {
 
     // 7월 구글 일정 데이터
     CalendarScheduleList googleSchedule1 = new CalendarScheduleList();
+    googleSchedule1.setCalendarName("구글 7월 일정");
     googleSchedule1.setScheduleId(30001L);
-    googleSchedule1.setMemberId("KAKAO_1234");
     googleSchedule1.setCalendarId(300L);
     googleSchedule1.setName("백엔드 회의");
     googleSchedule1.setDescription("스프링 프로젝트 논의");
     googleSchedule1.setStartTime(LocalDateTime.of(2025, 7, 2, 15, 0));
     googleSchedule1.setEndTime(LocalDateTime.of(2025, 7, 2, 16, 0));
     googleSchedule1.setLocation("구글 미트");
-    googleSchedule1.setMeetingType(MEETING_TYPE.OFFLINE);
 
     CalendarScheduleList googleSchedule2 = new CalendarScheduleList();
+    googleSchedule2.setCalendarName("구글 7월 일정");
     googleSchedule2.setScheduleId(30002L);
-    googleSchedule2.setMemberId("KAKAO_1234");
     googleSchedule2.setCalendarId(301L);
     googleSchedule2.setName("프론트엔드 리뷰");
     googleSchedule2.setDescription("UI/UX 검토");
     googleSchedule2.setStartTime(LocalDateTime.of(2025, 7, 3, 10, 0));
     googleSchedule2.setEndTime(LocalDateTime.of(2025, 7, 3, 11, 30));
-    googleSchedule2.setMeetingType(MEETING_TYPE.ONLINE);
 
-    CalendarScheduleList googleSchedule4 = new CalendarScheduleList();
-    googleSchedule4.setScheduleId(30004L);
-    googleSchedule4.setMemberId("KAKAO_1234");
-    googleSchedule4.setCalendarId(303L);
-    googleSchedule4.setName("월말 보고");
-    googleSchedule4.setDescription("7월 월말 보고");
-    googleSchedule4.setStartTime(LocalDateTime.of(2025, 7, 31, 16, 0));
-    googleSchedule4.setEndTime(LocalDateTime.of(2025, 7, 31, 17, 0));
-    googleSchedule4.setLocation("대회의실");
-    googleSchedule4.setMeetingType(MEETING_TYPE.OFFLINE);
+
+    CalendarScheduleList googleSchedule3 = new CalendarScheduleList();
+    googleSchedule3.setCalendarName("구글 7월 일정");
+    googleSchedule3.setScheduleId(30004L);
+    googleSchedule3.setCalendarId(303L);
+    googleSchedule3.setName("월말 보고");
+    googleSchedule3.setDescription("7월 월말 보고");
+    googleSchedule3.setStartTime(LocalDateTime.of(2025, 7, 31, 16, 0));
+    googleSchedule3.setEndTime(LocalDateTime.of(2025, 7, 31, 17, 0));
+    googleSchedule3.setLocation("대회의실");
 
     // 8월 초 일정 (7월 마지막 주에 포함)
-    CalendarScheduleList googleSchedule5 = new CalendarScheduleList();
-    googleSchedule5.setScheduleId(30005L);
-    googleSchedule5.setMemberId("KAKAO_1234");
-    googleSchedule5.setCalendarId(304L);
-    googleSchedule5.setName("8월 킥오프");
-    googleSchedule5.setDescription("8월 프로젝트 시작");
-    googleSchedule5.setStartTime(LocalDateTime.of(2025, 8, 1, 9, 0));
-    googleSchedule5.setEndTime(LocalDateTime.of(2025, 8, 1, 10, 0));
-    googleSchedule5.setMeetingType(MEETING_TYPE.ONLINE);
-    googleSchedule5.setIsGrouped(true);
-    googleSchedule5.setGroupName("BBBB비비비");
+    CalendarScheduleList googleSchedule4 = new CalendarScheduleList();
+    googleSchedule4.setCalendarName("구글 7월 일정");
+    googleSchedule4.setScheduleId(30005L);
+    googleSchedule4.setCalendarId(304L);
+    googleSchedule4.setName("8월 킥오프");
+    googleSchedule4.setDescription("8월 프로젝트 시작");
+    googleSchedule4.setStartTime(LocalDateTime.of(2025, 8, 1, 9, 0));
+    googleSchedule4.setEndTime(LocalDateTime.of(2025, 8, 1, 10, 0));
+    googleSchedule4.setIsGrouped(true);
+    googleSchedule4.setGroupName("BBBB비비비");
 
     googleSchedules.addAll(Arrays.asList(
-        googleSchedule1, googleSchedule2, googleSchedule4, googleSchedule5
+        googleSchedule1, googleSchedule2, googleSchedule3, googleSchedule4
     ));
 
     return googleSchedules;
@@ -245,51 +273,71 @@ public class MainPageController {
   private List<CalendarScheduleList> createMockInternalSchedules() {
     List<CalendarScheduleList> internalSchedules = new ArrayList<>();
 
-    // 7월 내부 일정 데이터
+    // 7월 내부 일정 데이터 (통일된 구조)
     CalendarScheduleList internalSchedule1 = new CalendarScheduleList();
     internalSchedule1.setScheduleId(30003L);
-    internalSchedule1.setMemberId("KAKAO_1234");
     internalSchedule1.setCalendarId(300L);
+    internalSchedule1.setCalendarName("7월 일정");
+    internalSchedule1.setGroupId(10000L);
+    internalSchedule1.setIsGrouped(true);
+    internalSchedule1.setGroupName("TEAM_HMD");
     internalSchedule1.setName("team hmd 정모");
     internalSchedule1.setDescription("팀 정기 모임");
     internalSchedule1.setStartTime(LocalDateTime.of(2025, 7, 3, 10, 0));
     internalSchedule1.setEndTime(LocalDateTime.of(2025, 7, 3, 12, 0));
     internalSchedule1.setLocation("강남역");
     internalSchedule1.setMeetingType(MEETING_TYPE.OFFLINE);
+    internalSchedule1.setMeetingPlatform(null);
+    internalSchedule1.setSchedulesStatus(SCHEDULES_STATUS.COMPLETE);
 
     CalendarScheduleList internalSchedule2 = new CalendarScheduleList();
     internalSchedule2.setScheduleId(30005L);
-    internalSchedule2.setMemberId("KAKAO_1234");
     internalSchedule2.setCalendarId(301L);
+    internalSchedule2.setCalendarName("7월 일정");
+    internalSchedule2.setGroupId(10000L);
+    internalSchedule2.setIsGrouped(true);
+    internalSchedule2.setGroupName("DOD_BE");
     internalSchedule2.setName("코드 리뷰");
     internalSchedule2.setDescription("주간 코드 리뷰 세션");
     internalSchedule2.setStartTime(LocalDateTime.of(2025, 7, 4, 14, 0));
     internalSchedule2.setEndTime(LocalDateTime.of(2025, 7, 4, 15, 30));
     internalSchedule2.setLocation("개발실");
     internalSchedule2.setMeetingType(MEETING_TYPE.OFFLINE);
+    internalSchedule2.setMeetingPlatform(null);
+    internalSchedule2.setSchedulesStatus(SCHEDULES_STATUS.FIXED);
 
     CalendarScheduleList internalSchedule3 = new CalendarScheduleList();
     internalSchedule3.setScheduleId(30012L);
-    internalSchedule3.setMemberId("KAKAO_1234");
     internalSchedule3.setCalendarId(312L);
+    internalSchedule3.setCalendarName("7월 일정");
+    internalSchedule3.setGroupId(null);
+    internalSchedule3.setIsGrouped(false);
+    internalSchedule3.setGroupName(null);
     internalSchedule3.setName("팀 빌딩");
     internalSchedule3.setDescription("월간 팀 빌딩 활동");
     internalSchedule3.setStartTime(LocalDateTime.of(2025, 7, 18, 18, 0));
     internalSchedule3.setEndTime(LocalDateTime.of(2025, 7, 18, 21, 0));
     internalSchedule3.setLocation("홍대");
-    internalSchedule3.setMeetingType(MEETING_TYPE.OFFLINE);
+    internalSchedule3.setMeetingType(MEETING_TYPE.ONLINE);
+    internalSchedule3.setMeetingPlatform(MEETING_PLATFORM.ZOOM);
+    internalSchedule3.setSchedulesStatus(SCHEDULES_STATUS.RECOMMEND);
     
 
     CalendarScheduleList internalSchedule4 = new CalendarScheduleList();
-    internalSchedule4.setScheduleId(30013L);
-    internalSchedule4.setMemberId("KAKAO_1234");
     internalSchedule4.setCalendarId(313L);
+    internalSchedule4.setScheduleId(30013L);
+    internalSchedule4.setCalendarName("7월 일정");
+    internalSchedule4.setGroupId(10000L);
+    internalSchedule4.setIsGrouped(true);
+    internalSchedule4.setGroupName("TEAM_HMD");
     internalSchedule4.setName("스프린트 회고");
-    internalSchedule4.setDescription("7월 스프린트 회고");
+    internalSchedule4.setMeetingType(MEETING_TYPE.OFFLINE);
+    internalSchedule4.setMeetingPlatform(null);
     internalSchedule4.setStartTime(LocalDateTime.of(2025, 7, 25, 16, 0));
     internalSchedule4.setEndTime(LocalDateTime.of(2025, 7, 25, 17, 0));
+    internalSchedule4.setSchedulesStatus(SCHEDULES_STATUS.FIXED);
+    internalSchedule4.setDescription("7월 스프린트 회고");
     internalSchedule4.setLocation("회의실 C");
-    internalSchedule4.setMeetingType(MEETING_TYPE.OFFLINE);
 
     internalSchedules.addAll(
         Arrays.asList(internalSchedule1, internalSchedule2, internalSchedule3, internalSchedule4));

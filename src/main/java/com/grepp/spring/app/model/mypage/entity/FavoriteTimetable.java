@@ -1,6 +1,6 @@
-package com.grepp.spring.app.model.calendar_detail.domain;
+package com.grepp.spring.app.model.mypage.entity;
 
-import com.grepp.spring.app.model.calendar.domain.Calendar;
+import com.grepp.spring.app.model.member.domain.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,10 +17,10 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "CalendarDetails")
+@Table(name = "FavoriteTimetables")
 @Getter
 @Setter
-public class CalendarDetail {
+public class FavoriteTimetable {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -37,25 +37,16 @@ public class CalendarDetail {
     private Long id;
 
     @Column(nullable = false)
-    private String title;
+    private LocalDateTime startTime;
 
     @Column(nullable = false)
-    private String startDatetime;
+    private LocalDateTime endTime;
 
     @Column(nullable = false)
-    private String endDatetime;
-
-    @Column(nullable = false)
-    private LocalDateTime syncedAt;
-
-    @Column(nullable = false)
-    private Boolean isAllDay;
-
-    @Column(nullable = false, columnDefinition = "text")
-    private String externalEtag;
+    private String weekday;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "calendar_id")
-    private Calendar calendar;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 }
