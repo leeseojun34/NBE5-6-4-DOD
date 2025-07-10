@@ -127,6 +127,7 @@ public class SchedulesController {
             response.setSCHEDULES_STATUS(SCHEDULES_STATUS.FIXED);
             response.setLocation("강남역");
             response.setSpecificLocation("강남역 스타벅스");
+            response.setScheduleName("모여라! DOD!");
             response.setDescription("DOD의 즐거운 미팅 날");
             response.setMeetingPlatform(MEETING_PLATFORM.ZOOM);
             response.setPlatformUrl("https://zoom.us/test-meeting");
@@ -214,7 +215,7 @@ public class SchedulesController {
             response1.setLongitude(127.0276);
             response1.setSuggestedMemberId(1L);
             response1.setVoteCount(5L);
-            response1.setSCHEDULES_STATUS(VOTE_STATUS.ALMOST);
+//            response1.setSCHEDULES_STATUS(VOTE_STATUS.ALMOST);
             response1.setMetroLines(Arrays.asList("2", "4", "5"));
             response1.setStationColors(Arrays.asList("G222","B342","P234"));
 
@@ -225,7 +226,7 @@ public class SchedulesController {
             response2.setLongitude(127.0365);
             response2.setSuggestedMemberId(2L);
             response2.setVoteCount(2L);
-            response2.setSCHEDULES_STATUS(VOTE_STATUS.WINNER);
+//            response2.setSCHEDULES_STATUS(VOTE_STATUS.WINNER);
             response2.setMetroLines(Arrays.asList("2","8"));
             response2.setStationColors(Arrays.asList("G222","R342"));
 
@@ -236,7 +237,7 @@ public class SchedulesController {
             response3.setLongitude(126.9245);
             response3.setSuggestedMemberId(3L);
             response3.setVoteCount(8L);
-            response3.setSCHEDULES_STATUS(VOTE_STATUS.DEFAULT);
+//            response3.setSCHEDULES_STATUS(VOTE_STATUS.DEFAULT);
             response3.setMetroLines(Arrays.asList("2","5","경의중앙","수인분당"));
             response3.setStationColors(Arrays.asList("G222","P234","b12314","y097234"));
 
