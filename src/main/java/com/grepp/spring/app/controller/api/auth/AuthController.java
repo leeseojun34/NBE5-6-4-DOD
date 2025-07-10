@@ -1,5 +1,6 @@
 package com.grepp.spring.app.controller.api.auth;
 
+import com.google.protobuf.Api;
 import com.grepp.spring.app.controller.api.auth.payload.AccountDeactivateRequest;
 import com.grepp.spring.app.controller.api.auth.payload.AccountDeactivateResponse;
 import com.grepp.spring.app.controller.api.auth.payload.GroupAdminResponse;
@@ -10,6 +11,7 @@ import com.grepp.spring.app.controller.api.auth.payload.UpdateAccessTokenRespons
 import com.grepp.spring.app.controller.api.group.groupDto.groupRole.GroupRole;
 import com.grepp.spring.app.model.auth.AuthService;
 import com.grepp.spring.app.model.auth.code.AuthToken;
+import com.grepp.spring.app.model.member.domain.Member;
 import com.grepp.spring.infra.auth.jwt.TokenCookieFactory;
 import com.grepp.spring.infra.response.ApiResponse;
 import com.grepp.spring.infra.response.ResponseCode;
@@ -23,7 +25,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
