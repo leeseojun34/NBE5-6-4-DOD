@@ -14,7 +14,7 @@ public class ShowSuggestedLocationsResponse {
     private	Double longitude;
     private	Long suggestedMemberId;
     private Long voteCount;
-    private VOTE_STATUS SCHEDULES_STATUS;
+//    private VOTE_STATUS SCHEDULES_STATUS;
 
     private List<String> metroLines; // 추가
     private List<String> stationColors; // 추가

@@ -16,6 +16,7 @@ public class ShowSchedulesResponse {
     private SCHEDULES_STATUS SCHEDULES_STATUS;
     private String location;
     private String specificLocation;
+    private String scheduleName;
     private String description;
     private MEETING_PLATFORM meetingPlatform;
     private String platformUrl;
