@@ -40,7 +40,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addHeader("Set-Cookie", accessTokenCookie.toString());
         response.addHeader("Set-Cookie", refreshTokenCookie.toString());
 
-        String frontEndRedirectUrl = "http://localhost:3000/auth/callback";
+        String frontEndRedirectUrl = "https://localhost:3000/auth/callback";
 
         getRedirectStrategy().sendRedirect(request,response,frontEndRedirectUrl);
     }
