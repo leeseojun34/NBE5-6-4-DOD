@@ -21,5 +21,6 @@ public class ModifySchedulesRequest {
 
     private ON_OFFLINE onOffline; // 추가
     private Long workspaceId; // 추가
+    private String workspaceName; // 추가
     private String workspaceUrl; // 추가
 }

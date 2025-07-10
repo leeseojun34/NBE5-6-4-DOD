@@ -11,6 +11,7 @@ import com.grepp.spring.app.controller.api.schedules.payload.CreateSchedulesResp
 import com.grepp.spring.app.controller.api.schedules.payload.CreateWorkspaceRequest;
 import com.grepp.spring.app.controller.api.schedules.payload.CreateWorkspaceResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.DeleteSchedulesResponse;
+import com.grepp.spring.app.controller.api.schedules.payload.DeleteWorkSpaceRequest;
 import com.grepp.spring.app.controller.api.schedules.payload.DeleteWorkSpaceResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.ModifySchedulesRequest;
 import com.grepp.spring.app.controller.api.schedules.payload.ModifySchedulesResponse;
@@ -402,7 +403,7 @@ public class SchedulesController {
     // 공통 워크스페이스 삭제
     @Operation(summary = "워크스페이스 삭제", description = "워크스페이스 삭제를 진행합니다.")
     @PostMapping("/delete-workspace/{scheduleId}")
-    public ResponseEntity<ApiResponse<DeleteWorkSpaceResponse>> CreateWorkspace(@PathVariable Long scheduleId) {
+    public ResponseEntity<ApiResponse<DeleteWorkSpaceResponse>> DeleteWorkspace(@PathVariable Long scheduleId, @RequestBody DeleteWorkSpaceRequest request) {
         try {
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
@@ -420,5 +421,4 @@ public class SchedulesController {
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
     }
-
-    }
+}

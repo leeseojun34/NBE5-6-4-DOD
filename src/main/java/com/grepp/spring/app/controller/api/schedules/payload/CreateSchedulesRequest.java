@@ -1,6 +1,5 @@
 package com.grepp.spring.app.controller.api.schedules.payload;
 
-import com.grepp.spring.app.model.schedule.domain.MEETING_PLATFORM;
 import com.grepp.spring.app.model.schedule.domain.SCHEDULES_STATUS;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +16,6 @@ public class CreateSchedulesRequest {
     private String description;
     private List<String> memberIds;
 
-    private String scheduleName;  // 추가
-    private String role;          // 추가
+    private String scheduleName;        // 추가
+    private List<String> role;          // 추가
 }
