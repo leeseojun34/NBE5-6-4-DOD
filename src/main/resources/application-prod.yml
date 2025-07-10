@@ -42,7 +42,7 @@ spring:
     password: ${sm@db-password}
     hikari:
       connection-timeout: 30000
-      maximum-pool-size: 10
+      maximum-pool-size: 40
   jpa:
     hibernate:
       ddl-auto: update
