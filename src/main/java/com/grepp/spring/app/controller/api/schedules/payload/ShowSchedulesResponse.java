@@ -14,8 +14,8 @@ public class ShowSchedulesResponse {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private SCHEDULES_STATUS SCHEDULES_STATUS;
-    private String location;
-    private String specificLocation;
+    private String location; // 중간장소
+    private String specificLocation; // 상세장소
     private String scheduleName;
     private String description;
     private MEETING_PLATFORM meetingPlatform;

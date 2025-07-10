@@ -22,7 +22,6 @@ import com.grepp.spring.app.controller.api.schedules.payload.VoteMiddleLocations
 import com.grepp.spring.app.controller.api.schedules.payload.VoteMiddleLocationsResponse;
 import com.grepp.spring.app.model.schedule.domain.MEETING_PLATFORM;
 import com.grepp.spring.app.model.schedule.domain.SCHEDULES_STATUS;
-import com.grepp.spring.app.model.schedule.domain.VOTE_STATUS;
 import com.grepp.spring.infra.error.exceptions.AuthApiException;
 import com.grepp.spring.infra.response.ApiResponse;
 import com.grepp.spring.infra.response.ResponseCode;
