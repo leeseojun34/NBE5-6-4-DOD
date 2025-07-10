@@ -13,7 +13,7 @@ spring:
             client-name: google
             client-id: ${sm@google-client-id}
             client-secret: ${sm@google-client-secret}
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            redirect-uri: "https://ittaeok.cedartodo.uk/login/oauth2/code/google"
             authorization-grant-type: authorization_code
             scope:
               - openid
