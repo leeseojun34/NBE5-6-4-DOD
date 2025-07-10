@@ -106,18 +106,13 @@ public class SchedulesController {
     // 일정 정보 조회
     @Operation(summary = "일정 정보 조회", description = "일정 정보를 조회합니다.")
     @GetMapping("/show/{scheduleId}")
-    public ResponseEntity<ApiResponse<ShowSchedulesResponse>> showSchedules(@PathVariable Long scheduleId, @RequestParam Long eventId) {
+    public ResponseEntity<ApiResponse<ShowSchedulesResponse>> showSchedules(@PathVariable Long scheduleId) {
 
         try {
 
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다. scheduleId는 30000 ~ 30003 입니다."));
-            }
-
-            if (eventId !=20000 && eventId !=20001 && eventId !=20002 && eventId !=20003 && eventId !=20004 && eventId !=22222 ) {
-                return ResponseEntity.status(404)
-                    .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 이벤트를 찾을 수 없습니다. eventId는 20000 ~ 20004 입니다."));
             }
 
             ShowSchedulesResponse  response = new ShowSchedulesResponse();
