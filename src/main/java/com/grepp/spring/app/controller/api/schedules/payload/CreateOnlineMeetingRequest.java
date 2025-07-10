@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateOnlineMeetingRequest {
-    private MEETING_PLATFORM meetingPlatform;
+    private MEETING_PLATFORM meetingPlatform;  // 온라인 플렛폼 종류 -> GOOGLE_MEET | ZOOM | NONE
 }
