@@ -1,8 +1,13 @@
 package com.grepp.spring.app.controller.api.event.payload;
 
-import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,29 +18,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateEventRequest {
 
-    @NotNull
     private String title;
     private String description;
-    @NotNull
-    private List<DateList> dateList;
-    @NotNull
-    private String type;
-    @NotNull
+    private String meetingType;
     private Integer maxMember;
+    private Long groupId;
+    private List<CandidateDateWeb> dateList;
 
     @Getter
     @Setter
-    public static class DateList {
-        private String date;
-        @NotNull
-        private String startTime;
-        @NotNull
-        private String endTime;
-
-        public DateList(String date, String startTime, String endTime) {
-            this.date = date;
-            this.startTime = startTime;
-            this.endTime = endTime;
-        }
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CandidateDateWeb {
+        private List<LocalDate> dates;
+        private LocalTime startTime;
+        private LocalTime endTime;
     }
 }
