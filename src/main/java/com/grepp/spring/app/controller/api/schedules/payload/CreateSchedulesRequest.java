@@ -16,4 +16,7 @@ public class CreateSchedulesRequest {
     private SCHEDULES_STATUS SCHEDULES_STATUS;
     private String description;
     private List<String> memberIds;
+
+    private String scheduleName;  // 추가
+    private String role;          // 추가
 }
