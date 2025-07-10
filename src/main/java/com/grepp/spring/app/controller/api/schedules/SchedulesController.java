@@ -11,6 +11,7 @@ import com.grepp.spring.app.controller.api.schedules.payload.CreateSchedulesResp
 import com.grepp.spring.app.controller.api.schedules.payload.CreateWorkspaceRequest;
 import com.grepp.spring.app.controller.api.schedules.payload.CreateWorkspaceResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.DeleteSchedulesResponse;
+import com.grepp.spring.app.controller.api.schedules.payload.DeleteWorkSpaceRequest;
 import com.grepp.spring.app.controller.api.schedules.payload.DeleteWorkSpaceResponse;
 import com.grepp.spring.app.controller.api.schedules.payload.ModifySchedulesRequest;
 import com.grepp.spring.app.controller.api.schedules.payload.ModifySchedulesResponse;
@@ -21,7 +22,6 @@ import com.grepp.spring.app.controller.api.schedules.payload.VoteMiddleLocations
 import com.grepp.spring.app.controller.api.schedules.payload.VoteMiddleLocationsResponse;
 import com.grepp.spring.app.model.schedule.domain.MEETING_PLATFORM;
 import com.grepp.spring.app.model.schedule.domain.SCHEDULES_STATUS;
-import com.grepp.spring.app.model.schedule.domain.VOTE_STATUS;
 import com.grepp.spring.infra.error.exceptions.AuthApiException;
 import com.grepp.spring.infra.response.ApiResponse;
 import com.grepp.spring.infra.response.ResponseCode;
@@ -124,7 +124,7 @@ public class SchedulesController {
             response.setEventId(20000L);
             response.setStartTime(LocalDateTime.of(2025, 7, 6, 3, 7));
             response.setEndTime(LocalDateTime.of(2025, 7, 7, 3, 7));
-            response.setSCHEDULES_STATUS(SCHEDULES_STATUS.FIXED);
+//            response.setSCHEDULES_STATUS(SCHEDULES_STATUS.FIXED);
             response.setLocation("강남역");
             response.setSpecificLocation("강남역 스타벅스");
             response.setScheduleName("모여라! DOD!");
@@ -133,8 +133,7 @@ public class SchedulesController {
             response.setPlatformUrl("https://zoom.us/test-meeting");
 
             response.setMembers(List.of("이서준","이강현","안준희","정서윤","최동준","박상윤","박은서","박준규","현혜주","황수지","아이유","박보검"));
-            response.setWorkspacesUrl(List.of("www.notion.com","www.github.com","www.slack.com"));
-            response.setWorkspacesName(List.of("프론트엔드 기획서","이때 어때 레포지토리","데브코스 슬렉"));
+            response.setWorkspaces(Map.of("프론트엔드 기획서","www.notion.com","이때 어때 레포지토리","www.github.com","데브코스 슬렉","www.slack.com" ));
             return ResponseEntity.ok(ApiResponse.success(response));
         }
 
@@ -172,14 +171,14 @@ public class SchedulesController {
 
     // 출발장소 등록
     @Operation(summary = "출발장소 등록", description = "출발장소 등록을 진행합니다.")
-    @PostMapping("create-depart-location")
-    public ResponseEntity<ApiResponse<CreateDepartLocationResponse>> createDepartLocation(@RequestBody CreateDepartLocationRequest request) {
+    @PostMapping("create-depart-location/{scheduleId}")
+    public ResponseEntity<ApiResponse<CreateDepartLocationResponse>> createDepartLocation(@RequestParam Long scheduleId, @RequestBody CreateDepartLocationRequest request) {
 
         try {
 
             if(
-                request.getScheduleId()!= 30000L && request.getScheduleId()!=30001L && request.getScheduleId()!=30002L &&
-                    request.getScheduleId()!=30003L && request.getScheduleId()!=30005L && request.getScheduleId()!=30303L && request.getScheduleId()!=33333L
+                scheduleId != 30000L && scheduleId !=30001L && scheduleId !=30002L &&
+                    scheduleId !=30003L && scheduleId !=30005L && scheduleId !=30303L && scheduleId !=33333L
             ){
                 return ResponseEntity.status(404)
                     .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 일정을 찾을 수 없습니다. scheduleId는 30000 ~ 30003 입니다."));
@@ -213,34 +212,19 @@ public class SchedulesController {
             response1.setLocationName("동대문역사문화공원역");
             response1.setLatitude(37.4979);
             response1.setLongitude(127.0276);
-            response1.setSuggestedMemberId(1L);
-            response1.setVoteCount(5L);
-//            response1.setSCHEDULES_STATUS(VOTE_STATUS.ALMOST);
-            response1.setMetroLines(Arrays.asList("2", "4", "5"));
-            response1.setStationColors(Arrays.asList("G222","B342","P234"));
-
+            response1.setMetroLines(Map.of("2","#00A84D", "4","#00A2D1", "5","#996CAC"));
 
             ShowSuggestedLocationsResponse response2 = new ShowSuggestedLocationsResponse();
             response2.setLocationName("역삼역");
             response2.setLatitude(37.5008);
             response2.setLongitude(127.0365);
-            response2.setSuggestedMemberId(2L);
-            response2.setVoteCount(2L);
-//            response2.setSCHEDULES_STATUS(VOTE_STATUS.WINNER);
-            response2.setMetroLines(Arrays.asList("2","8"));
-            response2.setStationColors(Arrays.asList("G222","R342"));
-
+            response2.setMetroLines(Map.of("2","#00A84D", "8","#E6186C"));
 
             ShowSuggestedLocationsResponse response3 = new ShowSuggestedLocationsResponse();
             response3.setLocationName("홍대입구역");
             response3.setLatitude(37.5572);
             response3.setLongitude(126.9245);
-            response3.setSuggestedMemberId(3L);
-            response3.setVoteCount(8L);
-//            response3.setSCHEDULES_STATUS(VOTE_STATUS.DEFAULT);
-            response3.setMetroLines(Arrays.asList("2","5","경의중앙","수인분당"));
-            response3.setStationColors(Arrays.asList("G222","P234","b12314","y097234"));
-
+            response3.setMetroLines(Map.of("2","#00A84D", "5","#996CAC", "경의중앙","#77C4A3","수인분당","#FDA600"));
 
             List<ShowSuggestedLocationsResponse> list = Arrays.asList(response1, response2, response3);
 
@@ -306,9 +290,8 @@ public class SchedulesController {
             response.setLocationName("잠실역");
             response.setLatitude(37.5572);
             response.setLongitude(126.9245);
-            response.setVoteCount(8L);
-            response.setMetroLines(List.of("2","8"));
-            response.setStationColors(List.of("G222","R342"));
+            response.setMetroLines(Map.of("2","#00A84D", "8","#E6186C"));
+
             return ResponseEntity.ok(ApiResponse.success(response));
         }
 
@@ -402,7 +385,7 @@ public class SchedulesController {
     // 공통 워크스페이스 삭제
     @Operation(summary = "워크스페이스 삭제", description = "워크스페이스 삭제를 진행합니다.")
     @PostMapping("/delete-workspace/{scheduleId}")
-    public ResponseEntity<ApiResponse<DeleteWorkSpaceResponse>> CreateWorkspace(@PathVariable Long scheduleId) {
+    public ResponseEntity<ApiResponse<DeleteWorkSpaceResponse>> DeleteWorkspace(@PathVariable Long scheduleId, @RequestBody DeleteWorkSpaceRequest request) {
         try {
             if (scheduleId !=30000 && scheduleId !=30001 && scheduleId !=30002 && scheduleId !=30003 && scheduleId !=30005 && scheduleId !=30303 && scheduleId != 33333) {
                 return ResponseEntity.status(404)
@@ -420,5 +403,4 @@ public class SchedulesController {
                 .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "서버가 요청을 처리할 수 없습니다."));
         }
     }
-
-    }
+}
