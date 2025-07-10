@@ -3,7 +3,6 @@ package com.grepp.spring.infra.auth.oauth2;
 import com.grepp.spring.app.model.auth.AuthService;
 import com.grepp.spring.app.model.auth.code.AuthToken;
 import com.grepp.spring.app.model.auth.dto.TokenDto;
-import com.grepp.spring.app.model.member.domain.Role;
 import com.grepp.spring.infra.auth.jwt.TokenCookieFactory;
 import com.grepp.spring.infra.auth.oauth2.user.OAuth2UserInfo;
 import jakarta.servlet.ServletException;
@@ -40,6 +39,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         response.addHeader("Set-Cookie", accessTokenCookie.toString());
         response.addHeader("Set-Cookie", refreshTokenCookie.toString());
-        getRedirectStrategy().sendRedirect(request,response,"/");
+
+        String frontEndRedirectUrl = "http://localhost:3000/auth/callback";
+
+        getRedirectStrategy().sendRedirect(request,response,frontEndRedirectUrl);
     }
 }

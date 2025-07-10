@@ -3,6 +3,8 @@ package com.grepp.spring.app.model.mypage.entity;
 import com.grepp.spring.app.model.member.domain.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +13,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,13 +41,14 @@ public class FavoriteTimetable {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime startTime;
+    private LocalTime startTime; // LocalDateTime -> LocalTime 으로 변경
 
     @Column(nullable = false)
-    private LocalDateTime endTime;
+    private LocalTime endTime; // LocalDateTime -> LocalTime 으로 변경
 
     @Column(nullable = false)
-    private String weekday;
+    @Enumerated(EnumType.STRING) // DB 에 문자로 저장되게 추가 (ex. "MONDAY")
+    private DayOfWeek weekday; // String -> DayOfWeek 타입으로 변경
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
