@@ -17,7 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
             .allowedOrigins(
                 frontServer
-                ,"https://ittaeok.cedartodo.uk"
+                ,"http://localhost:8080"
+                ,"http://ittaeok.cedartodo.uk"
                 ,"http://34.71.229.203"
             )
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")

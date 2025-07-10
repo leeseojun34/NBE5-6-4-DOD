@@ -1,17 +1,48 @@
 server:
-  port: 80
+  port: 8080
 
 app:
   domain: 34.71.229.203
 
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-name: google
+            client-id: ${sm@google-client-id}
+            client-secret: ${sm@google-client-secret}
+            redirect-uri: "https://ittaeok.cedartodo.uk/login/oauth2/code/google"
+            authorization-grant-type: authorization_code
+            scope:
+              - openid
+              - email
+              - profile
+
+          kakao:
+            client-name: kakao
+            client-id: ${sm@kakao-client-id}
+            client-secret: ${sm@kakao-client-secret}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_post
+            scope:
+              - profile_nickname
+              - account_email
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
   datasource:
     url: ${sm@db-url}
     username: ${sm@db-username}
     password: ${sm@db-password}
     hikari:
       connection-timeout: 30000
-      maximum-pool-size: 10
+      maximum-pool-size: 40
   jpa:
     hibernate:
       ddl-auto: update
