@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
                 ,"http://ittaeok.cedartodo.uk"
                 ,"http://34.71.229.203"
             )
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
             .allowedHeaders("*")
             .allowCredentials(true)
             .maxAge(3600);
