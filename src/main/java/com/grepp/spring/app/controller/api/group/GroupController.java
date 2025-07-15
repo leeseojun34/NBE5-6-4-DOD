@@ -34,10 +34,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -98,7 +98,7 @@ public class GroupController {
     @Operation(summary = "그룹 내 일정 조회")
     @GetMapping("/schedule-groups/{id}")
     public ResponseEntity<ApiResponse<ShowGroupScheduleResponse>> getGroupSchedules(
-        @RequestParam Long id
+        @PathVariable Long id
     ) {
         try {
             // 예외 발생
@@ -136,7 +136,7 @@ public class GroupController {
     @Operation(summary = "그룹 삭제")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<DeleteGroupResponse>> deleteGroup(
-        @RequestParam Long id,
+        @PathVariable Long id,
         @RequestBody DeleteGroupRequest request
     ) {
         try {
@@ -172,7 +172,7 @@ public class GroupController {
     @Operation(summary = "그룹 멤버 조회")
     @GetMapping("/{id}/member")
     public ResponseEntity<ApiResponse<ShowGroupMemberResponse>> getGroupMembers(
-        @RequestParam Long id
+        @PathVariable Long id
     ) {
         try {
             // 예외 발생
@@ -218,7 +218,7 @@ public class GroupController {
     @Operation(summary = "그룹 정보 수정")
     @PatchMapping("/{id}")
     public ResponseEntity<ApiResponse<ModifyGroupInfoResponse>> updateGroupInfo(
-        @RequestParam Long id,
+        @PathVariable Long id,
         @RequestBody ModifyGroupInfoRequest request
     ) {
         try {
@@ -254,8 +254,8 @@ public class GroupController {
     @Operation(summary = "그룹 멤버 내보내기")
     @PatchMapping("/{groupId}/members/{userId}")
     public ResponseEntity<ApiResponse<DeportGroupMemberResponse>> deportGroupMember(
-        @RequestParam Long groupId,
-        @RequestParam String userId
+        @PathVariable Long groupId,
+        @PathVariable String userId
     ) {
         try {
             // 예외 발생
@@ -366,7 +366,7 @@ public class GroupController {
     @Operation(summary = "그룹 멤버 권한 관리")
     @PatchMapping("/{id}/members")
     public ResponseEntity<ApiResponse<ControlGroupRoleResponse>> controlGroupRoles(
-        @RequestParam Long id,
+        @PathVariable Long id,
         @RequestBody ControlGroupRoleRequest request
     ) {
         try {
@@ -419,7 +419,7 @@ public class GroupController {
     @Operation(summary = "그룹 통계 조회")
     @GetMapping("/{id}/statistics")
     public ResponseEntity<ApiResponse<ShowGroupStatisticsResponse>> getGroupStatistics(
-        @RequestParam Long id
+        @PathVariable Long id
     ) {
         try {
             // 예외 발생
@@ -524,7 +524,7 @@ public class GroupController {
     @Operation(summary = "그룹 탈퇴")
     @PatchMapping("/{id}/leave")
     public ResponseEntity<ApiResponse<WithdrawGroupResponse>> withdrawGroup(
-        @RequestParam Long id
+        @PathVariable Long id
     ) {
         try {
             // 예외 발생
