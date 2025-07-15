@@ -210,39 +210,6 @@ public class MypageController {
     }
   }
 
-
-  // 프로필 수정 (사진 + 이름 수정)
-  @Operation(summary = "프로필", description = "회원 프로필 내 이름 및 프로필 캐릭터 수정, memberID는 KAKAO_1234 입력")
-  @PatchMapping("/member-profile/{memberId}")
-  public ResponseEntity<ApiResponse<ModifyProfileResponse>> modifyProfile(
-      @PathVariable String memberId,
-      @RequestBody @Valid ModifyFavoriteTimeRequest request) {
-
-    try {
-      if(
-          !"KAKAO_1234".equals(memberId)
-      ){
-        return ResponseEntity.status(404)
-            .body(ApiResponse.error(ResponseCode.NOT_FOUND, "해당 정보를 찾을 수 없습니다."));
-      }
-
-      ModifyProfileResponse response = new ModifyProfileResponse();
-      response.setMemberId("KAKAO_1234");
-      response.setProfileImageNumber("7");
-      response.setName("ABC");
-
-
-      return ResponseEntity.ok(ApiResponse.success(response));
-    } catch (Exception e) {
-      if (e instanceof AuthenticationException) {
-        return ResponseEntity.status(401)
-            .body(ApiResponse.error(ResponseCode.UNAUTHORIZED, "인증(로그인)이 되어있지 않습니다."));
-      }
-      return ResponseEntity.status(400)
-          .body(ApiResponse.error(ResponseCode.BAD_REQUEST, "필수값이 누락되었습니다."));
-    }
-  }
-
   // 캘린더 연동 변경
   @Operation(summary = "캘린더 연동 설정 변경", description = "회원 프로필 내 캘린더 연동 설정 변경 (ON/OFF), memberID는 KAKAO_1234 입력")
   @PatchMapping("/calendar/{memberId}")

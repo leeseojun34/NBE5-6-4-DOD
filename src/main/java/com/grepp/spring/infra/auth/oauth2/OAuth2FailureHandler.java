@@ -1,8 +1,6 @@
 package com.grepp.spring.infra.auth.oauth2;
 
-import com.grepp.spring.app.model.auth.AuthService;
 import com.grepp.spring.app.model.auth.code.AuthToken;
-import com.grepp.spring.app.model.auth.token.RefreshTokenService;
 import com.grepp.spring.infra.auth.jwt.JwtTokenProvider;
 import com.grepp.spring.infra.auth.jwt.TokenCookieFactory;
 import io.jsonwebtoken.Claims;
@@ -20,9 +18,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OAuth2FailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    private final AuthService authService;
     private final JwtTokenProvider jwtProvider;
-    private final RefreshTokenService refreshTokenService;
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
@@ -34,7 +30,6 @@ public class OAuth2FailureHandler extends SimpleUrlAuthenticationFailureHandler 
         }
 
         Claims claims = jwtProvider.getClaims(requestAccessToken);
-        refreshTokenService.deleteByAccessTokenId(claims.getId());
 
         ResponseCookie expiredAccessToken = TokenCookieFactory.createExpiredToken(AuthToken.ACCESS_TOKEN.toString());
         ResponseCookie expiredRefreshToken = TokenCookieFactory.createExpiredToken(AuthToken.REFRESH_TOKEN.toString());

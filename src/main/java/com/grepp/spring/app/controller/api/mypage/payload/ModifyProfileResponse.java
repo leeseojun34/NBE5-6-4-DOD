@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ModifyProfileResponse {
-  private String memberId;
-  private String profileImageNumber;
+  private String id;
   private String name;
+  private Long profileImageNumber;
 }

@@ -1,5 +1,6 @@
 package com.grepp.spring.app.model.member.domain;
 
+import com.grepp.spring.app.controller.api.auth.Provider;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,8 +24,9 @@ public class Member {
     @Column(nullable = true) // 잠시만
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String provider;
+    private Provider provider;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
